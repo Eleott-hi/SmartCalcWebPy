@@ -6,8 +6,14 @@ APP := polls
 
 start: env pip_update pip_install
 
+sqlmigrate:
+	cd $(PACKAGE); python manage.py sqlmigrate $(APP) 0001
+
 server_run:
 	cd $(PACKAGE); python manage.py runserver $(IP):$(PORT)
+
+admin:
+	cd $(PACKAGE); python manage.py createsuperuser
 
 app:
 	cd $(PACKAGE); python manage.py startapp $(APP)
@@ -15,8 +21,12 @@ app:
 $(PACKAGE): pip_install
 	django-admin startproject $(PACKAGE)
 
-migrate:
+migrate: make_migration
 	cd $(PACKAGE); python manage.py migrate
+
+
+shell:
+	cd $(PACKAGE); python manage.py shell
 
 make_migration:
 	cd $(PACKAGE); python manage.py makemigrations $(APP)
