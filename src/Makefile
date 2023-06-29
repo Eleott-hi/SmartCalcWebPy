@@ -24,6 +24,8 @@ $(PACKAGE): pip_install
 migrate: make_migration
 	cd $(PACKAGE); python manage.py migrate
 
+test:
+	cd $(PACKAGE); python manage.py test $(APP)
 
 shell:
 	cd $(PACKAGE); python manage.py shell
