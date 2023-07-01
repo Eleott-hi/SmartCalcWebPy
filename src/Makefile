@@ -1,6 +1,7 @@
 IP := 127.0.0.1
 PORT := 8000
 PACKAGE := mysite
+APP_PACKAGE := django-polls
 APP := polls
 
 
@@ -40,6 +41,15 @@ env:
 	@echo
 
 	exit 1;
+
+freeze:
+	pip freeze > requirements.txt
+
+build_package:
+	cd $(APP_PACKAGE); python setup.py sdist
+
+install_packege:
+	python -m pip install $(APP_PACKAGE)/dist/*.tar.gz
 
 pip_update:
 	pip install --upgrade pip
