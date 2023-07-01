@@ -47,7 +47,7 @@ body {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 5px;
   background-color: #f1f6ff; /* Light blue background */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  box-shadow: 0 40px 30px rgba(5, 46, 229, 0.2); /* Soft shadow */
   border-radius: 10px; /* Rounded corners */
 }
 
