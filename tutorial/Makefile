@@ -1,19 +1,11 @@
-PROJECT := SmartCalcWeb
-
 IP := 127.0.0.1
 PORT := 8000
-PACKAGE := $(PROJECT)
+PACKAGE := mysite
 APP_PACKAGE := django-polls
-APP := calculator
+APP := polls
 
 
 start: env pip_update pip_install
-
-start_project:
-	django-admin startproject $(PACKAGE)
-
-start_app:
-	cd $(PACKAGE); python manage.py startapp $(APP)
 
 sqlmigrate:
 	cd $(PACKAGE); python manage.py sqlmigrate $(APP) 0001
@@ -24,7 +16,8 @@ server_run:
 admin:
 	cd $(PACKAGE); python manage.py createsuperuser
 
-
+app:
+	cd $(PACKAGE); python manage.py startapp $(APP)
 
 $(PACKAGE): pip_install
 	django-admin startproject $(PACKAGE)

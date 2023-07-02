@@ -2,25 +2,15 @@ var selectedInputId = 'result';
 
 function appendToResult(value) {
   var selectedInput = document.getElementById(selectedInputId);
-
-
-
-  selectedInput.focus();
-
-  console.log(selectedInput.value);
   selectedInput.value += value;
-  console.log(selectedInput.value);
 }
 
 function setInputId(inputId) {
   var resultInput = document.getElementById('result');
   var xValueInput = document.getElementById('xValue');
-
-  // Remove custom focus attribute from both inputs
   resultInput.removeAttribute('custom-focus');
   xValueInput.removeAttribute('custom-focus');
 
-  // Set the custom focus attribute on the selected input
   selectedInputId = inputId;
   var selectedInput = document.getElementById(selectedInputId);
   selectedInput.setAttribute('custom-focus', '');
@@ -45,7 +35,6 @@ function deleteLastElement() {
 
 function animateCircle(button, x, y) {
   const rect = button.getBoundingClientRect();
-
   const offsetX = x - rect.left;
   const offsetY = y - rect.top;
 
