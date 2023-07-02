@@ -1,5 +1,12 @@
 function appendToResult(value) {
-  document.getElementById('result').value += value;
+  var resultInput = document.getElementById('result');
+  var xInput = document.getElementById('xValue');
+
+  if (resultInput === document.activeElement) {
+    resultInput.value += value;
+  } else if (xInput === document.activeElement) {
+    xInput.value += value;
+  }
 }
 
 function calculate() {
