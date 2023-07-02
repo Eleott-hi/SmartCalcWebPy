@@ -1,12 +1,29 @@
-function appendToResult(value) {
-  var resultInput = document.getElementById('result');
-  var xInput = document.getElementById('xValue');
+var selectedInputId = 'result';
 
-  if (resultInput === document.activeElement) {
-    resultInput.value += value;
-  } else if (xInput === document.activeElement) {
-    xInput.value += value;
-  }
+function appendToResult(value) {
+  var selectedInput = document.getElementById(selectedInputId);
+
+
+
+  selectedInput.focus();
+
+  console.log(selectedInput.value);
+  selectedInput.value += value;
+  console.log(selectedInput.value);
+}
+
+function setInputId(inputId) {
+  var resultInput = document.getElementById('result');
+  var xValueInput = document.getElementById('xValue');
+
+  // Remove custom focus attribute from both inputs
+  resultInput.removeAttribute('custom-focus');
+  xValueInput.removeAttribute('custom-focus');
+
+  // Set the custom focus attribute on the selected input
+  selectedInputId = inputId;
+  var selectedInput = document.getElementById(selectedInputId);
+  selectedInput.setAttribute('custom-focus', '');
 }
 
 function calculate() {
@@ -16,26 +33,26 @@ function calculate() {
 }
 
 function clearResult() {
-  document.getElementById('result').value = '';
+  document.getElementById(selectedInputId).value = '';
 }
 
 function deleteLastElement() {
-  const resultField = document.getElementById('result');
+  const resultField = document.getElementById(selectedInputId);
   const currentInput = resultField.value;
   resultField.value = currentInput.slice(0, -1);
 }
 
 
-function animateCircle(event) {
-  const button = event.currentTarget;
+function animateCircle(button, x, y) {
   const rect = button.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
+
+  const offsetX = x - rect.left;
+  const offsetY = y - rect.top;
 
   const circle = document.createElement("div");
   circle.classList.add("circle");
-  circle.style.left = `${x}px`;
-  circle.style.top = `${y}px`;
+  circle.style.left = `${offsetX}px`;
+  circle.style.top = `${offsetY}px`;
   button.appendChild(circle);
 
   setTimeout(() => {
@@ -138,15 +155,18 @@ window.addEventListener('keydown', function (event) {
     case '^':
       button = document.querySelector('button[data-value="Math.pow("]');
       break;
-      case 'Backspace':
-        button = document.querySelector('button[data-value="Backspace"]');
-        break;
-        case 'x':
-          button = document.querySelector('button[data-value="x"]');
-          break;
+    case 'Backspace':
+      button = document.querySelector('button[data-value="Backspace"]');
+      break;
+    case 'x':
+      button = document.querySelector('button[data-value="x"]');
+      break;
   }
 
   if (button) {
+    animateCircle(button, event.clientX, event.clientY);
     button.click();
   }
 });
+
+

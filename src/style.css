@@ -65,22 +65,29 @@ body {
   width: 100%;
   height: 100%;
   text-align: right;
-  direction: rtl;
+  /* direction: rtl; */
 }
 
-
-.disabled {
-  pointer-events: none;
-  opacity: 0.6;
-  /* Add any other styling to visually indicate the disabled state */
+.calculator input:focus {
+  outline: none;
 }
 
+.calculator input[custom-focus] {
+  /* Add your custom styles to highlight the input area */
+  border: 1px solid #74a5d9;
+  /* Example: red border */
+  box-shadow: 0 0 5px #74a5d9;
+  /* Example: red box shadow */
+  position: relative;
+  z-index: 1;
 
-
+}
 
 .calculator .x_input {
   grid-column: 2 / span 6;
 }
+
+
 
 
 .calculator .button {
@@ -103,6 +110,7 @@ body {
   position: relative;
   overflow: hidden;
 }
+
 
 .calculator .button::after {
   content: "";
