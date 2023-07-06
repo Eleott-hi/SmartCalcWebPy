@@ -17,7 +17,7 @@
       <button class="button number-button" data-value="x"
         onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('x')">x</button>
       <input class="x_input" type="text" id="xValue" onclick="setInputId('xValue')" readonly
-        placeholder="Enter x value or expression">
+        placeholder="Enter x value or expression" value="{{ result }}">
 
       <button class="button function-button" data-value="Math.sqrt("
         onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.sqrt(')">sqrt</button>
