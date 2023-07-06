@@ -18,7 +18,7 @@ start_app:
 sqlmigrate:
 	cd $(PACKAGE); python manage.py sqlmigrate $(APP) 0001
 
-server_run:
+run_server:
 	cd $(PACKAGE); python manage.py runserver $(IP):$(PORT)
 
 admin:
