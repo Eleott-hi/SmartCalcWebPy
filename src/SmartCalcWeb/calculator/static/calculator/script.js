@@ -165,16 +165,13 @@ function getCsrfToken() {
   return csrfCookie ? csrfCookie[1] : "";
 }
 
+
 function sendPostRequest() {
-  const url = "/calculate";
-
-  const expression = document.getElementById("result").value;
-
   const payload = JSON.stringify({
-    expression: expression,
+    expression: document.getElementById("result").value,
   });
 
-  fetch(url, {
+  fetch("/calculate", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -186,9 +183,7 @@ function sendPostRequest() {
       if (response.ok) {
         return response.json();
       } else {
-        return {
-          result: "Invalid Expression",
-        };
+        return { result: "Invalid Expression" };
       }
     })
     .then((data) => {
@@ -199,37 +194,3 @@ function sendPostRequest() {
     });
 }
 
-
-function sendPostRequest() {
-  const url = "/calculate";
-
-  const expression = document.getElementById("result").value;
-
-  const payload = JSON.stringify({
-    expression: expression,
-  });
-
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRFToken": getCsrfToken(),
-    },
-    body: payload,
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        return {
-          result: "Invalid Expression",
-        };
-      }
-    })
-    .then((data) => {
-      document.getElementById("result").value = data.result;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}
