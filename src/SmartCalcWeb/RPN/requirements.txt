@@ -1,0 +1,3 @@
+pybind11
+# pyside6
+cmake

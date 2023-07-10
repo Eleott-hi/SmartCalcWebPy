@@ -7,7 +7,7 @@ APP_PACKAGE := django-polls
 APP := calculator
 
 
-start: env pip_update pip_install
+start: env pip_update pip_install lib run_server
 
 start_project:
 	django-admin startproject $(PACKAGE)
@@ -24,6 +24,8 @@ run_server:
 admin:
 	cd $(PACKAGE); python manage.py createsuperuser
 
+lib:
+	cd $(PACKAGE)/RPN; make
 
 
 $(PACKAGE): pip_install
