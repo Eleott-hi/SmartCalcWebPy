@@ -24,7 +24,7 @@ admin:
 	cd $(PACKAGE); python manage.py createsuperuser
 
 lib:
-	cd $(PACKAGE)/RPN; make
+	cd RPN; make
 
 $(PACKAGE): pip_install
 	django-admin startproject $(PACKAGE)
