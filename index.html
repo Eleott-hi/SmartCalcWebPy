@@ -2,114 +2,199 @@
 <html>
 
 <head>
-  <title>SmartCalcWeb</title>
-  <link rel="stylesheet" href="style.css">
+    <title>Resizable Sidebar Window</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            height: 100%;
+        }
+
+        .sidebar {
+            position: relative;
+            width: 200px;
+            background-color: #252830;
+            color: #fff;
+            overflow: auto;
+            transition: width 0.1s;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .drag-handle {
+            width: 10px;
+            background-color: #1d1e24;
+            cursor: col-resize;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            width: 40px;
+            background-color: #1d1e24;
+            color: #fff;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            transition: left 0.1s;
+            z-index: 2;
+        }
+
+        .sidebar-toggle-icon {
+            font-size: 18px;
+        }
+
+        .sidebar-content {
+            padding: 20px;
+        }
+
+        .sidebar-content p {
+            cursor: pointer;
+            margin: 0;
+            padding: 10px 0;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar-content p:hover {
+            background-color: #444;
+        }
+
+        .sidebar-content p::before {
+            content: '\2022';
+            margin-right: 10px;
+        }
+
+        .sidebar-content p:last-child {
+            padding-bottom: 0;
+        }
+
+        #result {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .collapse-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            transform: translateX(0);
+            transition: transform 0.1s;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="container">
-    <div class="calculator">
-      <input type="text" id="result" onclick="setInputId('result')" readonly placeholder="Enter expression" autofocus
-        custom-focus>
-
-      <button class="button number-button" data-value="x"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('x')">x</button>
-      <input class="x_input" type="text" id="xValue" onclick="setInputId('xValue')" readonly
-        placeholder="Enter x value or expression">
-
-      <button class="button function-button" data-value="Math.sqrt("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.sqrt(')">sqrt</button>
-      <button class="button function-button" data-value="Math.pow("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.pow(')">pow</button>
-
-
-      <!-- Number Buttons -->
-      <button class="button number-button" data-value="7"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('7')">7</button>
-      <button class="button number-button" data-value="8"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('8')">8</button>
-      <button class="button number-button" data-value="9"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('9')">9</button>
-
-      <button class="button operation-button" data-value="("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('(')">(</button>
-      <button class="button operation-button" data-value=")"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult(')')">)</button>
-
-
-
-
-      <button class="button function-button" data-value="Math.asin("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.asin(')">asin</button>
-      <button class="button function-button" data-value="Math.sin("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.sin(')">sin</button>
-
-
-      <button class="button number-button" data-value="4"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('4')">4</button>
-      <button class="button number-button" data-value="5"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('5')">5</button>
-      <button class="button number-button" data-value="6"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('6')">6</button>
-
-
-
-      <button class="button operation-button" data-value="/"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('/')">/</button>
-      <button class="button operation-button" data-value="%"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('%')">%</button>
-
-
-
-      <!-- Function Buttons -->
-      <button class="button function-button" data-value="Math.acos("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.acos(')">acos</button>
-      <button class="button function-button" data-value="Math.cos("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.cos(')">cos</button>
-
-
-      <button class="button number-button" data-value="1"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('1')">1</button>
-      <button class="button number-button" data-value="2"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('2')">2</button>
-      <button class="button number-button" data-value="3"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('3')">3</button>
-
-      <button class="button operation-button" data-value="*"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('*')">*</button>
-      <button class="button operation-button" data-value="-"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('-')">-</button>
-
-
-      <button class="button function-button" data-value="Math.atan("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.atan(')">atan</button>
-      <button class="button function-button" data-value="Math.tan("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.tan(')">tan</button>
-
-
-
-      <button class="button number-button" data-value="e"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('e')">e</button>
-      <button class="button number-button" data-value="0"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('0')">0</button>
-      <button class="button number-button" data-value="."
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('.')">.</button>
-
-
-      <button class="button operation-button" data-value="+"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('+')">+</button>
-      <button class="button operation-button" data-value="="
-        onclick="animateCircle(this, event.clientX, event.clientY); calculate()">=</button>
-
-      <button class="button operation-button" data-value="C"
-        onclick="animateCircle(this, event.clientX, event.clientY); clearResult()">C</button>
-
-
-      <button class="button operation-button" data-value="Backspace"
-        onclick="animateCircle(this, event.clientX, event.clientY); deleteLastElement()">⌫</button>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <!-- Sidebar content goes here -->
+                <p onclick="setSidebarContent(1)">Sidebar content 1</p>
+                <p onclick="setSidebarContent(2)">Sidebar content 2</p>
+                <p onclick="setSidebarContent(3)">Sidebar content 3</p>
+                <p onclick="setSidebarContent(4)">Sidebar content 4</p>
+                <p onclick="setSidebarContent(5)">Sidebar content 5</p>
+                <p onclick="setSidebarContent(6)">Sidebar content 6</p>
+                <p onclick="setSidebarContent(7)">Sidebar content 7</p>
+            </div>
+        </div>
+        <div class="drag-handle"></div>
+        <div class="content">
+            <!-- Main content goes here -->
+            <input type="text" id="result" onclick="setInputId('result')" readonly placeholder="Enter expression"
+                autofocus maxlength="256" custom-focus>
+        </div>
+        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()"><i
+                class="sidebar-toggle-icon fas fa-chevron-right"></i></button>
+        <button class="collapse-button" id="arrowButton"><i class="fas fa-chevron-left"></i></button>
     </div>
-  </div>
 
+    <script>
+        const dragHandle = document.querySelector('.drag-handle');
+        const sidebarToggle = document.querySelector('#sidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const container = document.querySelector('.container');
+        const arrowButton = document.querySelector('#arrowButton');
+        const historyIcon = document.querySelector('.history-icon');
+        const historyIconClosedClass = 'fas fa-book';
+        const historyIconOpenedClass = 'fas fa-book-open';
+        let isResizing = false;
+        let sidebarWidth = sidebar.offsetWidth;
+        let isSidebarExpanded = true;
 
-  <script src="script.js"></script>
+        dragHandle.addEventListener('mousedown', startResize);
+
+        function startResize(e) {
+            e.preventDefault();
+            isResizing = true;
+
+            document.addEventListener('mousemove', resize);
+            document.addEventListener('mouseup', stopResize);
+        }
+
+        function resize(e) {
+            if (!isResizing) return;
+
+            const containerWidth = container.offsetWidth;
+            const mouseX = e.pageX;
+
+            const minSidebarWidth = 60; // Minimum sidebar width
+            const maxSidebarWidth = containerWidth - minSidebarWidth; // Maximum sidebar width
+
+            sidebarWidth = Math.max(minSidebarWidth, Math.min(maxSidebarWidth, mouseX));
+
+            sidebar.style.width = `${sidebarWidth}px`;
+            arrowButton.style.transform = `translateX(${sidebarWidth}px)`;
+
+            if (sidebarWidth <= minSidebarWidth) {
+                stopResize();
+                toggleSidebar();
+            }
+        }
+
+        function stopResize() {
+            isResizing = false;
+
+            document.removeEventListener('mousemove', resize);
+            document.removeEventListener('mouseup', stopResize);
+        }
+
+        function toggleSidebar() {
+            if (isSidebarExpanded) {
+                sidebar.style.width = '0';
+                sidebarToggle.style.left = '0';
+                arrowButton.style.transform = 'translateX(0)';
+                isSidebarExpanded = false;
+            } else {
+                sidebar.style.width = '200px';
+                sidebarToggle.style.left = '200px';
+                arrowButton.style.transform = 'translateX(200px)';
+                isSidebarExpanded = true;
+            }
+        }
+
+        function setSidebarContent(number) {
+            document.getElementById('result').value = number;
+        }
+    </script>
 </body>
+
+</html>

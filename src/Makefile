@@ -1,13 +1,12 @@
 PROJECT := SmartCalcWeb
 
-IP := 127.0.0.1
+IP := 0.0.0.0
 PORT := 8000
 PACKAGE := $(PROJECT)
 APP_PACKAGE := django-polls
 APP := calculator
 
-
-start: env pip_update pip_install lib run_server
+start: pip_update pip_install lib migrate run_server
 
 start_project:
 	django-admin startproject $(PACKAGE)
@@ -26,7 +25,6 @@ admin:
 
 lib:
 	cd $(PACKAGE)/RPN; make
-
 
 $(PACKAGE): pip_install
 	django-admin startproject $(PACKAGE)

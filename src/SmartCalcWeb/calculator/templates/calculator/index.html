@@ -6,112 +6,34 @@
 <head>
   <title>SmartCalcWeb</title>
   <link rel="stylesheet" href="{% static 'calculator/style.css' %}">
+
 </head>
 
 <body>
-  {% comment %} {% csrf_token %} {% endcomment %}
+  {% csrf_token %}
   <div class="container">
-    <div class="calculator">
-      <input type="text" id="result" onclick="setInputId('result')" readonly placeholder="Enter expression" autofocus
-        custom-focus>
+    <div class="sidebar">
+      <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="sidebar-toggle-icon fas fa-chevron-left"></i>Explore
+      </button>
+      <div class="sidebar-content">
+        <!-- Sidebar content goes here -->
+        <p>Sidebar content</p>
+        <p>Sidebar content</p>
+        <p>Sidebar content</p>
+        <p>Sidebar content</p>
+        <p>Sidebar content</p>
+        <p>Sidebar content</p>
+        <p>Sidebar content</p>
+        <p>Sidebar content</p>
+      </div>
+    </div>
+    <div class="drag-handle"></div>
 
-      <button class="button number-button" data-value="x"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('x')">x</button>
-      <input class="x_input" type="text" id="xValue" onclick="setInputId('xValue')" readonly
-        placeholder="Enter x value or expression" value="{{ result }}">
-
-      <button class="button function-button" data-value="Math.sqrt("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.sqrt(')">sqrt</button>
-      <button class="button function-button" data-value="Math.pow("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.pow(')">pow</button>
-
-
-      <!-- Number Buttons -->
-      <button class="button number-button" data-value="7"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('7')">7</button>
-      <button class="button number-button" data-value="8"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('8')">8</button>
-      <button class="button number-button" data-value="9"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('9')">9</button>
-
-      <button class="button operation-button" data-value="("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('(')">(</button>
-      <button class="button operation-button" data-value=")"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult(')')">)</button>
-
-
-
-
-      <button class="button function-button" data-value="Math.asin("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.asin(')">asin</button>
-      <button class="button function-button" data-value="Math.sin("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.sin(')">sin</button>
-
-
-      <button class="button number-button" data-value="4"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('4')">4</button>
-      <button class="button number-button" data-value="5"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('5')">5</button>
-      <button class="button number-button" data-value="6"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('6')">6</button>
-
-
-
-      <button class="button operation-button" data-value="/"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('/')">/</button>
-      <button class="button operation-button" data-value="%"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('%')">mod</button>
-
-
-      <button class="button function-button" data-value="Math.acos("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.acos(')">acos</button>
-      <button class="button function-button" data-value="Math.cos("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.cos(')">cos</button>
-
-
-      <button class="button number-button" data-value="1"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('1')">1</button>
-      <button class="button number-button" data-value="2"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('2')">2</button>
-      <button class="button number-button" data-value="3"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('3')">3</button>
-
-      <button class="button operation-button" data-value="*"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('*')">*</button>
-      <button class="button operation-button" data-value="-"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('-')">-</button>
-
-
-      <button class="button function-button" data-value="Math.atan("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.atan(')">atan</button>
-      <button class="button function-button" data-value="Math.tan("
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('Math.tan(')">tan</button>
-
-
-
-      <button class="button number-button" data-value="e"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('e')">e</button>
-      <button class="button number-button" data-value="0"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('0')">0</button>
-      <button class="button number-button" data-value="."
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('.')">.</button>
-
-
-      <button class="button operation-button" data-value="+"
-        onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('+')">+</button>
-      <button class="button operation-button" data-value="="
-        onclick="animateCircle(this, event.clientX, event.clientY); calculate()">=</button>
-
-      <button class="button operation-button" data-value="C"
-        onclick="animateCircle(this, event.clientX, event.clientY); clearResult()">C</button>
-
-
-      <button class="button operation-button" data-value="Backspace"
-        onclick="animateCircle(this, event.clientX, event.clientY); deleteLastElement()">⌫</button>
+    <div class="content">
+      <div class="calculator_container">
+        {% block calculator %}{% endblock %}
+      </div>
     </div>
   </div>
-
-  {% csrf_token %}
-  
-  <script src="{% static 'calculator/script.js' %}">  </script>
 </body>

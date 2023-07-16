@@ -18,12 +18,7 @@ function setInputId(inputId) {
 }
 
 function calculate() {
-  // var input = document.getElementById('result').value;
-  // input += "tnp"
-  // var result = eval("Math.pow(" + input + ", 2)");
-
   sendPostRequest();
-  // document.getElementById('result').value = result;
 }
 
 function clearResult() {
@@ -193,4 +188,63 @@ function sendPostRequest() {
       console.error(error);
     });
 }
+
+
+
+const dragHandle = document.querySelector('.drag-handle');
+const sidebar = document.querySelector('.sidebar');
+const container = document.querySelector('.container');
+const sidebarToggle = document.querySelector('#sidebarToggle');
+const sidebarContent = document.querySelector('.sidebar-content');
+
+let isResizing = false;
+let sidebarWidth = sidebar.offsetWidth;
+let isSidebarExpanded = true;
+
+dragHandle.addEventListener('mousedown', startResize);
+sidebarToggle.addEventListener('click', toggleSidebar);
+
+function startResize(e) {
+    e.preventDefault();
+    isResizing = true;
+
+    document.addEventListener('mousemove', resize);
+    document.addEventListener('mouseup', stopResize);
+}
+
+function resize(e) {
+    if (!isResizing) return;
+
+    const containerWidth = container.offsetWidth;
+    const mouseX = e.pageX;
+
+    const minSidebarWidth = 60; // Minimum sidebar width
+    const maxSidebarWidth = containerWidth - minSidebarWidth; // Maximum sidebar width
+
+    sidebarWidth = Math.max(minSidebarWidth, Math.min(maxSidebarWidth, mouseX));
+
+    sidebar.style.width = `${sidebarWidth}px`;
+}
+
+function stopResize() {
+    isResizing = false;
+
+    document.removeEventListener('mousemove', resize);
+    document.removeEventListener('mouseup', stopResize);
+}
+
+function toggleSidebar() {
+    if (isSidebarExpanded) {
+        sidebarWidth = 60;
+        sidebar.style.width = `${sidebarWidth}px`;
+        sidebarToggle.innerHTML = '<i class="sidebar-toggle-icon fas fa-chevron-right"></i>';
+    } else {
+        sidebarWidth = 200;
+        sidebar.style.width = `${sidebarWidth}px`;
+        sidebarToggle.innerHTML = '<i class="sidebar-toggle-icon fas fa-chevron-left"></i>';
+    }
+
+    isSidebarExpanded = !isSidebarExpanded;
+}
+
 

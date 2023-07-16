@@ -1,19 +1,23 @@
+html,
 body {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  /* justify-content: center; */
+  /* align-items: center; */
+  height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(45deg,
-      #ff9a9e,
-      #fad0c4,
-      #fad0c4,
-      #a18cd1,
-      #fbc2eb,
-      #a6c1ee,
-      #fbc2eb);
+  background: linear-gradient(
+    45deg,
+    #ff9a9e,
+    #fad0c4,
+    #fad0c4,
+    #a18cd1,
+    #fbc2eb,
+    #a6c1ee,
+    #fbc2eb
+  );
   background-size: 600% 600%;
   animation: gradient 15s ease infinite;
 }
@@ -34,9 +38,16 @@ body {
 
 .container {
   display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.calculator_container {
+  display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
+
 }
 
 .calculator {
@@ -44,14 +55,12 @@ body {
   border: 1px solid #ccc;
   padding: 10px;
   display: grid;
+  align-self: center;
   grid-template-columns: repeat(7, 1fr);
   grid-gap: 5px;
   background-color: #f1f6ff;
-  /* Light blue background */
   box-shadow: 30px 30px 30px rgba(5, 46, 229, 0.2);
-  /* Shadow offset: 10px down and 10px right */
   border-radius: 10px;
-  /* Rounded corners */
 }
 
 .calculator input {
@@ -73,22 +82,15 @@ body {
 }
 
 .calculator input[custom-focus] {
-  /* Add your custom styles to highlight the input area */
   border: 1px solid #74a5d9;
-  /* Example: red border */
   box-shadow: 0 0 5px #74a5d9;
-  /* Example: red box shadow */
   position: relative;
   z-index: 1;
-
 }
 
 .calculator .x_input {
   grid-column: 2 / span 6;
 }
-
-
-
 
 .calculator .button {
   width: 100%;
@@ -99,18 +101,14 @@ body {
   font-size: 14px;
   color: #333;
   background-color: #d4eaff;
-  /* Light blue button color */
   border: 1px solid #74a5d9;
-  /* Blue border color */
   cursor: pointer;
   transition: background-color 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
-  /* Rounded corners */
   position: relative;
   overflow: hidden;
 }
-
 
 .calculator .button::after {
   content: "";
@@ -119,7 +117,6 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.2);
-  /* Circle background color */
   border-radius: 50%;
   width: 0;
   height: 0;
@@ -130,14 +127,11 @@ body {
 
 .calculator .button:active::after {
   width: 200%;
-  /* Adjust the circle size as needed */
   height: 200%;
-  /* Adjust the circle size as needed */
 }
 
 .calculator .button:hover {
   background-color: #b7d7ff;
-  /* Darker blue button color on hover */
 }
 
 .calculator .button .circle {
@@ -167,4 +161,53 @@ body {
 /* Other Math Operation Buttons */
 .calculator .operation-button {
   background-color: #ffe3d4;
+}
+
+
+
+
+
+.sidebar {
+  position: relative;
+  width: 200px;
+  background-color: #252830;
+  color: #fff;
+  overflow: auto;
+  transition: width 0.1s;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.drag-handle {
+  width: 10px;
+  background-color: #1d1e24;
+  cursor: col-resize;
+}
+
+.sidebar-toggle {
+  position: absolute;
+  top: 0;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  background-color: #1d1e24;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: right 0.1s;
+}
+
+.sidebar-toggle-icon {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.sidebar-content {
+  padding: 20px;
 }
