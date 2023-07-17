@@ -12,9 +12,8 @@ def Print(*args):
     print(*args, flush=True)
 
 
-
 def index(request):
-    return render(request, "calculator/calculator.html", {})
+    return render(request, "calculator/index.html", {})
 
 
 def calculate(request):
@@ -41,3 +40,4 @@ def calculate(request):
         pass
 
     return HttpResponse(json.dumps(context), status=status, content_type="application/json")
+

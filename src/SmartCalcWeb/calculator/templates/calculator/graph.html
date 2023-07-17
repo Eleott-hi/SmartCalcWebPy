@@ -1,0 +1,32 @@
+<canvas id="myChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('myChart');
+
+  x = []
+  y = []
+
+  for (let i = -100; i < 100; i++) {
+    x.push(i)
+    y.push(i*i)
+  }
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: x,
+      datasets: [{
+        label: '# of Votes',
+        data: y,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>

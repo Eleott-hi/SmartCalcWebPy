@@ -1,39 +1,33 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html>
-
-<head>
-  <title>SmartCalcWeb</title>
-  <link rel="stylesheet" href="{% static 'calculator/style.css' %}">
-
-</head>
-
-<body>
-  {% csrf_token %}
-  <div class="container">
-    <div class="sidebar">
-      <button class="sidebar-toggle" id="sidebarToggle">
-        <i class="sidebar-toggle-icon fas fa-chevron-left"></i>Explore
-      </button>
-      <div class="sidebar-content">
-        <!-- Sidebar content goes here -->
-        <p>Sidebar content</p>
-        <p>Sidebar content</p>
-        <p>Sidebar content</p>
-        <p>Sidebar content</p>
-        <p>Sidebar content</p>
-        <p>Sidebar content</p>
-        <p>Sidebar content</p>
-        <p>Sidebar content</p>
+  <head>
+    <title>SmartCalcWeb</title>
+    <link rel="stylesheet" href="{% static 'calculator/style.css' %}">
+  </head>
+  <body>
+    {% csrf_token %}
+    <div class="container">
+      <div class="sidebar">
+        <button class="sidebar-toggle" id="sidebarToggle">
+          <i class="sidebar-toggle-icon fas fa-chevron-left"></i>Explore
+        </button>
+        <div class="sidebar-content">
+          <!-- Sidebar content goes here -->
+          <p>Sidebar content</p>
+          <p>Sidebar content</p>
+          <p>Sidebar content</p>
+          <p>Sidebar content</p>
+          <p>Sidebar content</p>
+          <p>Sidebar content</p>
+          <p>Sidebar content</p>
+          <p>Sidebar content</p>
+        </div>
+      </div>
+      <div class="drag-handle"></div>
+      <div class="content">
+        <div class="calculator_container">{% include 'calculator/calculator.html' %}</div>
+        <div>{% include 'calculator/graph.html' %}</div>
       </div>
     </div>
-    <div class="drag-handle"></div>
-
-    <div class="content">
-      <div class="calculator_container">
-        {% block calculator %}{% endblock %}
-      </div>
-    </div>
-  </div>
-</body>
+  </body>
