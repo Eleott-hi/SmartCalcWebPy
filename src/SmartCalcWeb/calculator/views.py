@@ -6,8 +6,12 @@ from SmartCalc import RPN
 from math import isnan
 from .models import MainExpression
 import logging
+import toml
+
+CONFIG = toml.load('config.toml')
 
 logger = logging.getLogger(__name__)
+
 
 def Print(*args):
     print(*args, flush=True)
@@ -17,7 +21,7 @@ def index(request):
     logger.info('This is an information message')
     logger.warning('This is a warning message')
     logger.error('This is an error message')
-    return render(request, "calculator/index.html", {})
+    return render(request, "calculator/index.html", {'CONFIG': CONFIG})
 
 
 def calculate(request):
@@ -44,4 +48,3 @@ def calculate(request):
         pass
 
     return HttpResponse(json.dumps(context), status=status, content_type="application/json")
-
