@@ -5,14 +5,18 @@ from django.http import HttpResponseNotAllowed
 from SmartCalc import RPN
 from math import isnan
 from .models import MainExpression
+import logging
 
-# Create your views here.
+logger = logging.getLogger(__name__)
 
 def Print(*args):
     print(*args, flush=True)
 
 
 def index(request):
+    logger.info('This is an information message')
+    logger.warning('This is a warning message')
+    logger.error('This is an error message')
     return render(request, "calculator/index.html", {})
 
 
