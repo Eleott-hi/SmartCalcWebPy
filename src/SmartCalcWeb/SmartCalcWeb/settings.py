@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from logging.handlers import TimedRotatingFileHandler
+import time
 from pathlib import Path
+import os
+from datetime import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -124,25 +128,47 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+class RotatingFilename(TimedRotatingFileHandler):
+    def doRollover(self):
+        if self.stream:
+            self.stream.close()
+            self.stream = None
+
+        file = os.path.basename(self.baseFilename)
+        self.baseFilename = self.baseFilename.replace(
+            file, f'logs_{datetime.now().strftime("%d-%m-%y-%H-%M-%S")}.log'
+        )
+        self.mode = "a"
+        self.stream = self._open()
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
         'file': {
-            'level': 'DEBUG',  # Set the desired log level
-            'class': 'logging.FileHandler',
-            'filename': '/project/logs/file.log',  # Set the desired file path
-            'formatter': 'verbose',
+            'level': 'DEBUG',
+            'class': 'SmartCalcWeb.settings.RotatingFilename',
+            # 'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join('/project/logs', f'logs_{datetime.now().strftime("%d-%m-%y-%H-%M-%S")}.log'),
+            'when': 'S',
+            'interval': 3,  # Rotate every 3 seconds
+            'backupCount': 1,  # Number of log files to keep (optional)
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
         },
     },
     'formatters': {
-        'verbose': {
-            'format': '{asctime} {levelname} {module} {message}',
-            'style': '{',
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S',
         },
-    },
-    'root': {
-        'handlers': ['file'],
-        'level': 'DEBUG',  # Set the desired log level
     },
 }
