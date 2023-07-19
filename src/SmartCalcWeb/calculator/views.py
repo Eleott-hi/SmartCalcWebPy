@@ -1,3 +1,4 @@
+import concurrent.futures
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 import json
@@ -48,3 +49,22 @@ def calculate(request):
         pass
 
     return HttpResponse(json.dumps(context), status=status, content_type="application/json")
+
+
+def graph(request):
+    expression = 'x*x'
+    from_value, to_value, step = -10, 10, 0.1
+    results, values = [], []
+    rpn = RPN()
+
+    i = from_value
+    while i <= to_value:
+        values.append(i)
+        results.append(rpn.calc(expression, i))
+        i += step
+
+    return render(request, "calculator/graph.html", {'data' : {
+        'expression': expression,
+        'x': values,
+        'y': results,
+    }})
