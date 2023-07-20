@@ -52,7 +52,7 @@ def calculate(request):
 
 
 def graph(request):
-    expression = 'x*x*x'
+    expression = 'sin(x)'
     from_value, to_value, step = -10, 10, 0.1
     results, values = [], []
     rpn = RPN()
@@ -63,7 +63,7 @@ def graph(request):
         results.append(rpn.calc(expression, i))
         i += step
 
-    return render(request, "calculator/graph.html", {'data' : {
+    return render(request, "graph/graph.html", {'data' : {
         'expression': expression,
         'x': values,
         'y': results,
