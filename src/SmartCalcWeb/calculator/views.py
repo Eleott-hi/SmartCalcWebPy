@@ -22,7 +22,7 @@ def index(request):
     logger.info('This is an information message')
     logger.warning('This is a warning message')
     logger.error('This is an error message')
-    return render(request, "calculator/index.html", {'CONFIG': CONFIG})
+    return render(request, "common/index.html", {'CONFIG': CONFIG})
 
 
 def calculate(request):

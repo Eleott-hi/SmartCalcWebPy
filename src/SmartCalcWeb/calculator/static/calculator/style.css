@@ -36,7 +36,7 @@ body {
   }
 }
 
-.container {
+ .container {
   display: flex;
   height: 100%;
   width: 100%;
@@ -153,12 +153,10 @@ body {
   background-color: #d4eaff;
 }
 
-/* Function Buttons */
 .calculator .function-button {
   background-color: #ffeed4;
 }
 
-/* Other Math Operation Buttons */
 .calculator .operation-button {
   background-color: #ffe3d4;
 }
@@ -166,7 +164,7 @@ body {
 
 
 
-
+/*
 .sidebar {
   position: relative;
   width: 200px;
@@ -210,4 +208,4 @@ body {
 
 .sidebar-content {
   padding: 20px;
-}
+} */
