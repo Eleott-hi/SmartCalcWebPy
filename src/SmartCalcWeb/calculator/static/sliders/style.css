@@ -38,14 +38,14 @@
 }
 
 .handler-vertical {
-  background-color: green;
-  width: 10px;
+  background-color: #3d1e4f;
+  width: 2px;
   cursor: ew-resize;
 }
 
 .handler-horizontal {
-  background-color: green;
-  height: 10px;
+  background-color: #3d1e4f;
+  height: 2px;
   cursor: ns-resize;
 }
 

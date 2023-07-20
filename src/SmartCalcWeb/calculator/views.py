@@ -52,7 +52,7 @@ def calculate(request):
 
 
 def graph(request):
-    expression = 'x*x'
+    expression = 'x*x*x'
     from_value, to_value, step = -10, 10, 0.1
     results, values = [], []
     rpn = RPN()

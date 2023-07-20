@@ -3,4 +3,4 @@ Django==4.2.2
 django-debug-toolbar==4.1.0
 pybind11==2.10.4
 sqlparse==0.4.4
-toml
+toml==0.10.2

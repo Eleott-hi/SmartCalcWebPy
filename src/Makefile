@@ -8,6 +8,9 @@ APP := calculator
 
 start: pip_update pip_install lib migrate run_server
 
+docker:
+	docker compose up
+
 start_project:
 	django-admin startproject $(PACKAGE)
 
@@ -63,3 +66,5 @@ pip_update:
 
 pip_install:
 	pip install -r requirements.txt
+
+.PHONY: docker
