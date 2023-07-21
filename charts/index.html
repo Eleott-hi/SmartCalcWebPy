@@ -1,37 +1,32 @@
-<div>
-    <canvas id="myChart"></canvas>
-  </div>
-  
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <script>
-    const ctx = document.getElementById('myChart');
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Embedded Graph</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>My Embedded Graph</h1>
+    <div id="graphContainer">
+        <!-- The content from graph.html will be loaded here -->
+    </div>
 
-    x = []
-    y = []
-
-    for (let i = -100; i < 100; i++) {
-      x.push(i)
-      y.push(i*i)
-    }
-  
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: x,
-        datasets: [{
-          label: '# of Votes',
-          data: y,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
+    <script>
+      $(document).ready(function() {
+          // Perform an AJAX request to fetch the content of graph.html
+          $.ajax({
+              url: 'graph.html', // Relative path to graph.html
+              type: 'GET',
+              dataType: 'html',
+              success: function(data) {
+                  // Inject the fetched content into the graphContainer div
+                  $('#graphContainer').html(data);
+              },
+              error: function() {
+                  console.error('Failed to load graph.html');
+              }
+          });
+      });
   </script>
   
+</body>
+</html>

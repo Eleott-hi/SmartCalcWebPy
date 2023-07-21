@@ -160,7 +160,6 @@ function getCsrfToken() {
   return csrfCookie ? csrfCookie[1] : "";
 }
 
-
 function sendPostRequest() {
   const payload = JSON.stringify({
     expression: document.getElementById("result").value,
@@ -189,62 +188,89 @@ function sendPostRequest() {
     });
 }
 
-
-
-const dragHandle = document.querySelector('.drag-handle');
-const sidebar = document.querySelector('.sidebar');
-const container = document.querySelector('.container');
-const sidebarToggle = document.querySelector('#sidebarToggle');
-const sidebarContent = document.querySelector('.sidebar-content');
+const dragHandle = document.querySelector(".drag-handle");
+const sidebar = document.querySelector(".sidebar");
+const container = document.querySelector(".container");
+const sidebarToggle = document.querySelector("#sidebarToggle");
+const sidebarContent = document.querySelector(".sidebar-content");
 
 let isResizing = false;
 let sidebarWidth = sidebar.offsetWidth;
 let isSidebarExpanded = true;
 
-dragHandle.addEventListener('mousedown', startResize);
-sidebarToggle.addEventListener('click', toggleSidebar);
+dragHandle.addEventListener("mousedown", startResize);
+sidebarToggle.addEventListener("click", toggleSidebar);
 
 function startResize(e) {
-    e.preventDefault();
-    isResizing = true;
+  e.preventDefault();
+  isResizing = true;
 
-    document.addEventListener('mousemove', resize);
-    document.addEventListener('mouseup', stopResize);
+  document.addEventListener("mousemove", resize);
+  document.addEventListener("mouseup", stopResize);
 }
 
 function resize(e) {
-    if (!isResizing) return;
+  if (!isResizing) return;
 
-    const containerWidth = container.offsetWidth;
-    const mouseX = e.pageX;
+  const containerWidth = container.offsetWidth;
+  const mouseX = e.pageX;
 
-    const minSidebarWidth = 60; // Minimum sidebar width
-    const maxSidebarWidth = containerWidth - minSidebarWidth; // Maximum sidebar width
+  const minSidebarWidth = 60; // Minimum sidebar width
+  const maxSidebarWidth = containerWidth - minSidebarWidth; // Maximum sidebar width
 
-    sidebarWidth = Math.max(minSidebarWidth, Math.min(maxSidebarWidth, mouseX));
+  sidebarWidth = Math.max(minSidebarWidth, Math.min(maxSidebarWidth, mouseX));
 
-    sidebar.style.width = `${sidebarWidth}px`;
+  sidebar.style.width = `${sidebarWidth}px`;
 }
 
 function stopResize() {
-    isResizing = false;
+  isResizing = false;
 
-    document.removeEventListener('mousemove', resize);
-    document.removeEventListener('mouseup', stopResize);
+  document.removeEventListener("mousemove", resize);
+  document.removeEventListener("mouseup", stopResize);
 }
 
 function toggleSidebar() {
-    if (isSidebarExpanded) {
-        sidebarWidth = 60;
-        sidebar.style.width = `${sidebarWidth}px`;
-        sidebarToggle.innerHTML = '<i class="sidebar-toggle-icon fas fa-chevron-right"></i>';
-    } else {
-        sidebarWidth = 200;
-        sidebar.style.width = `${sidebarWidth}px`;
-        sidebarToggle.innerHTML = '<i class="sidebar-toggle-icon fas fa-chevron-left"></i>';
-    }
+  if (isSidebarExpanded) {
+    sidebarWidth = 60;
+    sidebar.style.width = `${sidebarWidth}px`;
+    sidebarToggle.innerHTML =
+      '<i class="sidebar-toggle-icon fas fa-chevron-right"></i>';
+  } else {
+    sidebarWidth = 200;
+    sidebar.style.width = `${sidebarWidth}px`;
+    sidebarToggle.innerHTML =
+      '<i class="sidebar-toggle-icon fas fa-chevron-left"></i>';
+  }
 
-    isSidebarExpanded = !isSidebarExpanded;
+  isSidebarExpanded = !isSidebarExpanded;
 }
 
-
+(function () {
+  var a = document.getElementById("cwos"),
+    b;
+  var c = parseFloat(a.innerText || a.textContent),
+    d = c.toString();
+  if (12 >= d.replace(/^-/, "").replace(/\./, "").length) b = d;
+  else if (((d = c.toPrecision(12)), -1 !== d.indexOf("e"))) {
+    var e,
+      f,
+      g,
+      h =
+        null !=
+        (g =
+          null == (e = d.match(/e.*$/))
+            ? void 0
+            : null == (f = e[0])
+            ? void 0
+            : f.length)
+          ? g
+          : 0;
+    b = c.toPrecision(12 - h - ("0" === d[0] ? 1 : 0)).replace(/\.?0*e/, "e");
+  } else {
+    var k = d.match(/(^-|\.)/g),
+      l = d.substr(0, 12 + (k ? k.length : 0));
+    b = -1 !== l.indexOf(".") ? l.replace(/\.?0*$/, "") : l;
+  }
+  a.textContent = b;
+}).call(this);
