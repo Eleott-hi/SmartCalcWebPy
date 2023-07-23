@@ -7,10 +7,12 @@ function appendToResult(value) {
 }
 
 function setInputId(inputId) {
-  var resultInput = document.getElementById("result");
-  var xValueInput = document.getElementById("xValue");
-  resultInput.removeAttribute("custom-focus");
-  xValueInput.removeAttribute("custom-focus");
+  ids = ["result", "xValue", "x_from", "x_to", "y_from", "y_to"];
+
+  for (var i = 0; i < ids.length; i++) {
+    var resultInput = document.getElementById(ids[i]);
+    resultInput.removeAttribute("custom-focus");
+  }
 
   selectedInputId = inputId;
   var selectedInput = document.getElementById(selectedInputId);

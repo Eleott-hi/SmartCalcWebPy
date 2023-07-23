@@ -1,200 +1,37 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <title>Resizable Sidebar Window</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            display: flex;
-            height: 100%;
-        }
-
-        .sidebar {
-            position: relative;
-            width: 200px;
-            background-color: #252830;
-            color: #fff;
-            overflow: auto;
-            transition: width 0.1s;
-        }
-
-        .content {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .drag-handle {
-            width: 10px;
-            background-color: #1d1e24;
-            cursor: col-resize;
-        }
-
-        .sidebar-toggle {
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            width: 40px;
-            background-color: #1d1e24;
-            color: #fff;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            transition: left 0.1s;
-            z-index: 2;
-        }
-
-        .sidebar-toggle-icon {
-            font-size: 18px;
-        }
-
-        .sidebar-content {
-            padding: 20px;
-        }
-
-        .sidebar-content p {
-            cursor: pointer;
-            margin: 0;
-            padding: 10px 0;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar-content p:hover {
-            background-color: #444;
-        }
-
-        .sidebar-content p::before {
-            content: '\2022';
-            margin-right: 10px;
-        }
-
-        .sidebar-content p:last-child {
-            padding-bottom: 0;
-        }
-
-        #result {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            outline: none;
-        }
-
-        .collapse-button {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            transform: translateX(0);
-            transition: transform 0.1s;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="container">
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-content">
-                <!-- Sidebar content goes here -->
-                <p onclick="setSidebarContent(1)">Sidebar content 1</p>
-                <p onclick="setSidebarContent(2)">Sidebar content 2</p>
-                <p onclick="setSidebarContent(3)">Sidebar content 3</p>
-                <p onclick="setSidebarContent(4)">Sidebar content 4</p>
-                <p onclick="setSidebarContent(5)">Sidebar content 5</p>
-                <p onclick="setSidebarContent(6)">Sidebar content 6</p>
-                <p onclick="setSidebarContent(7)">Sidebar content 7</p>
-            </div>
+    <div class="container text-center">
+        <div class="row">
+          <div class="col">
+            Column
+          </div>
+          <div class="col">
+            Column
+          </div>
+          <div class="col">
+            Column
+          </div>
         </div>
-        <div class="drag-handle"></div>
-        <div class="content">
-            <!-- Main content goes here -->
-            <input type="text" id="result" onclick="setInputId('result')" readonly placeholder="Enter expression"
-                autofocus maxlength="256" custom-focus>
-        </div>
-        <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()"><i
-                class="sidebar-toggle-icon fas fa-chevron-right"></i></button>
-        <button class="collapse-button" id="arrowButton"><i class="fas fa-chevron-left"></i></button>
-    </div>
-
-    <script>
-        const dragHandle = document.querySelector('.drag-handle');
-        const sidebarToggle = document.querySelector('#sidebarToggle');
-        const sidebar = document.querySelector('.sidebar');
-        const container = document.querySelector('.container');
-        const arrowButton = document.querySelector('#arrowButton');
-        const historyIcon = document.querySelector('.history-icon');
-        const historyIconClosedClass = 'fas fa-book';
-        const historyIconOpenedClass = 'fas fa-book-open';
-        let isResizing = false;
-        let sidebarWidth = sidebar.offsetWidth;
-        let isSidebarExpanded = true;
-
-        dragHandle.addEventListener('mousedown', startResize);
-
-        function startResize(e) {
-            e.preventDefault();
-            isResizing = true;
-
-            document.addEventListener('mousemove', resize);
-            document.addEventListener('mouseup', stopResize);
-        }
-
-        function resize(e) {
-            if (!isResizing) return;
-
-            const containerWidth = container.offsetWidth;
-            const mouseX = e.pageX;
-
-            const minSidebarWidth = 60; // Minimum sidebar width
-            const maxSidebarWidth = containerWidth - minSidebarWidth; // Maximum sidebar width
-
-            sidebarWidth = Math.max(minSidebarWidth, Math.min(maxSidebarWidth, mouseX));
-
-            sidebar.style.width = `${sidebarWidth}px`;
-            arrowButton.style.transform = `translateX(${sidebarWidth}px)`;
-
-            if (sidebarWidth <= minSidebarWidth) {
-                stopResize();
-                toggleSidebar();
-            }
-        }
-
-        function stopResize() {
-            isResizing = false;
-
-            document.removeEventListener('mousemove', resize);
-            document.removeEventListener('mouseup', stopResize);
-        }
-
-        function toggleSidebar() {
-            if (isSidebarExpanded) {
-                sidebar.style.width = '0';
-                sidebarToggle.style.left = '0';
-                arrowButton.style.transform = 'translateX(0)';
-                isSidebarExpanded = false;
-            } else {
-                sidebar.style.width = '200px';
-                sidebarToggle.style.left = '200px';
-                arrowButton.style.transform = 'translateX(200px)';
-                isSidebarExpanded = true;
-            }
-        }
-
-        function setSidebarContent(number) {
-            document.getElementById('result').value = number;
-        }
-    </script>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+        integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

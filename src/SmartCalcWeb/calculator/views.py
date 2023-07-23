@@ -19,9 +19,7 @@ def Print(*args):
 
 
 def index(request):
-    logger.info('This is an information message')
-    logger.warning('This is a warning message')
-    logger.error('This is an error message')
+    logger.info('common/index.html loaded')
     return render(request, "common/index.html", {'CONFIG': CONFIG})
 
 
@@ -52,19 +50,35 @@ def calculate(request):
 
 
 def graph(request):
-    expression = 'sin(x)'
-    from_value, to_value, step = -10, 10, 0.1
+    data = json.loads(request.body)
+
+    Print(data)
+
+    expression = data["expression"]
+    x_from = float(data["x_from"])
+    x_to = float(data["x_to"])
+    step = float(0.01)
+    
     results, values = [], []
     rpn = RPN()
 
-    i = from_value
-    while i <= to_value:
+    i = x_from
+    while i <= x_to:
         values.append(i)
-        results.append(rpn.calc(expression, i))
+        answer = 0.0
+        try:
+            answer = rpn.calc(expression, i)
+        except:
+            logger.warning("C++ EXEPTION")
+
+        results.append(answer)
         i += step
 
-    return render(request, "graph/graph.html", {'data' : {
-        'expression': expression,
-        'x': values,
-        'y': results,
-    }})
+    # Print("values", values)
+    logger.info("/graph send values array")
+
+    return HttpResponse(json.dumps({
+        "x": values,
+        "y": results,
+        "label": expression,
+    }), status=200, content_type="application/json")

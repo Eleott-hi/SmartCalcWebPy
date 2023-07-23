@@ -142,7 +142,6 @@ class RotatingFilename(TimedRotatingFileHandler):
         self.mode = "a"
         self.stream = self._open()
 
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -150,11 +149,10 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'SmartCalcWeb.settings.RotatingFilename',
-            # 'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': os.path.join('/project/logs', f'logs_{datetime.now().strftime("%d-%m-%y-%H-%M-%S")}.log'),
-            'when': 'H',
-            'interval': 24,  # Rotate every 3 seconds
-            'backupCount': 1,  # Number of log files to keep (optional)
+            'when': 'S',
+            'interval': 30,  # Rotate every 3 seconds
+            # 'backupCount': 1,  # Number of log files to keep (optional)
             'formatter': 'standard',
         },
     },
@@ -168,7 +166,7 @@ LOGGING = {
     'formatters': {
         'standard': {
             'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
-            'datefmt': '%Y-%m-%d %H:%M:%S',
+            'datefmt': '%Y-%m-%d UTC %H:%M:%S',
         },
     },
 }
