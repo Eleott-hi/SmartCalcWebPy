@@ -1,44 +1,28 @@
-<!DOCTYPE html>
-<html>
-
 {% load static %}
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SmartCalcWeb</title>
-  <link rel="stylesheet" href="{% static 'calculator/style.css' %}">
-  <link rel="stylesheet" href="{% static 'sliders/style.css' %}">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
-</head>
-
-<body>
-  <div class="main-container">
-    <div class="item1">
-      <div class="block-content"></div>
-    </div>
-    <div class="handler-vertical"></div>
-    <div class="item2">
-      <div class="placeholder placeholder1">
-        <div class="calculator_container">
-          {% include 'calculator/calculator.html' %}
-        </div>
-      </div>
-      <div class="handler-horizontal"></div>
-      <div class="placeholder placeholder2">
-        <div class="chart-container">
-          <div class="chart" id="resizable-chart">
-            {% include 'graph/graph.html' %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="{% static 'sliders/script.js' %}"></script>
-  <script src="{% static 'calculator/script.js' %}"></script>
-</body>
-
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SmartCalcWeb</title>
+        <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+        crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'calculator/style.css' %}">
+    </head>
+    <body>
+        {% include 'common/main.html' %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+                crossorigin="anonymous"></script>
+        <script>
+    const tooltips = document.querySelectorAll('.tt')
+    tooltips.forEach(t => {
+      new bootstrap.Tooltip(t)
+    })
+        </script>
+    </body>
 </html>

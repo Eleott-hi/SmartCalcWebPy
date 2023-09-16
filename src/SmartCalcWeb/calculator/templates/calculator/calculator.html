@@ -1,90 +1,129 @@
-{% load static %}
-<link rel="stylesheet" href="{% static 'calculator/style.css' %}">
-
-<div class="calculator">
-        <input type="text" id="result" onclick="setInputId('result')" readonly placeholder="Enter expression" autofocus
-                maxlength="256" custom-focus>
-        <button class="button number-button" data-value="x"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('x')">x</button>
-        <input class="x_input" type="text" id="xValue" onclick="setInputId('xValue')" readonly maxlength="256"
-                placeholder="Enter x value or expression" value="{{ result }}">
-        <button class="button function-button" data-value="Math.sqrt("
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('sqrt(')">sqrt</button>
-        <button class="button function-button" data-value="Math.pow("
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('^')">pow</button>
-        <button class="button number-button" data-value="7"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('7')">7</button>
-        <button class="button number-button" data-value="8"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('8')">8</button>
-        <button class="button number-button" data-value="9"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('9')">9</button>
-        <button class="button operation-button" data-value="("
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('(')">(</button>
-        <button class="button operation-button" data-value=")"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult(')')">)</button>
-        <button class="button function-button" data-value="Math.asin("
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('asin(')">asin</button>
-        <button class="button function-button" data-value="Math.sin("
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('sin(')">sin</button>
-        <button class="button number-button" data-value="4"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('4')">4</button>
-        <button class="button number-button" data-value="5"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('5')">5</button>
-        <button class="button number-button" data-value="6"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('6')">6</button>
-        <button class="button operation-button" data-value="/"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('/')">/</button>
-        <button class="button operation-button" data-value="%"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('%')">mod</button>
-        <button class="button function-button" data-value="Math.acos("
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('acos(')">acos</button>
-        <button class="button function-button" data-value="Math.cos("
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('cos(')">cos</button>
-        <button class="button number-button" data-value="1"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('1')">1</button>
-        <button class="button number-button" data-value="2"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('2')">2</button>
-        <button class="button number-button" data-value="3"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('3')">3</button>
-        <button class="button operation-button" data-value="*"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('*')">*</button>
-        <button class="button operation-button" data-value="-"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('-')">-</button>
-        <button class="button function-button" data-value="Math.atan("
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('atan(')">atan</button>
-        <button class="button function-button" data-value="Math.tan("
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('tan(')">tan</button>
-        <button class="button number-button" data-value="e"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('e')">e</button>
-        <button class="button number-button" data-value="0"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('0')">0</button>
-        <button class="button number-button" data-value="."
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('.')">.</button>
-        <button class="button operation-button" data-value="+"
-                onclick="animateCircle(this, event.clientX, event.clientY); appendToResult('+')">+</button>
-        <button class="button operation-button" data-value="="
-                onclick="animateCircle(this, event.clientX, event.clientY); calculate()">=</button>
-        <button class="button operation-button" data-value="C"
-                onclick="animateCircle(this, event.clientX, event.clientY); clearResult()">C</button>
-        <button class="button operation-button" data-value="Backspace"
-                onclick="animateCircle(this, event.clientX, event.clientY); deleteLastElement()">⌫</button>
-
-        <!-- <div class="palceholder" id></div> -->
-        <form id="plot-form" action="/graph" method="post">
-                {% csrf_token %}
-                <label for="x_from">X from:</label>
-                <input type="number" id="x_from" onclick="setInputId('x_from')" readonly step="0.1" value="-10"
-                        required>
-                <label for="x_to">X to:</label>
-                <input type="number" id="x_to" onclick="setInputId('x_to')" readonly step="0.1" value="10" required>
-                <label for="y_from">Y from:</label>
-                <input type="number" id="y_from" onclick="setInputId('y_from')" readonly step="0.1" value="-10"
-                        required>
-                <label for="y_to">Y to:</label>
-                <input type="number" id="y_to" onclick="setInputId('y_to')" readonly step="0.1" value="10" required>
-                <input type="submit" id="GetGraphButton" value="GraphSubmit">
-        </form>
 
 
+<div class="container" style="width: 515px;">
+    <div class="hstack mb-3">
+        <span class="input-group-text">X</span>
+        <input class="form-control"
+               type="text"
+               id="xValue"
+               value="0"
+               style="width: 70px" />
+        <div class="vr ms-2 me-2"></div>
+        <input class="form-control expression"
+               type="text"
+               id="expression"
+               placeholder="0"
+               value="0" />
+    </div>
+    <div class="mb-2">
+        <button type="button"
+                class="button btn btn-lg btn-primary button-op me-1"
+                onclick="addSyllable('x')">x</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-op me-1"
+                onclick="addSyllable('(')">(</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-op me-1"
+                onclick="addSyllable(')')">)</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-op me-1"
+                onclick="addSyllable('+')">+</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-op me-1"
+                onclick="addSyllable('mod')">%</button>
+        <button type="button"
+                class="button button-fnc btn btn-lg btn-primary"
+                style="width: 149px"
+                onclick="addSyllable('sqrt(')">Sqrt</button>
+    </div>
+    <div class="mb-2">
+        <button type="button"
+                class="button btn btn-lg btn-primary button-numpad me-1"
+                onclick="addSyllable('7')">7</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-numpad me-1"
+                onclick="addSyllable('8')">8</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-numpad me-1"
+                onclick="addSyllable('9')">9</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-op me-1"
+                onclick="addSyllable('-')">-</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-op me-1"
+                onclick="addSyllable('e')">e</button>
+        <button type="button"
+                class="button button-fnc btn btn-lg btn-primary me-1"
+                onclick="addSyllable('cos(')">Cos</button>
+        <button type="button"
+                class="button button-fnc btn btn-lg btn-primary"
+                onclick="addSyllable('acos(')">Acos</button>
+    </div>
+    <div class="mb-2">
+        <button type="button"
+                class="button btn btn-lg btn-primary button-numpad me-1"
+                onclick="addSyllable('4')">4</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-numpad me-1"
+                onclick="addSyllable('5')">5</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-numpad me-1"
+                onclick="addSyllable('6')">6</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-op me-1"
+                onclick="addSyllable('*')">*</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-action me-1"
+                onclick="calculate()">=</button>
+        <button type="button"
+                class="button button-fnc btn btn-lg btn-primary me-1"
+                onclick="addSyllable('sin(')">Sin</button>
+        <button type="button"
+                class="button button-fnc btn btn-lg btn-primary"
+                onclick="addSyllable('asin(')">Asin</button>
+    </div>
+    <div class="mb-2">
+        <button type="button"
+                class="button btn btn-lg btn-primary button-numpad me-1"
+                onclick="addSyllable('1')">1</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-numpad me-1"
+                onclick="addSyllable('2')">2</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-numpad me-1"
+                onclick="addSyllable('3')">3</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-op me-1"
+                onclick="addSyllable('/')">/</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-action me-1"
+                onclick="subtractSyllable()">C</button>
+        <button type="button"
+                class="button button-fnc btn btn-lg btn-primary me-1"
+                onclick="addSyllable('tan(')">Tan</button>
+        <button type="button"
+                class="button button-fnc btn btn-lg btn-primary"
+                onclick="addSyllable('atan(')">Atan</button>
+    </div>
+    <div class="mb-2">
+        <button type="button"
+                class="button btn btn-lg btn-primary button-numpad me-1"
+                style="width: 129px"
+                onclick="addSyllable('0')">0</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-numpad me-1"
+                onclick="addSyllable('@decimalSeparator')">,</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-op me-1"
+                onclick="addSyllable('^')">^</button>
+        <button type="button"
+                class="button btn btn-lg btn-primary button-action me-1"
+                onclick="clearExpression()">CA</button>
+        <button type="button"
+                class="button button-fnc btn btn-lg btn-primary me-1"
+                onclick="addSyllable('ln(')">Ln</button>
+        <button type="button"
+                class="button button-fnc btn btn-lg btn-primary"
+                onclick="addSyllable('log(')">Log</button>
+    </div>
 </div>
-<script src="{% static 'calculator/script.js' %}">  </script>
