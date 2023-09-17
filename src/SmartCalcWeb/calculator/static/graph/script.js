@@ -1,10 +1,38 @@
-let plot;
-x = [];
-y = [];
-label = "Undefined";
+expression = document.getElementById("expression-plot");
+context = document.getElementById("chart");
+xMin = document.getElementById("x-from");
+xMax = document.getElementById("x-to");
+yMin = document.getElementById("y-from");
+yMax = document.getElementById("y-to");
+
+let config = {
+  type: 'line',
+  options: {
+    plugins: {
+      legend: {
+        display: true
+      }
+    },
+    scales: {
+      x: {
+        display: true
+      },
+      y: {
+        display: true,
+      }
+    }
+  },
+  data: {
+    datasets: [{
+      tension: 0.4
+    }]
+  }
+}
+
+chart = new Chart(context, config);
 
 document.addEventListener("DOMContentLoaded", function () {
-  DrawPlot();
+  DrawPlot({ x: [], y: [], label: "Undefined" });
 });
 
 function getCsrfToken() {
@@ -15,61 +43,41 @@ function getCsrfToken() {
 $("#plot-form").on("submit", function (event) {
   event.preventDefault();
 
-  var formData = {
-    expression: $("#result").val(),
-    x_from: $("#x_from").val(),
-    x_to: $("#x_to").val(),
-    y_from: $("#y_from").val(),
-    y_to: $("#y_to").val(),
-  };
+  let data = {
+    expression: $("#expression-plot").val(),
+    x_from: $("#x-from").val(),
+    x_to: $("#x-to").val()
+  }
+
+  console.log(data);
 
   $.ajax({
-    url: "/graph", // Replace with your API endpoint
+    url: "/graph",
     type: "POST",
     contentType: "application/json",
     headers: {
-      "X-CSRFToken": getCsrfToken(), // Fetch the CSRF token from the cookie
+      "X-CSRFToken": getCsrfToken(),
     },
-    data: JSON.stringify(formData),
-    success: function (data) {
-      x = data.x;
-      y = data.y;
-      label = data.expression;
-      DrawPlot();
-    },
+
+    data: JSON.stringify(data),
+
+    success: DrawPlot,
+
     error: function (xhr, status, error) {
-      console.error("Error fetching random number:", status, error);
+      console.error("Error fetching plot:", status, error);
     },
   });
 });
 
-function DrawPlot() {
-  // Now you can access the global variables x, y, and label
-  const ctx = document.getElementById("myChart");
+function DrawPlot(data) {
 
-  if (plot) {
-    plot.destroy();
-  }
+  chart.data.labels = data.x.map(x => x.toFixed(1));
+  chart.data.datasets[0].data = data.y;
+  chart.data.datasets[0].label = data.label;
 
-  plot = new Chart(ctx, {
-    type: "line",
+  chart.config.options.scales.y.min = $("#y-from").val();
+  chart.config.options.scales.y.max = $("#y-to").val();
 
-    data: {
-      labels: x.map((value) => value.toFixed(1)), // Round the x-axis values
-      datasets: [
-        {
-          label: label,
-          data: y,
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: false,
-        },
-      },
-    },
-  });
+  chart.update();
+
 }

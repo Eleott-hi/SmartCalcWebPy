@@ -10,9 +10,9 @@ namespace s21 {
 
 template <typename Type>
 void Print(Type const &value) {
-#ifdef DEBUG
+  // #ifdef DEBUG
   std::cout << "Value: " << value << std::endl;
-#endif
+  // #endif
 }
 
 std::map<char, std::function<double(double, double)>>

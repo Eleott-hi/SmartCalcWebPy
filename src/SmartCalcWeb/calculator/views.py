@@ -5,13 +5,16 @@ import json
 from django.http import HttpResponseNotAllowed
 from SmartCalc import RPN
 from math import isnan
-from .models import MainExpression
+from .models import MainExpression, XValueExpression
 import logging
 import toml
+from numpy import arange
+from django.views.decorators.http import require_http_methods
 
 CONFIG = toml.load('config.toml')
 
 logger = logging.getLogger(__name__)
+rpn = RPN()
 
 
 def Print(*args):
@@ -23,47 +26,64 @@ def index(request):
     return render(request, "common/index.html", {'CONFIG': CONFIG})
 
 
-def calculate(request):
-    context = {"result": "Invalid Expression"}
-    status = 404
+@require_http_methods(["POST"])
+def check_expression(request):
+    status = 500
+    context = {}
 
-    if request.method != "POST":
-        return HttpResponseNotAllowed(['POST'])
     try:
         expression = json.loads(request.body)["expression"]
-        rpn = RPN()
-        result = rpn.calc(expression)
-        Print("result", result)
-        if (result):
-            context["result"] = str(result)
-            status = 200
-            model = MainExpression()
-            model.Expression_text = expression
-            model.Answer_text = str(result)
-            model.save()
+        result = RPN.check_expression(str(expression))
 
-            Print(MainExpression.objects.all())
+        context = {'result': result}
+        status = 200
     except:
         pass
 
     return HttpResponse(json.dumps(context), status=status, content_type="application/json")
 
 
+@require_http_methods(["POST"])
+def calculate(request):
+    context = {"result": ""}
+    status = 500
+
+    try:
+        body: dict = json.loads(request.body)
+        x_expression: str = RPN.form_final_expression(body["xValue"])
+        main_expression: str = RPN.form_final_expression(body["expression"])
+
+        if RPN.check_expression(x_expression) and RPN.check_expression(main_expression):
+            xValue = rpn.calc(x_expression)
+            result = rpn.calc(main_expression, xValue)
+
+            MainExpression.objects.create(
+                Expression=main_expression, Answer=result)
+            XValueExpression.objects.create(
+                Expression=x_expression, Answer=xValue)
+
+            context["result"] = str(result)
+            status = 200
+    except:
+        pass
+
+    return HttpResponse(json.dumps(context), status=status, content_type="application/json")
+
+
+@require_http_methods(["POST"])
 def graph(request):
-    data = json.loads(request.body)
+    body = json.loads(request.body)
 
-    Print(data)
+    Print(body)
 
-    expression = data["expression"]
-    x_from = float(data["x_from"])
-    x_to = float(data["x_to"])
-    step = float(0.01)
-    
+    expression = body["expression"]
+    x_from = float(body["x_from"])
+    x_to = float(body["x_to"])
+    step = 0.01
+
     results, values = [], []
-    rpn = RPN()
-
-    i = x_from
-    while i <= x_to:
+    
+    for i in arange(x_from, x_to, step):
         values.append(i)
         answer = 0.0
         try:
@@ -72,13 +92,13 @@ def graph(request):
             logger.warning("C++ EXEPTION")
 
         results.append(answer)
-        i += step
 
-    # Print("values", values)
     logger.info("/graph send values array")
 
-    return HttpResponse(json.dumps({
+    data = {
         "x": values,
         "y": results,
         "label": expression,
-    }), status=200, content_type="application/json")
+    }
+
+    return HttpResponse(json.dumps(data), status=200, content_type="application/json")

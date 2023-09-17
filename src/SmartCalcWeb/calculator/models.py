@@ -4,21 +4,18 @@ from django.db import models
 # import datetime
 # from django.contrib import admin
 
+
 class MainExpression(models.Model):
-    Expression_text = models.CharField(max_length=300)
-    Answer_text = models.CharField(max_length=300)
+    Expression = models.CharField(max_length=300)
+    Answer = models.FloatField()
 
     def __str__(self):
-        return self.Expression_text + "; " + self.Answer_text
+        return self.Expression + "; " + self.Answer
 
 
 class XValueExpression(models.Model):
-    Expression_text = models.CharField(max_length=300)
-    Answer_text = models.CharField(max_length=300)
+    Expression = models.CharField(max_length=300)
+    Answer = models.FloatField()
 
     def __str__(self):
-        return self.question_text
-
-
-
-
+        return self.Expression + "; " + self.Answer
