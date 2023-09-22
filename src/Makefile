@@ -9,7 +9,7 @@ APP := calculator
 start: pip_update pip_install lib migrate run_server
 
 docker:
-	docker compose up
+	-@docker compose up
 
 start_project:
 	django-admin startproject $(PACKAGE)
@@ -27,7 +27,7 @@ admin:
 	cd $(PACKAGE); python manage.py createsuperuser
 
 lib:
-	cd RPN; make
+	cd libs/RPN; make
 
 $(PACKAGE): pip_install
 	django-admin startproject $(PACKAGE)
