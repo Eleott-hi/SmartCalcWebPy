@@ -8,10 +8,11 @@
 
 namespace s21 {
 
-template <typename Type>
-void Print(Type const &value) {
+template <typename... Args>
+void Print(Args const &...args) {
   // #ifdef DEBUG
-  std::cout << "Value: " << value << std::endl;
+  ((std::cout << args << ' '), ...);
+  std::cout << std::endl;
   // #endif
 }
 
@@ -122,7 +123,7 @@ bool RPN_Calculation::check_expression(const std::string &source_str) {
   for (size_t i = 0; i < arr.size(); ++i)
     if (std::regex_search(str, arr[i])) return false;
 
-  Print(str);
+  Print("Expression:", str);
 
   return true;
 }
@@ -229,6 +230,8 @@ void RPN_Calculation::form_deque(const std::string &str) {
 double RPN_Calculation::calc_lexems(double x) {
   std::stack<double> stack;
 
+  Print("Lexems size: ", lexems_.size());
+
   for (const auto &i : lexems_) {
     if (i.type == NUM || i.type == VAR) {
       stack.push(std::get<double>(i.type == VAR ? x : i.value));
@@ -248,6 +251,8 @@ double RPN_Calculation::calc_lexems(double x) {
       throw std::invalid_argument("calc_lexems: No such function");
     }
   }
+
+  Print("Stack size: ", stack.size());
 
   if (stack.size() != 1)
     throw std::invalid_argument("calc_lexems: stack.size() != 1");

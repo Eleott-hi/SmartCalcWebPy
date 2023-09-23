@@ -70,9 +70,10 @@ $("#plot-form").on("submit", function (event) {
 });
 
 function DrawPlot(data) {
+  console.log(data);
 
   chart.data.labels = data.x.map(x => x.toFixed(1));
-  chart.data.datasets[0].data = data.y;
+  chart.data.datasets[0].data = data.y.filter(value => !isNaN(value));
   chart.data.datasets[0].label = data.label;
 
   chart.config.options.scales.y.min = $("#y-from").val();
