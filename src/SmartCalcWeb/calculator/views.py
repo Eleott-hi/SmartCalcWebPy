@@ -4,12 +4,12 @@ from django.shortcuts import render
 import json
 from django.http import HttpResponseNotAllowed
 from SmartCalc import RPN
-from math import isnan
 from .models import MainExpression, XValueExpression
 import logging
 import toml
-from numpy import arange
 from django.views.decorators.http import require_http_methods
+from .utils import ExludeNanFromArray, CalculatePlotData
+from .pydantic_models import PlotData
 
 CONFIG = toml.load('config.toml')
 
@@ -20,10 +20,15 @@ rpn = RPN()
 def Print(*args):
     print(*args, flush=True)
 
+def CheckExpression(expression):
+    result = RPN.check_expression(expression)
+    logger.info(f'Static CheckExpression: [expression: \"{expression}\" ,result - {result}]')
+    return RPN.check_expression(expression)
 
 def index(request):
-    logger.info('common/index.html loaded')
-    return render(request, "common/index.html", {'CONFIG': CONFIG})
+    html = "common/index.html"
+    logger.info(f'{html} loaded')
+    return render(request, html, {'CONFIG': CONFIG})
 
 
 @require_http_methods(["POST"])
@@ -33,13 +38,14 @@ def check_expression(request):
 
     try:
         expression = json.loads(request.body)["expression"]
-        result = RPN.check_expression(str(expression))
-
+        result = CheckExpression(expression)
         context = {'result': result}
         status = 200
+
     except:
         pass
 
+    logger.info(f"/check_expression: [context: {context}, status: {status}]")
     return HttpResponse(json.dumps(context), status=status, content_type="application/json")
 
 
@@ -53,52 +59,48 @@ def calculate(request):
         x_expression: str = RPN.form_final_expression(body["xValue"])
         main_expression: str = RPN.form_final_expression(body["expression"])
 
-        if RPN.check_expression(x_expression) and RPN.check_expression(main_expression):
-            xValue = rpn.calc(x_expression)
+        logger.info(f"/calculate: [x_expression: \"{x_expression}\", main_expression: \"{main_expression}\"]")
+
+        if CheckExpression(x_expression) and CheckExpression(main_expression):
+            xValue = 0.0 if (x_expression == "") else rpn.calc(x_expression)
             result = rpn.calc(main_expression, xValue)
 
-            MainExpression.objects.create(
-                Expression=main_expression, Answer=result)
-            XValueExpression.objects.create(
-                Expression=x_expression, Answer=xValue)
+            logger.info(f"/calculate: [xValue: \"{xValue}\", result: \"{result}\"]")
+
+            MainExpression.objects.create(Expression=main_expression, Answer=result)
+            XValueExpression.objects.create(Expression=x_expression, Answer=xValue)
 
             context["result"] = str(result)
             status = 200
     except:
         pass
 
+    logger.info(f"/calculate [context: {context}, status: {status}]")
     return HttpResponse(json.dumps(context), status=status, content_type="application/json")
 
 
 @require_http_methods(["POST"])
 def graph(request):
-    body = json.loads(request.body)
+    try:
+        plot_data = PlotData(**json.loads(request.body))
+        logger.info(f"/graph: [plot_data: {plot_data}]")
 
-    Print(body)
+        x,y = CalculatePlotData(plot_data)
+        logger.info(f"/graph: [ x, y: calulated]")
 
-    expression = body["expression"]
-    x_from = float(body["x_from"])
-    x_to = float(body["x_to"])
-    step = 0.01
+        x,y = ExludeNanFromArray(x, y)
+        status = 200
 
-    results, values = [], []
-    
-    for i in arange(x_from, x_to, step):
-        values.append(i)
-        answer = 0.0
-        try:
-            answer = rpn.calc(expression, i)
-        except:
-            logger.warning("C++ EXEPTION")
-
-        results.append(answer)
-
-    logger.info("/graph send values array")
+    except:
+        logger.warning("/graph: [plot_data: {plot_data}]")
+        status = 500
+        x,y = [], []
 
     data = {
-        "x": values,
-        "y": results,
-        "label": expression,
+        "x": x,
+        "y": y,
+        "label": plot_data.expression,
     }
 
-    return HttpResponse(json.dumps(data), status=200, content_type="application/json")
+    logger.info("/graph [send data, status: {status}]")
+    return HttpResponse(json.dumps(data), status=status, content_type="application/json")
