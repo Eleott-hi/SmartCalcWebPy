@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fixed Header Table with Scrollable Content</title>
+  <!-- Link to Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Add custom CSS styles */
+    .table-container {
+      max-height: 300px; /* Adjust the height as needed */
+      overflow-y: auto; /* Add a vertical scrollbar when content overflows */
+    }
+
+    .table-container thead th {
+      position: sticky;
+      top: 0;
+    }
+
+    .table-container thead th:first-child {
+      left: 0;
+      z-index: 1; /* Ensure the first header stays above the content */
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <h2>Fixed Header Table with Scrollable Content</h2>
+    <div class="table-container">
+      <table class="table table-striped">
+        <thead >
+          <tr class="table-dark">
+            <th scope="col">Header 1</th>
+            <th scope="col">Header 2</th>
+            <!-- Add more headers as needed -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Add more data rows as needed -->
+          <tr>
+            <td>Data 1</td>
+            <td>Data 2</td>
+          </tr>
+          <tr>
+            <td>Data 3</td>
+            <td>Data 4</td>
+          </tr>
+          <tr>
+            <td>Data 5</td>
+            <td>Data 6</td>
+          </tr>
+          <tr>
+            <td>Data 7</td>
+            <td>Data 8</td>
+          </tr>
+          <tr>
+            <td>Data 9</td>
+            <td>Data 10</td>
+          </tr>
+          <tr>
+            <td>Data 11</td>
+            <td>Data 12</td>
+          </tr>
+          <tr>
+            <td>Data 13</td>
+            <td>Data 14</td>
+          </tr>
+          <tr>
+            <td>Data 15</td>
+            <td>Data 16</td>
+          </tr>
+          <tr>
+            <td>Data 17</td>
+            <td>Data 18</td>
+          </tr>
+          <tr>
+            <td>Data 19</td>
+            <td>Data 20</td>
+          </tr>
+          <!-- Add more data rows as needed -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Link to Bootstrap JS and Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

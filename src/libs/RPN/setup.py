@@ -9,7 +9,7 @@ __version__ = "3.0.0"
 setup(
     version=__version__,
     ext_modules=[
-        Pybind11Extension("SmartCalc",
+        Pybind11Extension("PybindRPN",
                           #   ["main.cpp"],
                           sorted(glob("*.cc")),
                           define_macros=[('DEBUG', 1)],

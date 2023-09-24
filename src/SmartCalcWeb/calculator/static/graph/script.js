@@ -65,6 +65,12 @@ $("#plot-form").on("submit", function (event) {
 
     error: function (xhr, status, error) {
       console.error("Error fetching plot:", status, error);
+            // Handle the error here
+            if (xhr.responseJSON && xhr.responseJSON.error) {
+              alert("Error: " + xhr.responseJSON.error);
+          } else {
+              alert("An error occurred.");
+          }
     },
   });
 });

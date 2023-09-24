@@ -165,7 +165,7 @@ LOGGING = {
     },
     'formatters': {
         'standard': {
-            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s',
+            'format': '%(asctime)s [%(levelname)s] %(name)s/%(funcName)s: %(message)s',
             'datefmt': '%Y-%m-%d UTC %H:%M:%S',
         },
     },

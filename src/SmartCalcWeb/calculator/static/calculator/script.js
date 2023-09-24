@@ -1,28 +1,58 @@
 var selectedInputId = "result";
 
+function getCsrfToken() {
+    const csrfCookie = document.cookie.match(/csrftoken=([\w-]+)/);
+    return csrfCookie ? csrfCookie[1] : "";
+}
+
 function appendToResult(value) {
     var selectedInput = document.getElementById(selectedInputId);
-    expression = selectedInput.value;
-    expression += value;
-    console.log(expression);
-    checkExpression(selectedInputId, expression);
+    selectedInput.value += value;
 }
 
 function setInputId(inputId) {
     ids = ["result", "xValue"];
 
-    for (var i = 0; i < ids.length; i++) {
-        var resultInput = document.getElementById(ids[i]);
+    for (const i of ids) {
+        var resultInput = document.getElementById(i);
         resultInput.removeAttribute("custom-focus");
     }
 
     selectedInputId = inputId;
-    var selectedInput = document.getElementById(selectedInputId);
-    selectedInput.setAttribute("custom-focus", "");
+    document.getElementById(selectedInputId).setAttribute("custom-focus", "");
 }
 
 function calculate() {
-    sendPostRequest();
+    const payload = {
+        expression: $("#result").val(),
+        xValue: $("#xValue").val()
+    };
+
+    console.log(payload);
+
+    $.ajax({
+        url: "/calculate",
+        type: "POST",
+        contentType: "application/json",
+        headers: {
+          "X-CSRFToken": getCsrfToken(),
+        },
+    
+        data: JSON.stringify(payload),
+    
+        success: (data) => { document.getElementById("result").value = data.result; },
+    
+        error: function (xhr, status, error) {
+          console.error("Error calc:", xhr, status, error);
+          
+        // Handle the error here
+        if (xhr.responseJSON && xhr.responseJSON.error) {
+            alert("Error: " + xhr.responseJSON.error);
+        } else {
+            alert("An error occurred.");
+        }
+        },
+      });
 }
 
 function clearResult() {
@@ -159,56 +189,9 @@ window.addEventListener("keydown", function (event) {
     }
 });
 
-function getCsrfToken() {
-    const csrfCookie = document.cookie.match(/csrftoken=([\w-]+)/);
-    return csrfCookie ? csrfCookie[1] : "";
-}
-
-function sendPostRequest() {
-    const payload = JSON.stringify({
-        expression: document.getElementById("result").value,
-        xValue: document.getElementById("xValue").value,
-    });
-
-    fetch("/calculate", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCsrfToken(),
-        },
-        body: payload
-    }).then((response) => { return response.ok ? response.json() : { result: "" }; })
-        .then((data) => { document.getElementById("result").value = data.result; })
-        .catch((error) => { console.error(error); });
-}
 
 
-function checkExpression(id, formed_expression) {
-    const payload = JSON.stringify({
-        expression: formed_expression
-    });
-
-    fetch("/check_expression", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCsrfToken(),
-        },
-        body: payload,
-    })
-        .then((response) => {
-            return response.ok ?
-                response.json() :
-                { result: "Invalid Expression" };
-        })
-        .then((data) => {
-            if (data.result)
-                document.getElementById(id).value = formed_expression;
-        })
-        .catch((error) => {
-            console.error(error);
-        });
 
 
-    return
-}
+
+
