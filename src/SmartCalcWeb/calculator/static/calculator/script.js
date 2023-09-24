@@ -35,24 +35,24 @@ function calculate() {
         type: "POST",
         contentType: "application/json",
         headers: {
-          "X-CSRFToken": getCsrfToken(),
+            "X-CSRFToken": getCsrfToken(),
         },
-    
+
         data: JSON.stringify(payload),
-    
+
         success: (data) => { document.getElementById("result").value = data.result; },
-    
+
         error: function (xhr, status, error) {
-          console.error("Error calc:", xhr, status, error);
-          
-        // Handle the error here
-        if (xhr.responseJSON && xhr.responseJSON.error) {
-            alert("Error: " + xhr.responseJSON.error);
-        } else {
-            alert("An error occurred.");
-        }
+            console.error("Error calc:", xhr, status, error);
+
+            // Handle the error here
+            if (xhr.responseJSON && xhr.responseJSON.error) {
+                alert("Error: " + xhr.responseJSON.error);
+            } else {
+                alert("An error occurred.");
+            }
         },
-      });
+    });
 }
 
 function clearResult() {
