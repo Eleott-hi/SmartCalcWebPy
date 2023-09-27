@@ -11,7 +11,7 @@
 namespace s21 {
 
 std::ostream &operator<<(std::ostream &os, const Lexem &lexem) {
-  return os << "{ Lexem: " << lexem.lexem_ << ",\tValue: " << lexem.value_
+  return os << "{ Lexem: \'" << lexem.lexem_ << "\',\tValue: " << lexem.value_
             << ",\tPriority: " << Cast<int>(lexem.priority_) << " }";
 }
 
@@ -39,7 +39,7 @@ std::optional<Lexem> GetLexem(std::string const &str, size_t index) {
       {"%", s21::Priority::MUL, [](double x, double y) { return fmod(x, y); }},
       {"*", s21::Priority::MUL, [](double x, double y) { return x * y; }},
       {"/", s21::Priority::MUL, [](double x, double y) { return x / y; }},
-      {"-", s21::Priority::ADD, [](double x, double y) { return y - x; }},
+      {"-", s21::Priority::ADD, [](double x, double y) { return x - y; }},
       {"+", s21::Priority::ADD, [](double x, double y) { return x + y; }},
       {"(", s21::Priority::PARENTHESIS_OPEN, nullptr},
       {")", s21::Priority::PARENTHESIS_CLOSE, nullptr},
@@ -113,8 +113,8 @@ void Lexem::CheckLexem(std::vector<Lexem> const &lexems) {
 
 std::string Lexem::ProcessExpression(std::string const &str) {
   std::unordered_map<std::string, std::string> map = {
-      {"^\\-", "0-"},  {"\\(\\-", "(0-"}, {"^\\+", ""},
-      {"\\(\\+", "("}, {" ", ""},
+      {" ", ""},      {"\t", ""},        {"\n", ""},   {"\r", ""},
+      {"^\\-", "0-"}, {"\\(\\-", "(0-"}, {"^\\+", ""}, {"\\(\\+", "("},
   };
 
   auto count_breckets = [](std::string const &str) {

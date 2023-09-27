@@ -1,0 +1,1052 @@
+<html lang="ru">
+
+<head>
+    <title>Кредитный калькулятор</title>
+    <meta name="description"
+        content="Кредитный калькулятор рассчитает ежемесячный платеж, сумму переплаты и сформирует график платежей по кредиту. Сохранение расчетов.">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no">
+
+    <meta name="yandex-verification" content="4c2827b6df3c76fb">
+    <meta name="google-site-verification" content="7LsDfN30RziGVOFpSi9Y8XdtxAraz-GZ61by25RuRLA">
+    <meta name="verify-admitad" content="6c3a57523d">
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link href="/dist/vendor.css?1" rel="stylesheet" type="text/css">
+    <link href="/dist/styles_ru.css?9" rel="stylesheet" type="text/css">
+
+
+    <link href="/kreditnyj-kalkulyator" rel="canonical">
+
+    <style type="text/css">
+        /* Chart.js */
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: .99
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            animation: chartjs-render-animation 1ms
+        }
+
+        .chartjs-size-monitor,
+        .chartjs-size-monitor-expand,
+        .chartjs-size-monitor-shrink {
+            position: absolute;
+            direction: ltr;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            pointer-events: none;
+            visibility: hidden;
+            z-index: -1
+        }
+
+        .chartjs-size-monitor-expand>div {
+            position: absolute;
+            width: 1000000px;
+            height: 1000000px;
+            left: 0;
+            top: 0
+        }
+
+        .chartjs-size-monitor-shrink>div {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            left: 0;
+            top: 0
+        }
+    </style>
+</head>
+
+<body data-version="ru">
+
+
+    <div class="container">
+        <header>
+            <a class="d-none d-lg-block" href="/">
+                <img src="/images/logo.png">
+            </a>
+            <a class="d-lg-none" href="/">
+                <img src="/images/logo-mobile.png" style="height: 24px">
+            </a>
+
+            <div class="menu-icon" data-bs-toggle="offcanvas" data-bs-target="#mainOffcanvas">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </header>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="mb-3 d-sm-none d-print-none text-center position-relative" style="height:300px">
+            <div id="top_a_container" style="min-height: 300px"><a target="_blank"
+                    href="https://pxl.leads.su/click/227a5e0b8e6f46a34b0d163396ef2b02?erid=LjN8KcE9k"><img
+                        src="/images/banners/1695581429538/tinkoff_platinum_top.gif" style="max-width: 100%"></a></div>
+        </div>
+
+
+
+
+
+
+        <h1>Кредитный калькулятор</h1>
+
+
+        <div class="columns-container">
+
+            <div class="content-column">
+
+
+
+
+
+
+
+
+
+
+
+
+                <form novalidate="" action="/kreditnyj-kalkulyator" method="post" class="calc-form calculated"
+                    data-embed="" data-errors="[]" data-suggested="100 000 руб., 1 год, 5%" data-lang="ru"
+                    data-name="Credit" data-input-hash="8cb5de51eadbb33b39bba38861d67c2f">
+                    <input type="hidden" name="calculate" value="1" wfd-id="id0">
+
+
+                    <style>
+                        @media all and (min-width: 481px) {
+                            .split .calc-fleft {
+                                width: 50%;
+                            }
+
+                            .split .calc-fright {
+                                margin-left: 56%;
+                            }
+                        }
+                    </style>
+
+
+                    <div class="modal" id="currencyModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="feedbackModalLabel">Выберите валюту</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-4">
+                                        <input type="text" class="calc-inp w-100 search-global-currency"
+                                            placeholder="Поиск..." wfd-id="id1">
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6 col-md-4">
+                                            <a href="" class="set-global-currency " data-id="USD" data-sign="$">USD
+                                                <span class="mx-1">-</span> $ </a>
+                                        </div>
+                                        <div class="col-6 col-md-4">
+                                            <a href="" class="set-global-currency " data-id="EUR" data-sign="€">EUR
+                                                <span class="mx-1">-</span> € </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="currency" value="RUB" wfd-id="id2">
+
+                    <input type="hidden" name="credit_sum_max" value="" wfd-id="id3">
+
+
+                    <input type="hidden" name="type" value="2" wfd-id="id4">
+                    <input type="hidden" name="cost" value="0" wfd-id="id5">
+                    <input type="hidden" name="start_sum_type" value="1" wfd-id="id6">
+                    <input type="hidden" name="start_sum" value="0" wfd-id="id7">
+                    <input type="hidden" name="rest_payment" value="0" wfd-id="id8">
+
+
+                    <div class="calc-frow">
+                        <div class="calc-fleft">
+                            Вариант расчета <svg class="icon" data-bs-toggle="tooltip" title=""
+                                data-bs-original-title="<b>Калькулятор производит 3 варианта расчетов:</b><br>1. Расчет ежемесячного платежа по сумме и сроку кредита.<br>2. Расчет срока кредита по сумме и заранее заданному ежемесячному платежу<br>3. Расчет возможной суммы кредита при фиксированном сроке и платеже."
+                                aria-label="<b>Калькулятор производит 3 варианта расчетов:</b><br>1. Расчет ежемесячного платежа по сумме и сроку кредита.<br>2. Расчет срока кредита по сумме и заранее заданному ежемесячному платежу<br>3. Расчет возможной суммы кредита при фиксированном сроке и платеже.">
+                                <use xlink:href="#icon-info-circle"></use>
+                            </svg>
+                        </div>
+                        <div class="calc-fright">
+                            <input type="hidden" name="calc_type" value="1" wfd-id="id9">
+
+                            <select class="calc-inp js-calc-toggle" name="calc_type">
+                                <option value="1" data-autofocus="credit_sum" selected="">Расчет ежемесячного платежа
+                                </option>
+                                <option value="2" data-autofocus="credit_sum">Расчет срока кредита</option>
+                                <option value="3" data-autofocus="period">Расчет максимальной суммы кредита</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="calc-frow type-x type-2 calc_type-x calc_type-1 calc_type-2" style="display:block">
+                        <div class="calc-fleft">Сумма кредита</div>
+                        <div class="calc-fright">
+                            <div class="calc-input" style="width: 150px">
+                                <input type="text" required="" name="credit_sum" inputmode="decimal"
+                                    class="calc-inp w-100 autonumeric-money autofocus" value="" style="width: 150px"
+                                    wfd-id="id10">
+                            </div>
+
+                            <a href="#currencyModal" tabindex="-1" class="dropdown-toggle calc-input-desc"
+                                data-bs-toggle="modal"><span class="global-currency-placeholder">₽</span></a>
+                        </div>
+                    </div>
+
+
+                    <div class="calc-frow calc_type-x calc_type-1 calc_type-3" style="display: block">
+                        <div class="calc-fleft">Срок кредита</div>
+                        <div class="calc-fright">
+                            <div class="calc-input" style="width: 150px">
+                                <input type="number" required="" inputmode="numeric" name="period" min="1" step="1"
+                                    max="50" class="calc-inp w-100" autocomplete="off" value="" data-max="50"
+                                    wfd-id="id11">
+                            </div>
+                            <div class="calc-input">
+                                <select name="period_type" class="period_type calc-inp">
+                                    <option value="Y" selected="">лет</option>
+                                    <option value="M">месяцев</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="calc-frow calc_type-x calc_type-2 calc_type-3" style="display: none">
+                        <div class="calc-fleft">Ежемесячный платеж</div>
+                        <div class="calc-fright">
+                            <div class="calc-input" style="width: 150px">
+                                <input type="text" required="" name="monthly_payment" inputmode="decimal"
+                                    class="calc-inp w-100 autonumeric-money" value="" style="width: 150px" disabled=""
+                                    wfd-id="id12">
+                            </div>
+
+                            <a href="#currencyModal" tabindex="-1" class="dropdown-toggle calc-input-desc"
+                                data-bs-toggle="modal"><span class="global-currency-placeholder">₽</span></a>
+                        </div>
+                    </div>
+
+                    <div class="calc-frow">
+                        <div class="calc-fleft">
+                            Процентная ставка </div>
+                        <div class="calc-fright">
+                            <div class="calc-input" style="width: 150px">
+                                <input type="text" inputmode="decimal" required="" name="percent"
+                                    class="percent w-100 calc-inp" style="width: 150px" value="" wfd-id="id13">
+                            </div>
+                            <div class="calc-input-desc">%</div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="calc-frow calc_type-x calc_type-1" style="display: block">
+                        <div class="calc-fleft">
+                            Тип ежемесячных платежей </div>
+                        <div class="calc-fright" style="padding-top:7px;">
+                            <div class="mb-2">
+                                <input id="payment-type-1" type="radio" class="calc-radio" name="payment_type" value="1"
+                                    checked="" wfd-id="id14"> <label
+                                    for="payment-type-1"><span>Аннуитетные</span></label> <svg class="icon tooltip-icon"
+                                    data-bs-toggle="tooltip" title=""
+                                    data-bs-original-title="Аннуитетный платеж – вариант ежемесячного платежа по кредиту, когда размер ежемесячного платежа остаётся постоянным на всём периоде кредитования."
+                                    aria-label="Аннуитетный платеж – вариант ежемесячного платежа по кредиту, когда размер ежемесячного платежа остаётся постоянным на всём периоде кредитования.">
+                                    <use xlink:href="#icon-info-circle"></use>
+                                </svg>
+                            </div>
+                            <input id="payment-type-2" type="radio" name="payment_type" class="calc-radio" value="2"
+                                wfd-id="id15"> <label for="payment-type-2"><span>Дифференцированные</span></label> <svg
+                                class="icon tooltip-icon" data-bs-toggle="tooltip" title=""
+                                data-bs-original-title="Дифференцированный платеж – вариант ежемесячного платежа по кредиту, когда размер ежемесячного платежа по погашению кредита постепенно уменьшается к концу периода кредитования."
+                                aria-label="Дифференцированный платеж – вариант ежемесячного платежа по кредиту, когда размер ежемесячного платежа по погашению кредита постепенно уменьшается к концу периода кредитования.">
+                                <use xlink:href="#icon-info-circle"></use>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="calc-frow d-print-none">
+                        <div class="calc-fright">
+                            <a href="#features-collapse" data-bs-toggle="collapse">
+                                <svg class="icon">
+                                    <use xlink:href="#icon-plus"></use>
+                                </svg>
+                                Досрочное погашение и другие функции
+                            </a>
+                            <div class="collapse mt-3" id="features-collapse">
+                                <div class="alert alert-secondary fw-normal">
+                                    Данный калькулятор предназначен для быстрого расчета кредита без дополнительных
+                                    опций. Досрочные погашения и многие другие опции доступны в <a
+                                        href="/kreditnyj-kalkulyator-s-dosrochnym-pogasheniem"
+                                        onclick="ym(30023134,'reachGoal','move_to_creditd')">расширенном кредитном
+                                        калькуляторе</a>.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="calc-frow button-row">
+                        <div class="calc-fright">
+                            <input type="submit" class="calc-submit me-3" value="Рассчитать" wfd-id="id16">
+
+                            <div class="flex-grow-1 d-md-none"></div>
+                            <div class="btn-group d-inline-block">
+                                <button type="button" class="calc-history-btn" data-bs-toggle="dropdown"
+                                    title="История расчетов">
+                                    <svg class="icon" style="vertical-align: text-bottom">
+                                        <use xlink:href="#icon-clock-history"></use>
+                                    </svg>
+                                </button>
+                                <div id="history-container" data-calc="Credit"
+                                    class="dropdown-menu dropdown-menu-end dropdown-menu-md-start"><a
+                                        class="dropdown-item"
+                                        href="/kreditnyj-kalkulyator?input={&quot;currency&quot;:&quot;RUB&quot;,&quot;credit_sum_max&quot;:&quot;&quot;,&quot;type&quot;:&quot;2&quot;,&quot;cost&quot;:&quot;0&quot;,&quot;start_sum_type&quot;:&quot;1&quot;,&quot;start_sum&quot;:&quot;0&quot;,&quot;rest_payment&quot;:&quot;0&quot;,&quot;calc_type&quot;:&quot;1&quot;,&quot;credit_sum&quot;:&quot;100 000&quot;,&quot;period&quot;:&quot;1&quot;,&quot;period_type&quot;:&quot;Y&quot;,&quot;percent&quot;:&quot;5&quot;,&quot;payment_type&quot;:&quot;1&quot;}">100
+                                        000 руб., 1 год, 5%</a><a class="dropdown-item"
+                                        href="/kreditnyj-kalkulyator?input={&quot;currency&quot;:&quot;RUB&quot;,&quot;credit_sum_max&quot;:&quot;&quot;,&quot;type&quot;:&quot;2&quot;,&quot;cost&quot;:&quot;0&quot;,&quot;start_sum_type&quot;:&quot;1&quot;,&quot;start_sum&quot;:&quot;0&quot;,&quot;rest_payment&quot;:&quot;0&quot;,&quot;calc_type&quot;:&quot;1&quot;,&quot;credit_sum&quot;:&quot;100 000&quot;,&quot;period&quot;:&quot;1&quot;,&quot;period_type&quot;:&quot;Y&quot;,&quot;percent&quot;:&quot;5&quot;,&quot;payment_type&quot;:&quot;2&quot;}">100
+                                        000 руб., 1 год, 5%</a><a class="dropdown-item"
+                                        href="/kreditnyj-kalkulyator?input={&quot;currency&quot;:&quot;RUB&quot;,&quot;credit_sum_max&quot;:&quot;&quot;,&quot;type&quot;:&quot;2&quot;,&quot;cost&quot;:&quot;0&quot;,&quot;start_sum_type&quot;:&quot;1&quot;,&quot;start_sum&quot;:&quot;0&quot;,&quot;rest_payment&quot;:&quot;0&quot;,&quot;calc_type&quot;:&quot;1&quot;,&quot;credit_sum&quot;:&quot;10 000&quot;,&quot;period&quot;:&quot;1&quot;,&quot;period_type&quot;:&quot;Y&quot;,&quot;percent&quot;:&quot;5&quot;,&quot;payment_type&quot;:&quot;1&quot;}">10
+                                        000 руб., 1 год, 5%</a><a class="dropdown-item"
+                                        href="/kreditnyj-kalkulyator?input={&quot;currency&quot;:&quot;RUB&quot;,&quot;credit_sum_max&quot;:&quot;&quot;,&quot;type&quot;:&quot;2&quot;,&quot;cost&quot;:&quot;0&quot;,&quot;start_sum_type&quot;:&quot;1&quot;,&quot;start_sum&quot;:&quot;0&quot;,&quot;rest_payment&quot;:&quot;0&quot;,&quot;calc_type&quot;:&quot;1&quot;,&quot;credit_sum&quot;:&quot;100 000&quot;,&quot;period&quot;:&quot;5&quot;,&quot;period_type&quot;:&quot;Y&quot;,&quot;percent&quot;:&quot;5&quot;,&quot;payment_type&quot;:&quot;1&quot;}">100
+                                        000 руб., 5 лет, 5%</a></div>
+                            </div>
+
+                            <a id="reset-form" href="/kreditnyj-kalkulyator" class="calc-history-btn ms-1"
+                                title="Начать новый расчет">
+                                <svg class="icon" style="vertical-align: text-bottom">
+                                    <use xlink:href="#icon-file-earmark"></use>
+                                </svg>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="result-sep"></div>
+
+                    <div class="calc-loading" style="width: 0px; display: none;"></div>
+
+
+
+                    <div class="row g-0 split">
+                        <div class="col-12 col-sm-6">
+                            <div class="calc-frow pe-0 result-row" style="display: block;">
+                                <div class="calc-fleft">Ежемесячный платеж</div>
+                                <div class="calc-fright">
+                                    <div class="calc-result-value result-placeholder-monthlyPayment">8 560,75</div>
+                                    <span class="calc-text-desc global-currency-placeholder">₽</span>
+                                </div>
+                            </div>
+
+                            <div class="calc-frow pe-0 result-row" style="display: none">
+                                <div class="calc-fleft">Сумма кредита</div>
+                                <div class="calc-fright">
+                                    <div class="calc-result-value result-placeholder-credit_sum">
+                                    </div>
+                                    <span class="calc-text-desc global-currency-placeholder">₽</span>
+                                </div>
+                            </div>
+
+                            <div class="calc-frow pe-0 result-row" style="display: none">
+                                <div class="calc-fleft">Срок кредита</div>
+                                <div class="calc-fright">
+                                    <div class="result-placeholder-credit_period">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="calc-frow pe-0 result-row" style="display: block;">
+                                <div class="calc-fleft">Начисленные проценты</div>
+                                <div class="calc-fright">
+                                    <div class="calc-result-value result-placeholder-overPayment">2 729,00</div>
+                                    <span class="calc-text-desc global-currency-placeholder">₽</span>
+                                </div>
+                            </div>
+
+                            <div class="calc-frow pe-0 result-row" style="display: block;">
+                                <div class="calc-fleft">Долг + проценты</div>
+                                <div class="calc-fright">
+                                    <div class="calc-result-value result-placeholder-totalPaid">102 729,00</div>
+                                    <span class="calc-text-desc global-currency-placeholder">₽</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="calc-frow result-row mt-3 mt-md-0 d-print-none" style="display: block;">
+                                <div class="result-placeholder-chart_total" style="max-width: 320px; ">
+                                    <div class="chartjs-size-monitor">
+                                        <div class="chartjs-size-monitor-expand">
+                                            <div class=""></div>
+                                        </div>
+                                        <div class="chartjs-size-monitor-shrink">
+                                            <div class=""></div>
+                                        </div>
+                                    </div>
+                                    <canvas id="credit-total-chart" data-currency="₽" data-creditsum="100000"
+                                        data-overpayment="2729"
+                                        data-translations="{&quot;loan&quot;:&quot;\u041a\u0440\u0435\u0434\u0438\u0442&quot;,&quot;interest&quot;:&quot;\u041f\u0440\u043e\u0446\u0435\u043d\u0442\u044b&quot;}"
+                                        style="display: block; height: 121px; width: 243px;" width="303" height="151"
+                                        class="chartjs-render-monitor">
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="calc-frow result-row d-print-none text-center py-4" style="display: block;">
+                        <div class="result-placeholder-ad">
+                            <style>
+                                #a_in_result {
+                                    max-height: 300px;
+                                }
+
+                                @media screen and (min-width: 768px) {
+                                    #a_in_result {
+                                        max-height: 150px;
+                                    }
+                                }
+                            </style>
+
+
+                            <div id="a_in_result"></div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="calc-frow result-row d-print-none" style="display: block;">
+                        <div class="mb-2">График погашения</div>
+                        <div class="result-placeholder-chart_payments">
+                            <div class="chartjs-size-monitor">
+                                <div class="chartjs-size-monitor-expand">
+                                    <div class=""></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink">
+                                    <div class=""></div>
+                                </div>
+                            </div>
+
+                            <canvas id="credit-payments-chart" data-currency="₽"
+                                data-dates="[&quot;\u0421\u0435\u043d\u0442\u044f\u0431\u0440\u044c 2023&quot;,&quot;\u041e\u043a\u0442\u044f\u0431\u0440\u044c 2023&quot;,&quot;\u041d\u043e\u044f\u0431\u0440\u044c 2023&quot;,&quot;\u0414\u0435\u043a\u0430\u0431\u0440\u044c 2023&quot;,&quot;\u042f\u043d\u0432\u0430\u0440\u044c 2024&quot;,&quot;\u0424\u0435\u0432\u0440\u0430\u043b\u044c 2024&quot;,&quot;\u041c\u0430\u0440\u0442 2024&quot;,&quot;\u0410\u043f\u0440\u0435\u043b\u044c 2024&quot;,&quot;\u041c\u0430\u0439 2024&quot;,&quot;\u0418\u044e\u043d\u044c 2024&quot;,&quot;\u0418\u044e\u043b\u044c 2024&quot;,&quot;\u0410\u0432\u0433\u0443\u0441\u0442 2024&quot;]"
+                                data-values1="[8144.08,8178.02,8212.09,8246.31,8280.67,8315.17,8349.82,8384.61,8419.54,8454.63,8489.85,8525.23]"
+                                data-values2="[416.67,382.73,348.66,314.44,280.08,245.58,210.93,176.14,141.21,106.12,70.9,35.52]"
+                                data-translations="{&quot;monthly_payment&quot;:&quot;\u0415\u0436\u0435\u043c\u0435\u0441\u044f\u0447\u043d\u044b\u0439 \u043f\u043b\u0430\u0442\u0435\u0436&quot;,&quot;principal&quot;:&quot;\u041e\u0441\u043d\u043e\u0432\u043d\u043e\u0439 \u0434\u043e\u043b\u0433&quot;,&quot;interest&quot;:&quot;\u041f\u0440\u043e\u0446\u0435\u043d\u0442\u044b&quot;}"
+                                style="display: block; height: 206px; width: 516px;" width="645" height="257"
+                                class="chartjs-render-monitor"></canvas>
+
+
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="calc-frow result-row" style="display: block;">
+                        <div class="result-placeholder-schedule">
+                            <div class="schedule-table-wrapper">
+                                <table class="schedule-table w-100">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-center">№</th>
+                                            <th>Месяц</th>
+                                            <th class="d-sm-none">Платеж, <span
+                                                    class="text-muted global-currency-placeholder">₽</span></th>
+                                            <th class="d-none d-sm-table-cell">Сумма платежа, <span
+                                                    class="text-muted global-currency-placeholder">₽</span></th>
+                                            <th class="d-none d-sm-table-cell">Платеж по основному долгу, <span
+                                                    class="text-muted global-currency-placeholder">₽</span></th>
+                                            <th class="d-none d-sm-table-cell">Платеж по процентам, <span
+                                                    class="text-muted global-currency-placeholder">₽</span></th>
+                                            <th>Остаток долга, <span
+                                                    class="text-muted global-currency-placeholder">₽</span></th>
+                                        </tr>
+
+
+                                        <tr class="" style="display: table-row">
+                                            <td class="text-nowrap text-center">1</td>
+                                            <td>Сентябрь 2023</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 144,08</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span>
+                                                    416,67</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 144,08</td>
+                                            <td class="d-none d-sm-table-cell">416,67</td>
+                                            <td>91 855,92</td>
+                                        </tr>
+
+
+
+
+                                        <tr class="" style="display: table-row">
+                                            <td class="text-nowrap text-center">2</td>
+                                            <td>Октябрь 2023</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 178,02</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span>
+                                                    382,73</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 178,02</td>
+                                            <td class="d-none d-sm-table-cell">382,73</td>
+                                            <td>83 677,90</td>
+                                        </tr>
+
+
+
+
+                                        <tr class="" style="display: table-row">
+                                            <td class="text-nowrap text-center">3</td>
+                                            <td>Ноябрь 2023</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 212,09</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span>
+                                                    348,66</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 212,09</td>
+                                            <td class="d-none d-sm-table-cell">348,66</td>
+                                            <td>75 465,81</td>
+                                        </tr>
+
+
+
+
+                                        <tr class="" style="display: table-row">
+                                            <td class="text-nowrap text-center">4</td>
+                                            <td>Декабрь 2023</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 246,31</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span>
+                                                    314,44</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 246,31</td>
+                                            <td class="d-none d-sm-table-cell">314,44</td>
+                                            <td>67 219,50</td>
+                                        </tr>
+
+
+
+
+                                        <tr class="year-sep" style="display: table-row">
+                                            <td class="text-nowrap text-center">5</td>
+                                            <td>Январь 2024</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 280,67</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span>
+                                                    280,08</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 280,67</td>
+                                            <td class="d-none d-sm-table-cell">280,08</td>
+                                            <td>58 938,83</td>
+                                        </tr>
+
+
+
+
+                                        <tr class="" style="display: table-row">
+                                            <td class="text-nowrap text-center">6</td>
+                                            <td>Февраль 2024</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 315,17</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span>
+                                                    245,58</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 315,17</td>
+                                            <td class="d-none d-sm-table-cell">245,58</td>
+                                            <td>50 623,66</td>
+                                        </tr>
+
+
+
+
+                                        <tr class="" style="display: table-row">
+                                            <td class="text-nowrap text-center">7</td>
+                                            <td>Март 2024</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 349,82</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span>
+                                                    210,93</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 349,82</td>
+                                            <td class="d-none d-sm-table-cell">210,93</td>
+                                            <td>42 273,84</td>
+                                        </tr>
+
+
+
+
+                                        <tr class="" style="display: table-row">
+                                            <td class="text-nowrap text-center">8</td>
+                                            <td>Апрель 2024</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 384,61</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span>
+                                                    176,14</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 384,61</td>
+                                            <td class="d-none d-sm-table-cell">176,14</td>
+                                            <td>33 889,23</td>
+                                        </tr>
+
+
+
+
+                                        <tr class="" style="display: table-row">
+                                            <td class="text-nowrap text-center">9</td>
+                                            <td>Май 2024</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 419,54</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span>
+                                                    141,21</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 419,54</td>
+                                            <td class="d-none d-sm-table-cell">141,21</td>
+                                            <td>25 469,69</td>
+                                        </tr>
+
+
+
+
+                                        <tr class="" style="display: table-row">
+                                            <td class="text-nowrap text-center">10</td>
+                                            <td>Июнь 2024</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 454,63</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span>
+                                                    106,12</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 454,63</td>
+                                            <td class="d-none d-sm-table-cell">106,12</td>
+                                            <td>17 015,06</td>
+                                        </tr>
+
+
+
+
+                                        <tr class="" style="display: table-row">
+                                            <td class="text-nowrap text-center">11</td>
+                                            <td>Июль 2024</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 489,85</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span> 70,90
+                                                </div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 489,85</td>
+                                            <td class="d-none d-sm-table-cell">70,90</td>
+                                            <td>8 525,21</td>
+                                        </tr>
+
+
+
+
+                                        <tr class="" style="display: table-row">
+                                            <td class="text-nowrap text-center">12</td>
+                                            <td>Август 2024</td>
+                                            <td class="d-sm-none">
+                                                8 560,75 <div class="text-nowrap"><span class="text-muted">Долг:</span>
+                                                    8 525,23</div>
+                                                <div class="text-nowrap"><span class="text-muted">Проценты:</span> 35,52
+                                                </div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">8 560,75</td>
+                                            <td class="d-none d-sm-table-cell">8 525,23</td>
+                                            <td class="d-none d-sm-table-cell">35,52</td>
+                                            <td>-0,02</td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td>
+                                                <span class="fw-bold">102 729,00</span>
+                                                <span class="text-muted global-currency-placeholder">₽</span>
+                                                <div class="mt-1 text-muted">(Выплачено всего)</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">
+                                                <span class="fw-bold">100 000,02</span>
+                                                <span class="text-muted global-currency-placeholder">₽</span>
+                                                <div class="mt-1 text-muted">(Сумма выплаченного долга)</div>
+                                            </td>
+                                            <td class="d-none d-sm-table-cell">
+                                                <span class="fw-bold">2 728,98</span>
+                                                <span class="text-muted global-currency-placeholder">₽</span>
+                                                <div class="mt-1 text-muted">(Сумма выплаченных процентов)</div>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr style="display:none">
+                                            <td colspan="6" class="text-center" style="padding: 10px 0">
+                                                <a href="" class="js-scroll d-print-none"
+                                                    data-element="#calc-top">Наверх <svg class="icon">
+                                                        <use xlink:href="#icon-arrow-up"></use>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+
+
+
+            <style>
+                #under-calc-ad-placeholder {
+                    max-height: 400px;
+                    min-height: 250px;
+                }
+
+                @media screen and (min-width: 768px) {
+                    #under-calc-ad-placeholder {
+                        max-height: 220px;
+                        min-height: 90px;
+                        overflow: hidden;
+                    }
+                }
+            </style>
+
+            <div class="mb-5 text-center no-print">
+                <div id="under-calc-ad-placeholder" class="position-relative"><a target="_blank"
+                        href="https://pxl.leads.su/click/227a5e0b8e6f46a34b0d163396ef2b02?erid=LjN8KcE9k"><img
+                            src="/images/banners/1695581429536/tinkoff_platinum_under.gif" style="max-width: 100%"></a>
+                </div>
+            </div>
+
+
+
+
+            <article class="article">
+                <div class="border border-secondary p-3 mb-5 rounded">
+                    <p>Кредитный калькулятор осуществляет 3 типа расчетов:</p>
+                    <ul>
+                        <li><em>Классический – нахождение ежемесячного платежа по заданной сумме и сроку
+                                кредита.</em> Такой расчет производят банки при выдаче кредитов.</li>
+                        <li><em>Вычисление срока кредита на основе заданной суммы и ежемесячного платежа.</em> Этот
+                            вариант интересен тем, что поможет спрогнозировать точный срок возврата кредита при
+                            наличии у заемщика конкретных пожеланий к ежемесячному платежу.</li>
+                        <li><em>Расчет максимальной суммы кредита по заданному сроку и ежемесячному платежу.</em>
+                            Если вы точно знаете, какую сумму и в течение какого времени вы готовы отдавать каждый
+                            месяц на погашение кредита, калькулятор сообщит вам, сколько денег вы сможете занять на
+                            таких условиях.</li>
+                    </ul>
+                    Если вам необходим детальный расчет с указанием точных дат, плавающей ставкой и возможностью
+                    вносить досрочные платежи, воспользуйтесь <a
+                        href="/kreditnyj-kalkulyator-s-dosrochnym-pogasheniem">расширенным кредитным
+                        калькулятором</a>.
+                </div>
+
+                <p>Кредитование населения является неотъемлимой частью экономики любой страны. Возможность
+                    кредитования повышает спрос на товары и услуги, что является стимулом развития экономики.</p>
+                <p>Раз вы находитесь на этой странице, значит вы как минимум задумываетесь о получения кредита. Наш
+                    калькулятор послужит вам помощником в предварительном расчете.</p>
+                <p><em><strong>Кредитный калькулятор - это удобный инструмент для быстрого самостоятельного расчета
+                            кредита онлайн.</strong></em></p>
+                <p>Калькулятор универсален. Не имеет значения, в каком банке вы будете брать кредит. Не имеет
+                    значение и тип займа: потребительский кредит, ипотека, кредит наличными. Результат всегда будет
+                    достаточно точным.</p>
+
+                <p>На выходе вы получите:</p>
+                <ul>
+                    <li>Размер ежемесячного платежа</li>
+                    <li>Сумму процентов (переплаты) за весь срок</li>
+                    <li>Детализированный график погашения по месяцам</li>
+                    <li>Наглядную диаграмму</li>
+                    <li>Список подходящих предложений от банков с возможностью оставить заявку онлайн</li>
+                </ul>
+
+
+
+                <h2>Что такое процентная ставка и от чего она зависит?</h2>
+
+                <p>Процентая ставка — самый важный параметр при расчете кредита. Измеряется в процентах годовых. Он
+                    показывает сколько процентов начисляется на сумму долга за 1 год. Но фактически проценты
+                    начисляются не один раз в год, а ежедневно в размере ставки, разделенной на 365 дней.</p>
+                <p>У каждого банка есть свои программы кредитования и свои процентные ставки. </p>
+
+                <p class="fw-bold">Основные факторы, влияющие на процентную ставку:</p>
+                <ol>
+                    <li>
+                        <p><i>Ключевая ставка Центробанка</i>. Чтобы дать вам кредит, банк занимает у ЦБ по ставке,
+                            равной ключевой, накидывает еще несколько процентов сверху и дает вам в долг под более
+                            высокий процент, зарабатывая на разнице. Выгоднее брать кредит, когда ключевая ставка
+                            ниже: вы заплатите меньше процентов. На каждом очередном заседании ЦБ может как
+                            повысить, так и понизить ставку или оставить без изменений. Это решение принимается в
+                            зависимости от экономической ситуации.</p>
+                        <p>Вот так ключевая ставка она менялась за последние годы:</p>
+
+
+                        <canvas id="keyrate-chart"
+                            data-data="[{&quot;x&quot;:&quot;2013-02-03&quot;,&quot;y&quot;:&quot;5.50&quot;},{&quot;x&quot;:&quot;2014-03-03&quot;,&quot;y&quot;:&quot;7.00&quot;},{&quot;x&quot;:&quot;2014-04-28&quot;,&quot;y&quot;:&quot;7.50&quot;},{&quot;x&quot;:&quot;2014-07-28&quot;,&quot;y&quot;:&quot;8.00&quot;},{&quot;x&quot;:&quot;2014-11-05&quot;,&quot;y&quot;:&quot;9.50&quot;},{&quot;x&quot;:&quot;2014-12-12&quot;,&quot;y&quot;:&quot;10.50&quot;},{&quot;x&quot;:&quot;2014-12-16&quot;,&quot;y&quot;:&quot;17.00&quot;},{&quot;x&quot;:&quot;2015-02-02&quot;,&quot;y&quot;:&quot;15.00&quot;},{&quot;x&quot;:&quot;2015-03-16&quot;,&quot;y&quot;:&quot;14.00&quot;},{&quot;x&quot;:&quot;2015-05-05&quot;,&quot;y&quot;:&quot;12.50&quot;},{&quot;x&quot;:&quot;2015-06-16&quot;,&quot;y&quot;:&quot;11.50&quot;},{&quot;x&quot;:&quot;2015-08-03&quot;,&quot;y&quot;:&quot;11.00&quot;},{&quot;x&quot;:&quot;2016-06-14&quot;,&quot;y&quot;:&quot;10.50&quot;},{&quot;x&quot;:&quot;2016-09-19&quot;,&quot;y&quot;:&quot;10.00&quot;},{&quot;x&quot;:&quot;2017-03-27&quot;,&quot;y&quot;:&quot;9.75&quot;},{&quot;x&quot;:&quot;2017-05-02&quot;,&quot;y&quot;:&quot;9.25&quot;},{&quot;x&quot;:&quot;2017-06-19&quot;,&quot;y&quot;:&quot;9.00&quot;},{&quot;x&quot;:&quot;2017-09-18&quot;,&quot;y&quot;:&quot;8.50&quot;},{&quot;x&quot;:&quot;2017-10-30&quot;,&quot;y&quot;:&quot;8.25&quot;},{&quot;x&quot;:&quot;2017-12-18&quot;,&quot;y&quot;:&quot;7.75&quot;},{&quot;x&quot;:&quot;2018-02-12&quot;,&quot;y&quot;:&quot;7.50&quot;},{&quot;x&quot;:&quot;2018-03-26&quot;,&quot;y&quot;:&quot;7.25&quot;},{&quot;x&quot;:&quot;2018-09-17&quot;,&quot;y&quot;:&quot;7.50&quot;},{&quot;x&quot;:&quot;2018-12-17&quot;,&quot;y&quot;:&quot;7.75&quot;},{&quot;x&quot;:&quot;2019-06-17&quot;,&quot;y&quot;:&quot;7.50&quot;},{&quot;x&quot;:&quot;2019-07-29&quot;,&quot;y&quot;:&quot;7.25&quot;},{&quot;x&quot;:&quot;2019-09-09&quot;,&quot;y&quot;:&quot;7.00&quot;},{&quot;x&quot;:&quot;2019-10-28&quot;,&quot;y&quot;:&quot;6.50&quot;},{&quot;x&quot;:&quot;2019-12-16&quot;,&quot;y&quot;:&quot;6.25&quot;},{&quot;x&quot;:&quot;2020-02-10&quot;,&quot;y&quot;:&quot;6.00&quot;},{&quot;x&quot;:&quot;2020-04-27&quot;,&quot;y&quot;:&quot;5.50&quot;},{&quot;x&quot;:&quot;2020-06-22&quot;,&quot;y&quot;:&quot;4.50&quot;},{&quot;x&quot;:&quot;2020-07-27&quot;,&quot;y&quot;:&quot;4.25&quot;},{&quot;x&quot;:&quot;2021-03-22&quot;,&quot;y&quot;:&quot;4.50&quot;},{&quot;x&quot;:&quot;2021-04-26&quot;,&quot;y&quot;:&quot;5.00&quot;},{&quot;x&quot;:&quot;2021-06-15&quot;,&quot;y&quot;:&quot;5.50&quot;},{&quot;x&quot;:&quot;2021-07-26&quot;,&quot;y&quot;:&quot;6.50&quot;},{&quot;x&quot;:&quot;2021-09-13&quot;,&quot;y&quot;:&quot;6.75&quot;},{&quot;x&quot;:&quot;2021-10-25&quot;,&quot;y&quot;:&quot;7.50&quot;},{&quot;x&quot;:&quot;2021-12-20&quot;,&quot;y&quot;:&quot;8.50&quot;},{&quot;x&quot;:&quot;2022-02-14&quot;,&quot;y&quot;:&quot;9.50&quot;},{&quot;x&quot;:&quot;2022-02-28&quot;,&quot;y&quot;:&quot;20.00&quot;},{&quot;x&quot;:&quot;2022-04-11&quot;,&quot;y&quot;:&quot;17.00&quot;},{&quot;x&quot;:&quot;2022-05-04&quot;,&quot;y&quot;:&quot;14.00&quot;},{&quot;x&quot;:&quot;2022-05-27&quot;,&quot;y&quot;:&quot;11.00&quot;},{&quot;x&quot;:&quot;2022-06-14&quot;,&quot;y&quot;:&quot;9.50&quot;},{&quot;x&quot;:&quot;2022-07-25&quot;,&quot;y&quot;:&quot;8.00&quot;},{&quot;x&quot;:&quot;2022-09-19&quot;,&quot;y&quot;:&quot;7.50&quot;},{&quot;x&quot;:&quot;2023-07-24&quot;,&quot;y&quot;:&quot;8.50&quot;},{&quot;x&quot;:&quot;2023-08-15&quot;,&quot;y&quot;:&quot;12.00&quot;},{&quot;x&quot;:&quot;2023-09-18&quot;,&quot;y&quot;:&quot;13.00&quot;}]"></canvas>
+                        <div class="text-center mb-5">
+                            <div class="diag-title">График изменения ключевой ставки с 2013 по 2023 год</div>
+                        </div>
+                    </li>
+                    <li>
+                        <i>Тип кредита</i>. Чем больше риска несет кредит для банка, тем он дороже. Например,
+                        ипотечный кредит дешевле потребительского кредита или кредита наличными. Причина проста —
+                        при выдаче ипотеки банк берет в залог недвижимость, невелируя этим риски невыплаты кредита.
+                        При выдаче кредита наличными на любые цели у банка нет способа гарантировать возврат,
+                        поэтому ставка гораздо выше.
+                    </li>
+                    <li>
+                        <i>Характиристики заемщика</i>. Среди них кредитная история и отношения с банком. Кредитные
+                        организации оценивают надежность потенциальных заемщиков и делают более выгодные
+                        персональные предложения потенциальным клиентам, в надежности которых они уверены. Своим
+                        зарплатным клиентам многие банки предоставляют скидку в размере 0.3 - 0.6 процентных пункта.
+                    </li>
+                </ol>
+
+                <h2>Аннуитетный и дифференцированный платеж</h2>
+                <p>Что такое аннуитетный и дифференцированный платеж? В чем разница между ними? Какой из них
+                    выгоднее для заемщика?</p>
+                <div class="content_payment_type">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="text-center mb-3 p-3 rounded-2" style="border: 1px solid #dde5e7">
+                                <div class="fw-bold mb-2">Аннуитетный</div>
+                                <p>Представляет собой равные ежемесячные суммы на протяжении всего срока
+                                    кредитования. </p>
+                                <p><img src="/images/content/payment_annuitet.png" class="img-fluid"
+                                        title="График платежей - аннуитетный платеж"
+                                        alt="График платежей - аннуитетный платеж"></p>
+                                <p>Доля процентов и доля основного долга в каждом месяце рассчитываются таким
+                                    образом, чтобы общая сумма была неизменной.</p>
+                                <hr>
+                                <p>Аннуитетный платеж более распространен за счет удобства выплаты. Платить каждый
+                                    месяц одну и ту же сумму логичнее и проще для учета финансов.</p>
+                                <hr>
+                                <p>Переплата по кредиту выше, чем при дифференцированном платеже.</p>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="text-center mb-3 p-3 rounded-2" style="border: 1px solid #dde5e7">
+                                <div class="fw-bold mb-2">Дифференцированный</div>
+                                <p>Сумма ежемесячного платежа уменьшается к концу срока кредитования. </p>
+                                <p><img src="/images/content/payment_diff.png" class="img-fluid"
+                                        title="График платежей - дифференцированный платеж"
+                                        alt="График платежей - дифференцированный платеж"></p>
+                                <p>Доля основного долга остается неизменной, а доля процентов с каждым месяцем
+                                    уменьшается, так как уменьшается общая сумма долга.</p>
+                                <hr>
+                                <p>Ежемесячные платежи вначале срока выше по сравнению с аннуитетом, поэтому выше
+                                    требования к платежеспоособности клиента.</p>
+                                <hr>
+                                <p>При прочих равных дифференцированный платеж выгоднее, сумма переплаты ниже.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+            </article>
+
+
+
+
+        </div>
+
+
+
+        <div class="columns-separator"></div>
+
+        <div class="sidebar">
+
+
+            <div class="text-center mb-4">
+                <div id="a_sidebar_container" style="min-height: 290px"><a target="_blank"
+                        href="https://pxl.leads.su/click/227a5e0b8e6f46a34b0d163396ef2b02?erid=LjN8KcE9k"><img
+                            src="/images/banners/1695581429537/tinkoff_platinum_top.gif" style="max-width: 100%"></a>
+                </div>
+            </div>
+
+
+            <div class="sidebar-block d-none d-xl-block mb-4">
+                <noindex>
+                    <div class="sidebar-block-header">Сохраненные расчеты</div>
+
+                    <div class="sidebar-block-body result-list-container">
+
+                        <div class="text-black-50">Вы можете сохранять ваши расчеты и они будут отображаться
+                            здесь.<br><br>Для сохранения расчета воспользуйтесь кнопкой <svg class="icon mx-1"
+                                style="color:#3498db">
+                                <use xlink:href="#icon-save"></use>
+                            </svg> под формой калькулятора.</div>
+
+                    </div>
+
+                </noindex>
+            </div>
+
+
+
+            <div class="sidebar-block">
+                <div class="sidebar-block-header">Финансовые калькуляторы</div>
+                <div class="sidebar-block-body">
+                    <ul class="ul">
+                        <li><a href="/kalkulyator-ipoteki">Ипотечный калькулятор</a></li>
+                        <li><a href="/kreditnyj-kalkulyator-s-dosrochnym-pogasheniem">Кредитный калькулятор с
+                                досрочным погашением</a></li>
+                        <li><a href="/kalkulyator-refinansirovaniya">Калькулятор рефинансирования</a></li>
+                        <li><a href="/kalkulyator-mikrokredita">Калькулятор микрозаймов</a></li>
+                        <li><a href="/inflyaciya">Калькулятор инфляции</a></li>
+                        <li><a href="/kalkulyator-nds">Калькулятор НДС</a></li>
+                        <li><a href="/summa-propisyu">Сумма прописью</a></li>
+                        <li><a href="/kalkulyator-ndfl">Калькулятор НДФЛ</a></li>
+                        <li><a href="/nalogovyj-vychet-pri-pokupke-kvartiry">Калькулятор имущественного вычета</a>
+                        </li>
+                        <li><a href="/nalog-s-prodazhi-kvartiry">Калькулятор налога с продажи квартиры</a></li>
+                        <li><a href="/kalkulyator-penej">Калькулятор пеней</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <script type="text/javascript" async=""
+        src="https://www.googletagmanager.com/gtag/js?id=G-1P9L5C5TBK&amp;l=dataLayer&amp;cx=c"></script>
+    <script async="" src="https://mc.yandex.ru/metrika/tag.js"></script>
+    <script type="text/javascript" src="/dist/vendor.js?1"></script>
+    <script type="text/javascript" src="/dist/scripts.js?43"></script>
+    <script type="text/javascript" src="https://yandex.ru/ads/system/context.js"></script>
+    <script type="text/javascript" src="https://yandex.ru/ads/system/context.js"></script>
+    <script type="text/javascript" src="https://yandex.ru/ads/system/context.js"></script>
+
+    <script>
+        let Calc = new Calcus(document.querySelector('.calc-form'), JSON.parse('{"js.today":"\u0421\u0435\u0433\u043e\u0434\u043d\u044f","js.yesterday":"\u0412\u0447\u0435\u0440\u0430","js.history_empty":"\u0418\u0441\u0442\u043e\u0440\u0438\u044f \u043f\u0443\u0441\u0442\u0430","js.no_licence":"\u0412\u0438\u0434\u0436\u0435\u0442 \u043a\u0430\u043b\u044c\u043a\u0443\u043b\u044f\u0442\u043e\u0440\u0430 \u0443\u0441\u0442\u0430\u043d\u043e\u0432\u043b\u0435\u043d \u043d\u0430 \u0434\u0430\u043d\u043d\u044b\u0439 \u0441\u0430\u0439\u0442 \u0441 \u043d\u0430\u0440\u0443\u0448\u0435\u043d\u0438\u044f\u043c\u0438 \u0443\u0441\u043b\u043e\u0432\u0438\u0439 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u043d\u0438\u044f. \u041f\u0440\u0430\u0432\u0430 \u043d\u0430 \u0432\u0438\u0434\u0436\u0435\u0442 \u043f\u0440\u0438\u043d\u0430\u0434\u043b\u0435\u0436\u0430\u0442 \u0441\u0430\u0439\u0442\u0443 www.calcus.ru","js.error_text":"\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u0432\u044b\u043f\u043e\u043b\u043d\u0438\u0442\u044c \u0440\u0430\u0441\u0447\u0435\u0442. \u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0446\u0438\u044f \u043e\u0431 \u043e\u0448\u0438\u0431\u043a\u0435 \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0430 \u0430\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440\u0443.","js.error_413":"\u0421\u043b\u0438\u0448\u043a\u043e\u043c \u0431\u043e\u043b\u044c\u0448\u043e\u0439 \u043e\u0431\u044a\u0435\u043c \u0437\u0430\u043f\u0440\u043e\u0441\u0430","js.copied":"\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e"}'))
+    </script>
+    <script src="/dist/credit.js?3"></script>
+
+
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+            (function (m, e, t, r, i, k, a) {
+                m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+                m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+            })
+            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(30023134, "init", {
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true
+        });
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/30023134" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-44154612-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-44154612-3');
+    </script>
+
+
+
+    <script type="text/javascript" src="/chartjs/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="/chartjs/chartjs-plugin-labels.js"></script>
+    <script type="text/javascript" src="https://yandex.ru/ads/system/context.js"></script>
+    <script type="text/javascript" src="https://yandex.ru/ads/system/context.js"></script>
+    <script type="text/javascript" src="https://yandex.ru/ads/system/context.js"></script>
+</body>
+
+</html>

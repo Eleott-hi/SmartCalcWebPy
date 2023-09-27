@@ -55,13 +55,17 @@ double RPN::CalculateLexems(Lexems const &lexems, double x_value) {
       if (lexem == "x") lexem.value_ = x_value;
       stack.push(lexem.value_);
 
-    } else if (lexem == Priority::FUN) {
-      stack.push(lexem.func_(Pop(stack), 0.0));
-
-    } else {
-      double y = Pop(stack), x = Pop(stack);
-      stack.push(lexem.func_(x, y));
+      Print("Stack value:", lexem);
+      continue;
     }
+
+    double y = lexem == Priority::FUN ? 0.0 : Pop(stack);
+    double x = Pop(stack);
+    double result = lexem.func_(x, y);
+
+    Print("Calculate:", "\n\tLexem:", lexem, "\n\tx:", x, "\n\ty:", y,
+          "\n\tresult:", result);
+    stack.push(result);
   }
 
   if (stack.size() != 1)
@@ -71,12 +75,23 @@ double RPN::CalculateLexems(Lexems const &lexems, double x_value) {
 }
 
 double RPN::Calculate(std::string const &expression, double x) {
+  Print("Expression:", expression, ";\tx:", x);
   if (expression_ != expression) {
+    Print("Unknown expression");
+
+    Print("Form lexems:");
     auto lexems = Lexem::GetLexemList(expression);
+    for (auto const &lexem : lexems) Print(lexem);
+
+    Print("Form RPN:");
     lexems_ = FormRPN(lexems);
+    for (auto const &lexem : lexems_) Print(lexem);
+
+    Print("Save expression...");
     expression_ = expression;
   }
 
+  Print("Calculating...");
   return CalculateLexems(lexems_, x);
 }
 

@@ -7,7 +7,7 @@ from django.db import models
 
 class MainExpression(models.Model):
     Expression = models.CharField(max_length=300)
-    Answer = models.FloatField()
+    Answer = models.FloatField(null=True)
 
     def __str__(self):
         return self.Expression + "; " + self.Answer
@@ -15,7 +15,7 @@ class MainExpression(models.Model):
 
 class XValueExpression(models.Model):
     Expression = models.CharField(max_length=300)
-    Answer = models.FloatField()
+    Answer = models.FloatField(null=True)
 
     def __str__(self):
         return self.Expression + "; " + self.Answer

@@ -2,6 +2,7 @@ from .pydantic_models import PlotData
 import logging
 from cmath import isnan
 from PybindRPN import RPN
+from PybindLoanCalculator import LoanCalculator, LoanInfo, LoanResult
 from .pydantic_models import PlotData
 from numpy import arange
 from .models import MainExpression, XValueExpression
@@ -39,7 +40,7 @@ def Calculate(expression: str, x_value: float = 0) -> float:
 
     logger.info(f"Result: {res}")
 
-    return res
+    return res #TODO: return float(nan)
 
 
 def CalculateData(main_exp: str, x_exp: str) -> float:
@@ -48,7 +49,24 @@ def CalculateData(main_exp: str, x_exp: str) -> float:
     x = Calculate(x_exp)
     res = Calculate(main_exp, x)
 
+    logger.info(f"Saving to database...")
+
     XValueExpression.objects.create(Expression=x_exp, Answer=x)
     MainExpression.objects.create(Expression=main_exp, Answer=res)
-    
+
+    logger.info(f"Success!")
+
     return res
+
+
+def CalculateLoan():
+    loan_info = LoanInfo()
+    loan_info.sum = 100000
+    loan_info.term = 3
+    loan_info.rate = 3
+
+    res = LoanCalculator.Calculate(loan_info)
+
+    logger.info(f"LOAN RES: {res.overpay}, {res.all_sum}")
+    logger.info(f"LOAN vec: {res.payment}")
+    pass
