@@ -18,7 +18,7 @@
     <RouterView />
   </div>
 
-  <footer class="bg-secondary mt-5">
+  <footer class="mt-5">
     <h5 class=" text-center">
       Powered by
       <a href="https://www.djangoproject.com/" target="_blank" rel="noopener">Django</a> +

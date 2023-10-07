@@ -4,7 +4,6 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="container">
-                        <form>
                             <label for="amount" class="form-label">Amount:</label>
                             <div class="input-group mb-4">
                                 <!-- tooltip -->
@@ -68,7 +67,6 @@
                                 <p>Payments type: {{ paymentsType }}</p>
                                 <button type="submit" class="btn btn-secondary">Calculate</button>
                             </div>
-                        </form>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -240,4 +238,6 @@ export default {
 }
 </script>
   
-<style></style>
+<style>
+
+</style>

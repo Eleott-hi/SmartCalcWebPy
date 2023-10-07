@@ -1,4 +1,6 @@
 
+PROJECT := SmartCalcWebUi
+
 all: dev
 
 up:
@@ -12,14 +14,14 @@ create:
 	npm create vue@latest
 
 install:
-	cd vue-project; npm instal
+	cd $(PROJECT); npm instal
 
 dev:
-	cd vue-project; npm run dev
+	cd $(PROJECT); npm run dev
 
 
 build:
-	cd vue-project; npm run build
+	cd $(PROJECT); npm run build
 
 chart:
 	npm install vue-chartjs chart.js
