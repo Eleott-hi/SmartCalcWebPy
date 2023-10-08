@@ -1,3 +1,102 @@
+<script>
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import { Bar, Pie,Doughnut } from "vue-chartjs";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
+
+export default {
+  components: { VueDatePicker, Pie ,Doughnut},
+  data() {
+    return {
+      amount: 100000,
+      period: 12,
+      rate: 5,
+      date: new Date(),
+      period_types: ["day", "week", "month", "quarter", "year", "halfyear"],
+      capitalizationInfo: {
+        isActive: false,
+        period: "year",
+      },
+      incomeInfo: {
+        isActive: false,
+        amount: 10000,
+        period: "month",
+      },
+      outcomeInfo: {
+        isActive: false,
+        amount: 10000,
+        period: "month",
+      },
+      pieData: {
+        labels: ["VueJs", "EmberJs", "ReactJs", "AngularJs"],
+        datasets: [
+          {
+            backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],
+            hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5"],
+            data: [40, 20, 80, 10],
+          },
+        ],
+      },
+      result: {
+        charges: 300,
+        table: [
+          {
+            date: "2023-01-01",
+            interest_charges: 300,
+            balance_change: 10000,
+            pay: 0,
+            balance: 0,
+          },
+          {
+            date: "2023-02-01",
+            interest_charges: 301,
+            balance_change: 10001,
+            pay: 1,
+            balance: 1,
+          },
+          {
+            date: "2023-03-01",
+            interest_charges: 302,
+            balance_change: 10002,
+            pay: 2,
+            balance: 2,
+          },
+        ],
+      },
+    };
+  },
+  computed: {
+    PieData() {
+      return this.pieData;
+    },
+
+    PieOptions() {
+      return {};
+    },
+  },
+};
+</script>
+
 <template>
   <div class="container mt-5">
     <div class="container">
@@ -143,7 +242,7 @@
               <i class="bi bi-cash-stack text-secondary"></i>
             </span>
             <input
-              v-model="incomeInfo ['amount']"
+              v-model="incomeInfo['amount']"
               id="period"
               type="number"
               min="10000"
@@ -179,7 +278,7 @@
           </div>
         </div>
       </div>
-            <div class="mb-4 input-group">
+      <div class="mb-4 input-group">
         <div class="form-check form-switch">
           <input
             v-model="outcomeInfo['isActive']"
@@ -239,7 +338,56 @@
         </div>
       </div>
     </div>
+    <div class="row mt-5">
+      <div class="col-md-6">
+        <p>Interest charges: {{ result["charges"] }}</p>
+        <p>
+          Deposit amount with interest:
+          {{ incomeInfo["amount"] + result["charges"] }}
+        </p>
+        <p>
+          Capital gains:
+          {{
+            ((outcomeInfo["amount"] + result["charges"]) * 100) /
+              outcomeInfo["amount"] -
+            100
+          }}
+          %
+        </p>
+      </div>
+      <div class="col-md-6">
+        <div class="container">
+          <div class="container justify-content-center align-items-center">
+            <Doughnut class="mt-5" :data="PieData" :options="PieOptions" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container overflow-auto mt-5" style="max-height: 400px">
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Interest charges</th>
+            <th scope="col">Balance change</th>
+            <th scope="col">Pay</th>
+            <th scope="col">Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in result['table']" :key="item['date']">
+            <th scope="row">{{ item["date"] }}</th>
+            <td>{{ item["interest_charges"] }}</td>
+            <td>{{ item["balance_change"] }}</td>
+            <td>{{ item["pay"] }}</td>
+            <td>{{ item["balance"] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="container">
+      <br /><br />
       <p>Amount: {{ amount }}</p>
       <p>Period: {{ period }}</p>
       <p>Rate: {{ rate }}</p>
@@ -258,35 +406,6 @@
   </div>
 </template>
 
-<script>
-import VueDatePicker from "@vuepic/vue-datepicker";
-import "@vuepic/vue-datepicker/dist/main.css";
-export default {
-  components: { VueDatePicker },
-  data() {
-    return {
-      amount: 100000,
-      period: 12,
-      rate: 5,
-      date: new Date(),
-      period_types: ["day", "week", "month", "quarter", "year", "halfyear"],
-      capitalizationInfo: {
-        isActive: false,
-        period: "year",
-      },
-      incomeInfo: {
-        isActive: false,
-        amount: 10000,
-        period: "month",
-      },
-      outcomeInfo: {
-        isActive: false,
-        amount: 10000,
-        period: "month",
-      },
-    };
-  },
-};
-</script>
+
 
 <style></style>
