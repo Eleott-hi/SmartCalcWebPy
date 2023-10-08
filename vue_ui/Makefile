@@ -3,6 +3,8 @@ PROJECT := SmartCalcWebUi
 
 all: dev
 
+start: nvm create chart intall dev
+
 up:
 	docker-compose build
 	docker-compose up
@@ -24,7 +26,7 @@ build:
 	cd $(PROJECT); npm run build
 
 chart:
-	npm install vue-chartjs chart.js
+	cd $(PROJECT); npm install vue-chartjs chart.js @vuepic/vue-datepicker
 
 nvm:
 	nvm use 18
