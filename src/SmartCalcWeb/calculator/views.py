@@ -23,7 +23,7 @@ def index(request):
     return render(request, html, {'CONFIG': CONFIG})
 
 
-@require_http_methods(["POST"])
+@require_http_methods(["GET"])
 def calculate(request):
     try:
         body: dict = json.loads(request.body)
@@ -38,7 +38,7 @@ def calculate(request):
         return HttpResponseBadRequest(json.dumps({"error": str(e)}), content_type="application/json")
 
 
-@require_http_methods(["POST"])
+@require_http_methods(["GET"])
 def graph(request):
     try:
         plot_data = PlotData.parse_raw(request.body)
