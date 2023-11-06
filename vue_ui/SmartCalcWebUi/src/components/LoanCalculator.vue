@@ -4,6 +4,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="container">
+
                             <label for="amount" class="form-label">Amount:</label>
                             <div class="input-group mb-4">
                                 <!-- tooltip -->
@@ -20,6 +21,7 @@
                                     </span>
                                 </span>
                             </div>
+
                             <label for="period" class="form-label">Period, month:</label>
                             <div class="mb-4 input-group">
                                 <!-- tooltip -->
@@ -35,6 +37,7 @@
                                     </span>
                                 </span>
                             </div>
+
                             <label for="rate" class="form-label">Interest rate, %:</label>
                             <div class="mb-4 input-group">
                                 <span class="input-group-text">
@@ -50,6 +53,7 @@
                                     </span>
                                 </span>
                             </div>
+
                             <label for="payments-type" class="form-label">Type of monthly payments:</label>
                             <div class="mb-4 input-group">
                                 <span class="input-group-text">
@@ -150,8 +154,6 @@ export default {
                     }
                 ]
             },
-
-
             x: [1, 2, 3],
             from: -10.0,
             to: 10.0,

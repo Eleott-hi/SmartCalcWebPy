@@ -7,7 +7,21 @@ export default {
                 main: '',
                 x: ''
             },
-            activeInput: 'main'
+            activeInput: 'main',
+            historySelected: null,
+            history: [
+                    // {
+                    //     id: 1,
+                    //     expression_main: "1+2",
+                    //     expression_x: "2",
+                    // },
+                    // {
+                    //     id: 2,
+                    //     expression_main: "1+3",
+                    //     expression_x:"1",
+                    // }
+                
+            ],
         }
     },
 
@@ -24,6 +38,11 @@ export default {
         },
         showErrorAlert(err, vm, info) {
             alert(err, vm, info)
+        },
+
+        SetExpressions() {
+          this.expressions['main'] = this.historySelected.expression_main
+          this.expressions['x'] = this.historySelected.expression_x
         }
     },
 
@@ -137,7 +156,16 @@ export default {
                 </div>
             </div>
 
-
+            <div class="mb-4 input-group">
+              <span class="input-group-text">
+                <i class="bi bi-clock-history"></i>
+              </span>
+              <select v-model="historySelected" class="form-select" id="history" @change="SetExpressions">
+                <option v-for="item in history" :value="item" :key="item.id" >
+                  expression={{ item.expression_main }}; x={{ item.expression_x }}
+                </option>
+              </select>
+            </div>
         </div>
 
         <div>
