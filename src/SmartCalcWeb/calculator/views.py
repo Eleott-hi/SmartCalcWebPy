@@ -26,12 +26,8 @@ def index(request):
 @require_http_methods(["GET"])
 def calculate(request):
     try:
-        body: dict = json.loads(request.body)
-        res = CalculateData(body["expression"], body["xValue"])
-        context = {'result': res}
-
-        logger.info(f"Context: {context}, Status: 200")
-        return JsonResponse(context, status=200)
+        res = CalculateData(request.GET.get('expression', ''), request.GET.get('x', ''))
+        return JsonResponse({'result': res}, status=200)
 
     except Exception as e:
         logger.error(f"{e}")
