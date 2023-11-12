@@ -7,9 +7,9 @@
 namespace s21 {
 
 struct LoanInfo {
-  double sum = 0;
+  double amount = 0;
   double rate = 0;
-  int term = 0;
+  int period = 0;
   bool annuity = true;
 
   LoanInfo() = default;
@@ -24,11 +24,11 @@ struct LoanResult {
   double all_sum;
 
   LoanResult() = default;
-  LoanResult(int term) {
-    payment.reserve(term);
-    debth.reserve(term);
-    percent.reserve(term);
-    remain.reserve(term);
+  LoanResult(int period) {
+    payment.reserve(period);
+    debth.reserve(period);
+    percent.reserve(period);
+    remain.reserve(period);
   }
 };
 

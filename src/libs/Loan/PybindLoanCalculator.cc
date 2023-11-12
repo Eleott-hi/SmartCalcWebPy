@@ -7,9 +7,9 @@ namespace py = pybind11;
 PYBIND11_MODULE(PybindLoanCalculator, m) {
   py::class_<s21::LoanInfo>(m, "LoanInfo")
       .def(py::init<>())
-      .def_readwrite("sum", &s21::LoanInfo::sum)
+      .def_readwrite("amount", &s21::LoanInfo::amount)
       .def_readwrite("rate", &s21::LoanInfo::rate)
-      .def_readwrite("term", &s21::LoanInfo::term)
+      .def_readwrite("period", &s21::LoanInfo::period)
       .def_readwrite("annuity", &s21::LoanInfo::annuity);
 
   py::class_<s21::LoanResult>(m, "LoanResult")

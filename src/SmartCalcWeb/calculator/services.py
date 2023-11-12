@@ -1,46 +1,44 @@
-from .pydantic_models import PlotData
 import logging
 from cmath import isnan
 from PybindRPN import RPN
-from PybindLoanCalculator import LoanCalculator, LoanInfo, LoanResult
-from .pydantic_models import PlotData
+from PybindLoanCalculator import LoanCalculator
+from .pydantic_serializer import *
 from numpy import arange
 from .models import MainExpression, XValueExpression
 from typing import Tuple
+
 
 logger = logging.getLogger(__name__)
 
 rpn = RPN()
 
 
-def ExludeNanFromArray(x_src: list, y_src: list):
-    logger.info(f"Exclude nan from x and y")
-    x, y = zip(*[(x_val, y_val)
-               for x_val, y_val in zip(x_src, y_src) if not isnan(y_val)])
-    return list(x), list(y)
-
-
-def CaclculatePlotData(plot_data: PlotData) -> Tuple[list, list]:
-    logger.info(f"Calculating...")
-
-    x = arange(plot_data.x_from, plot_data.x_to, 0.01)
-    y = [rpn.Calculate(plot_data.expression, i) for i in x]
-    x, y = ExludeNanFromArray(x, y)
-
-    return x, y
+def CalculateRPN(expression: str, x_value: float = 0) -> float | None:
+    y = rpn.Calculate("0" if len(expression) == 0 else expression, x_value)
+    return None if isnan(y) else y
 
 
 def Calculate(expression: str, x_value: float = 0) -> float:
-    logger.info(f"Expression: '{expression}', x: '{x_value}'")
-
-    if len(expression) == 0:
-        expression = "0"
-
-    res = rpn.Calculate(expression, x_value)
-
+    logger.info(f"Expression: '{expression}', x: {x_value}")
+    res = CalculateRPN(expression, x_value)
     logger.info(f"Result: {res}")
 
-    return res #TODO: return float(nan)
+    return res
+
+
+def CaclculatePlotData(plot_data: PlotDataInput) -> PlotDataOutput:
+    logger.info(f"Calculating plot data...")
+
+    x = arange(plot_data.xMin, plot_data.xMax, 0.01)
+    y = [CalculateRPN(plot_data.expression, i) for i in x]
+
+    logger.info(f"Success!")
+
+    return PlotDataOutput(
+        label=plot_data.expression,
+        x=list(x),
+        y=list(y),
+    )
 
 
 def CalculateData(main_exp: str, x_exp: str) -> float:
@@ -59,14 +57,12 @@ def CalculateData(main_exp: str, x_exp: str) -> float:
     return res
 
 
-def CalculateLoan():
-    loan_info = LoanInfo()
-    loan_info.sum = 100000
-    loan_info.term = 3
-    loan_info.rate = 3
+def CalculateLoan(data_input: LoanDataInput) -> LoanDataOutput:
+    logger.info(f"Calculating loan...")
 
-    res = LoanCalculator.Calculate(loan_info)
+    cpp_data_output = LoanCalculator.Calculate(data_input.getCPPObject())
+    python_data_output = LoanDataOutput.from_cpp_object(cpp_data_output)
 
-    logger.info(f"LOAN RES: {res.overpay}, {res.all_sum}")
-    logger.info(f"LOAN vec: {res.payment}")
-    pass
+    logger.info(f"Success!")
+
+    return python_data_output

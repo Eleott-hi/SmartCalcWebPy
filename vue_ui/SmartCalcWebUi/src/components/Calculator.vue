@@ -13,17 +13,23 @@ export default {
 
     methods: {
         Calculate() {
-            try {
-                this.expressions['main'] = eval(this.expressions['main']);
-            } catch (error) {
-                this.showErrorAlert(error);
+            $.ajax({
+                url: `http://localhost:8000/calculate?${$.param(this.expressions)}`,
+                type: "GET",
+                success: (data) => { this.expressions['main'] = data.result; },
+                error: this.showErrorAlert
+            });
+        },
+
+        showErrorAlert(xhr, status, error) {
+            if (xhr.responseJSON && xhr.responseJSON.error) {
+                alert(
+                    "Status: " +status +
+                    "\nError: " + error +
+                    "\nMessage: " + xhr.responseJSON.error);
+            } else {
+                alert("An error occurred.");
             }
-        },
-        FocusInput(input) {
-            this.activeInput = input
-        },
-        showErrorAlert(err, vm, info) {
-            alert(err, vm, info)
         }
     },
 
@@ -37,7 +43,7 @@ export default {
             <div class="row mb-2">
                 <div class="col-12 btn-group " role="group">
 
-                    <input type="text" class="form-control" v-model="expressions['main']" @focus="FocusInput('main')"
+                    <input type="text" class="form-control" v-model="expressions['main']" @focus="activeInput = 'main'"
                         placeholder="Enter expression">
                 </div>
             </div>
@@ -47,7 +53,7 @@ export default {
                     <button class="btn btn-primary" @click="expressions[activeInput] += 'x'">x</button>
                 </div>
                 <div class="col-8">
-                    <input class="form-control w-100" v-model="expressions['x']" @focus="FocusInput('x')"
+                    <input class="form-control w-100" v-model="expressions['x']" @focus="activeInput = 'x'"
                         placeholder="Enter x value or expression">
                 </div>
             </div>
@@ -136,17 +142,15 @@ export default {
                     <button class="btn btn-secondary" @click="Calculate">=</button>
                 </div>
             </div>
-
-
         </div>
 
-        <div>
+        <!-- <div>
             Main Expression: {{ expressions['main'] }}
             <br>
             X Expression: {{ expressions['x'] }}
             <br>
             Active Input: {{ activeInput }}
-        </div>
+        </div> -->
     </div>
 </template>
 

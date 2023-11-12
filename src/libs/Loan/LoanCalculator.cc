@@ -9,17 +9,17 @@ LoanResult LoanCalculator::Calculate(LoanInfo info) {
 }
 
 LoanResult LoanCalculator::Annuity(LoanInfo const& info) {
-  LoanResult result(info.term);
+  LoanResult result(info.period);
 
   auto formula = [](double debth, double p, int monthes) {
     return debth * (p + (p / (pow((1. + p), (double)monthes) - 1.)));
   };
 
-  double debth = info.sum;
+  double debth = info.amount;
   double sum_payment = 0;
-  double payment = round(formula(debth, info.rate, info.term) * 100.0) / 100.0;
+  double payment = round(formula(debth, info.rate, info.period) * 100.0) / 100.0;
 
-  for (int i = 0; i < info.term; i++) {
+  for (int i = 0; i < info.period; i++) {
     double percent_part = debth * info.rate;
     double debth_part = payment - percent_part;
     double remain = debth - debth_part;
@@ -34,21 +34,21 @@ LoanResult LoanCalculator::Annuity(LoanInfo const& info) {
     debth = round(debth * 100.0) / 100.0;
   }
 
-  result.overpay = sum_payment - info.sum;
+  result.overpay = sum_payment - info.amount;
   result.all_sum = sum_payment;
 
   return result;
 }
 
 LoanResult LoanCalculator::Differentiated(LoanInfo const& info) {
-  LoanResult result(info.term);
+  LoanResult result(info.period);
 
-  double main_debt = info.sum / info.term;
-  double remaining = info.sum;
+  double main_debt = info.amount / info.period;
+  double remaining = info.amount;
   double sum_payment = 0;
 
-  for (int i = 0; i < info.term; i++) {
-    double remain = info.sum - (main_debt * (i + 1));
+  for (int i = 0; i < info.period; i++) {
+    double remain = info.amount - (main_debt * (i + 1));
     double rate_payment = remaining * info.rate;
     double payment = main_debt + rate_payment;
 
@@ -61,7 +61,7 @@ LoanResult LoanCalculator::Differentiated(LoanInfo const& info) {
     remaining = remain;
   }
 
-  result.overpay = sum_payment - info.sum;
+  result.overpay = sum_payment - info.amount;
   result.all_sum = sum_payment;
 
   return result;

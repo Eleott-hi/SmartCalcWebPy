@@ -1,128 +1,3 @@
-<template>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="container">
-                            <label for="amount" class="form-label">Amount:</label>
-                            <div class="input-group mb-4">
-                                <!-- tooltip -->
-                                <span class="input-group-text">
-                                    <i class="bi bi-cash-stack text-secondary"></i>
-                                </span>
-                                <input v-model="amount" type="number" min="10000" class="form-control"
-                                    placeholder="e.g. 100000" required />
-                                <!-- tooltip -->
-                                <span class="input-group-text">
-                                    <span class="tt" data-bs-placement="bottom"
-                                        title="Enter an amount of money you want to borrow">
-                                        <i class="bi bi-question-circle text-muted"></i>
-                                    </span>
-                                </span>
-                            </div>
-                            <label for="period" class="form-label">Period, month:</label>
-                            <div class="mb-4 input-group">
-                                <!-- tooltip -->
-                                <span class="input-group-text">
-                                    <i class="bi bi-calendar-date text-secondary"></i>
-                                </span>
-                                <input v-model="period" type="number" id="period" min="1" step="1" class="form-control"
-                                    placeholder="e.g. 12" required />
-                                <!-- tooltip -->
-                                <span class="input-group-text">
-                                    <span class="tt" data-bs-placement="bottom" title="Period within you plan to pay loan">
-                                        <i class="bi bi-question-circle text-muted"></i>
-                                    </span>
-                                </span>
-                            </div>
-                            <label for="rate" class="form-label">Interest rate, %:</label>
-                            <div class="mb-4 input-group">
-                                <span class="input-group-text">
-                                    <i class="bi bi-percent text-secondary"></i>
-                                </span>
-                                <input v-model="rate" type="number" id="rate" min="1" step="1" class="form-control"
-                                    placeholder="e.g. 5" required />
-                                <!-- tooltip -->
-                                <span class="input-group-text">
-                                    <span class="tt" data-bs-placement="bottom"
-                                        title="The interest rate at which you are going to repay the loan">
-                                        <i class="bi bi-question-circle text-muted"></i>
-                                    </span>
-                                </span>
-                            </div>
-                            <label for="payments-type" class="form-label">Type of monthly payments:</label>
-                            <div class="mb-4 input-group">
-                                <span class="input-group-text">
-                                    <i class="bi bi-wallet2 text-secondary"></i>
-                                </span>
-                                <select v-model="paymentsType" class="form-select" id="payments-type">
-                                    <option value="annuity" selected>Annuity</option>
-                                    <option value="differentiated">Differentiated</option>
-                                </select>
-                            </div>
-                            <div class="mb-4 text-center">
-                                <p>Amount: {{ amount }}</p>
-                                <p>Period: {{ period }}</p>
-                                <p>Rate: {{ rate }}</p>
-                                <p>Payments type: {{ paymentsType }}</p>
-                                <button type="submit" class="btn btn-secondary">Calculate</button>
-                            </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="container">
-                        <div class="container justify-content-center align-items-center ">
-                            <Pie class="mt-5" :data="PieData" :options="PieOptions" @click="ClickMe" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-10">
-                <div class="container justify-content-center align-items-center ">
-                    <Bar class="mt-5" :data="Data" :options="Options" @click="ClickMe" />
-                </div>
-            </div>
-            <div class="container overflow-auto mt-5" style="height: 400px;">
-                <table class="table table-striped">
-                    <thead class="table-dark">
-                        <tr>
-                            <th scope="col">Month</th>
-                            <th scope="col">Amount of payment</th>
-                            <th scope="col">Principal payment</th>
-                            <th scope="col">Interest payment</th>
-                            <th scope="col">Balance owed</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>1234</td>
-                            <td>1234</td>
-                            <td>1234</td>
-                            <td>1234</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>1234</td>
-                            <td>1234</td>
-                            <td>1234</td>
-                            <td>1234</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>1234</td>
-                            <td>1234</td>
-                            <td>1234</td>
-                            <td>1234</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</template>
-
-
 <script>
 import { Bar, Pie } from 'vue-chartjs'
 import { Chart as ChartJS, ArcElement, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
@@ -135,61 +10,80 @@ export default {
 
     data() {
         return {
-            amount: 100000,
-            period: 12,
-            rate: 5,
-            paymentsType: 'annuity',
-
-            pieData: {
-                labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
-                datasets: [
-                    {
-                        backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                        hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5",],
-                        data: [40, 20, 80, 10]
-                    }
-                ]
+            input_data: {
+                amount: 100000,
+                rate: 5,
+                period: 12,
+                paymentsType: 'annuity',
             },
 
-
-            x: [1, 2, 3],
-            from: -10.0,
-            to: 10.0,
-            label: '',
-            scales: {
-                xAxes: [{ ticks: { min: -10, max: 10 } }],
-                yAxes: [{ ticks: { min: -10, max: 10 } }],
+            PieData:{
+                
             }
+
+            output_data: {
+                pieData: {
+                    labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
+                    datasets: [
+                        {
+                            backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+                            hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5",],
+                            data: [40, 20, 80, 10]
+                        }
+                    ]
+                },
+                x: [1, 2, 3],
+                label: '',
+                scales: {
+                    xAxes: [{ ticks: { min: -10, max: 10 } }],
+                    yAxes: [{ ticks: { min: -10, max: 10 } }],
+                },
+            },
+            table: null,
         }
     },
 
     methods: {
-        ClickMe(e) {
-            let { x, y } = this.Calculate(this.from, this.to)
-            this.x = x.map(value => value.toFixed(2));
-            this.y = y.map(value => value.toFixed(2));
-            this.label = this.expressions
-
+        Calculate() {
+            $.ajax({
+                url: `http://localhost:8000/loan_calculator?${$.param(this.input_data)}`,
+                type: "GET",
+                success: (data) => { this.FormTable(data); },
+                error: this.showErrorAlert
+            });
         },
-        Calculate(from = -10.0, to = 10.0) {
-            let x = []
-            let y = []
-            let step = (to - from) / 100.0
 
-            for (let i = from; i <= to; i += step) {
-                let expression = this.expressions
-                expression = expression.replaceAll('x', "(" + i + ")")
-                x.push(i)
-                y.push(eval(expression))
+        FormTable(data) {
+            const { payment, debth, percent, remain, overpay, all_sum } = data;
+            let table = []
+
+            for (let i = 0; i < payment.length; i++) {
+                table.push({
+                    month: i + 1,
+                    payment_amount: payment[i].toFixed(2),
+                    payment_principal: debth[i].toFixed(2),
+                    payment_interest: percent[i].toFixed(2),
+                    balance_owed: remain[i].toFixed(2),
+                })
             }
 
-            return { x, y }
+            this.table = table
+        },
 
-        }
+        showErrorAlert(xhr, status, error) {
+            if (xhr.responseJSON && xhr.responseJSON.error) {
+                alert(
+                    "Status: " + status +
+                    "\nError: " + error +
+                    "\nMessage: " + xhr.responseJSON.error);
+            } else {
+                alert("An error occurred.");
+            }
+        },
     },
 
     computed: {
-        Data() {
+        BarData() {
             return {
                 labels: this.x,
                 datasets: [
@@ -206,7 +100,7 @@ export default {
                 ]
             }
         },
-        Options() {
+        BarOptions() {
             return {
                 plugins: {
                     title: {
@@ -228,7 +122,16 @@ export default {
             }
         },
         PieData() {
-            return this.pieData
+            return {
+                labels: ['Main debt', 'Interest'],
+                datasets: [
+                    {
+                        backgroundColor: ['#41B883', '#00D8FF'],
+                        hoverBackgroundColor: ['#FFFFFF'],
+                        data: [40, 20]
+                    }
+                ]
+            }
         },
 
         PieOptions() {
@@ -238,6 +141,115 @@ export default {
 }
 </script>
   
-<style>
 
-</style>
+<template>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="container">
+                <div class="container">
+                    <label for="amount" class="form-label">Amount:</label>
+                    <div class="input-group mb-4">
+                        <!-- tooltip -->
+                        <span class="input-group-text">
+                            <i class="bi bi-cash-stack text-secondary"></i>
+                        </span>
+                        <input v-model="input_data['amount']" type="number" min="10000" class="form-control"
+                            placeholder="e.g. 100000" required />
+                        <!-- tooltip -->
+                        <span class="input-group-text">
+                            <span class="tt" data-bs-placement="bottom" title="Enter an amount of money you want to borrow">
+                                <i class="bi bi-question-circle text-muted"></i>
+                            </span>
+                        </span>
+                    </div>
+                    <label for="period" class="form-label">Period, month:</label>
+                    <div class="mb-4 input-group">
+                        <!-- tooltip -->
+                        <span class="input-group-text">
+                            <i class="bi bi-calendar-date text-secondary"></i>
+                        </span>
+                        <input v-model="input_data['period']" type="number" id="period" min="1" step="1"
+                            class="form-control" placeholder="e.g. 12" required />
+                        <!-- tooltip -->
+                        <span class="input-group-text">
+                            <span class="tt" data-bs-placement="bottom" title="Period within you plan to pay loan">
+                                <i class="bi bi-question-circle text-muted"></i>
+                            </span>
+                        </span>
+                    </div>
+                    <label for="rate" class="form-label">Interest rate, %:</label>
+                    <div class="mb-4 input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-percent text-secondary"></i>
+                        </span>
+                        <input v-model="input_data['rate']" type="number" id="rate" min="1" step="1" class="form-control"
+                            placeholder="e.g. 5" required />
+                        <!-- tooltip -->
+                        <span class="input-group-text">
+                            <span class="tt" data-bs-placement="bottom"
+                                title="The interest rate at which you are going to repay the loan">
+                                <i class="bi bi-question-circle text-muted"></i>
+                            </span>
+                        </span>
+                    </div>
+                    <label for="payments-type" class="form-label">Type of monthly payments:</label>
+                    <div class="mb-4 input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-wallet2 text-secondary"></i>
+                        </span>
+                        <select v-model="input_data['paymentsType']" class="form-select" id="payments-type">
+                            <option value="annuity" selected>Annuity</option>
+                            <option value="differentiated">Differentiated</option>
+                        </select>
+                    </div>
+                    <div class="mb-4 text-center">
+                        <button type="submit" class="btn btn-secondary" @click="Calculate">Calculate</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Month payment: 1887</p>
+                    <p>Interest charges: 13.2222</p>
+                    <p>Debt + interest: 113 227,20 </p>
+                </div>
+                <div class="col-md-6">
+                    <div class="container justify-content-center align-items-center ">
+                        <Pie class="mt-5" :data="PieData" :options="PieOptions" />
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-lg-10">
+                <div class="container justify-content-center align-items-center ">
+                    <Bar class="mt-5" :data="BarData" :options="BarOptions" />
+                </div>
+            </div> -->
+            <div class="container overflow-auto mt-5" style="height: 400px;">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Month</th>
+                            <th scope="col">Amount of payment</th>
+                            <th scope="col">Principal payment</th>
+                            <th scope="col">Interest payment</th>
+                            <th scope="col">Balance owed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in table" :key="item['month']">
+                            <th scope="row">{{ item["month"] }}</th>
+                            <td>{{ item["payment_amount"] }}</td>
+                            <td>{{ item["payment_principal"] }}</td>
+                            <td>{{ item["payment_interest"] }}</td>
+                            <td>{{ item["balance_owed"] }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+<style></style>
