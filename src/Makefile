@@ -29,6 +29,7 @@ admin:
 lib:
 	cd libs/RPN; make
 	cd libs/Loan; make
+	cd libs/Deposit; make
 
 $(PACKAGE): pip_install
 	django-admin startproject $(PACKAGE)

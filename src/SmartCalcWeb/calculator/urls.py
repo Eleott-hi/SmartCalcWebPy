@@ -8,6 +8,7 @@ urlpatterns = [
     path("calculate", views.calculate, name="calculate"),
     path("graph", views.graph, name="graph"),
     path("loan_calculator", views.loan_calculator, name="loan_calculator"),
+    path("deposit_calculator", views.deposit_calculator, name="deposit_calculator"),
 ]
 
 

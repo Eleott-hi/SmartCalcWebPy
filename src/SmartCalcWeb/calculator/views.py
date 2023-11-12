@@ -37,7 +37,8 @@ def index(request):
 def calculate(request):
     try:
         query = GetQuery(request.GET)
-        res = CalculateData(query['main'], query['x'])
+        res = CalculateData(query['expression'], query['x'])
+
         return JsonResponse({'result': res}, status=200)
 
     except Exception as e:
@@ -65,6 +66,37 @@ def loan_calculator(request):
         query = GetQuery(request.GET)
         data_input = LoanDataInput.parse_obj(query)
         data_output = CalculateLoan(data_input)
+
+        return JsonResponse(data_output.dict(), status=200)
+
+    except Exception as e:
+        logger.error(f"{e}")
+        return HttpResponseBadRequest(json.dumps({"error": str(e)}), content_type="application/json")
+
+import datetime
+@require_http_methods(["GET"])
+def deposit_calculator(request):
+    try:
+        query = GetQuery(request.GET)
+
+        # query = {
+        #     "cop_period": "NONE",
+        #     "add_period": "YEAR",
+        #     "sub_period": "YEAR",
+        #     "date_start": "2022-01-01 00:00:00",
+        #     "term": 100,
+        #     "percent": 100,
+        #     "percent_max_without_bill": 100,
+        #     "percent_bill": 100,
+        #     "sum_in": 100,
+        #     "sum_add": 100,
+        #     "sum_sub": 100,
+        # }
+        
+        logger.info(type(query["date_start"]))
+
+        data_input = DepositDataInput.parse_obj(query)
+        data_output = CalculateDeposit(data_input)
 
         return JsonResponse(data_output.dict(), status=200)
 

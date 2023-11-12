@@ -2,6 +2,7 @@ import logging
 from cmath import isnan
 from PybindRPN import RPN
 from PybindLoanCalculator import LoanCalculator
+from PybindDepositCalculator import DepositCalculator
 from .pydantic_serializer import *
 from numpy import arange
 from .models import MainExpression, XValueExpression
@@ -62,6 +63,16 @@ def CalculateLoan(data_input: LoanDataInput) -> LoanDataOutput:
 
     cpp_data_output = LoanCalculator.Calculate(data_input.getCPPObject())
     python_data_output = LoanDataOutput.from_cpp_object(cpp_data_output)
+
+    logger.info(f"Success!")
+
+    return python_data_output
+
+def CalculateDeposit(data_input: DepositDataInput) -> DepositDataOutput:
+    logger.info(f"Calculating deposit...")
+
+    cpp_data_output = DepositCalculator.Calculate(data_input.getCPPObject())
+    python_data_output = DepositDataOutput.from_cpp_object(cpp_data_output)
 
     logger.info(f"Success!")
 
