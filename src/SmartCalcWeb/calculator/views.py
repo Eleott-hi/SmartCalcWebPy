@@ -38,10 +38,7 @@ def calculate(request):
     try:
         query = GetQuery(request.GET)
         res = CalculateData(query['main'], query['x'])
-        context = {'result': res}
-
-        logger.info(f"Context: {context}, Status: 200")
-        return JsonResponse(context, status=200)
+        return JsonResponse({'result': res}, status=200)
 
     except Exception as e:
         logger.error(f"{e}")

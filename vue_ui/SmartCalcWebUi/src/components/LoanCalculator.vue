@@ -16,10 +16,14 @@ export default {
                 period: 12,
                 paymentsType: 'annuity',
             },
-
-            PieData:{
-                
-            }
+            x: [1, 2, 3],
+            from: -10.0,
+            to: 10.0,
+            label: '',
+            scales: {
+                xAxes: [{ ticks: { min: -10, max: 10 } }],
+                yAxes: [{ ticks: { min: -10, max: 10 } }],
+            },
 
             output_data: {
                 pieData: {

@@ -40,10 +40,10 @@ class LoanDataInput (BaseModel):
         return f"sum: {self.amount}, term: {self.period}, rate: {self.rate}, annuity: {self.paymentsType}"
 
     def getCPPObject(self):
-        loan_info = LoanInfo()
-        loan_info.amount = self.amount
-        loan_info.period = self.period
-        loan_info.rate = self.rate
+        loan_info         = LoanInfo()
+        loan_info.amount  = self.amount
+        loan_info.period  = self.period
+        loan_info.rate    = self.rate
         loan_info.annuity = self.paymentsType == "annuity"
         return loan_info
 
@@ -59,12 +59,12 @@ class LoanDataOutput(BaseModel):
     @classmethod
     def from_cpp_object(cls, cpp_object: LoanResult):
         return cls(
-            payment=cpp_object.payment,
-            debth=cpp_object.debth,
-            percent=cpp_object.percent,
-            remain=cpp_object.remain,
-            overpay=cpp_object.overpay,
-            all_sum=cpp_object.all_sum
+            payment = cpp_object.payment,
+            debth   = cpp_object.debth,
+            percent = cpp_object.percent,
+            remain  = cpp_object.remain,
+            overpay = cpp_object.overpay,
+            all_sum = cpp_object.all_sum
         )
 
     def __str__(self):

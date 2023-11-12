@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'calculator.apps.CalculatorConfig',
-    'rest_framework',
     'corsheaders',
 ]
 
@@ -71,6 +70,11 @@ CORS_ALLOW_METHODS = [
 ]
 
 ROOT_URLCONF = 'SmartCalcWeb.urls'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
 
 TEMPLATES = [
     {
