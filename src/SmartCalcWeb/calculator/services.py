@@ -42,7 +42,7 @@ def CaclculatePlotData(plot_data: PlotDataInput) -> PlotDataOutput:
     )
 
 
-def CalculateData(main_exp: str, x_exp: str) -> float:
+def CalculateData(main_exp: str, x_exp: str) -> str:
     logger.info(f"Main_exp: '{main_exp}', x_exp: '{x_exp}'")
 
     x = Calculate(x_exp)
@@ -55,7 +55,7 @@ def CalculateData(main_exp: str, x_exp: str) -> float:
 
     logger.info(f"Success!")
 
-    return res
+    return "nan" if res == None else str(res)
 
 
 def CalculateLoan(data_input: LoanDataInput) -> LoanDataOutput:

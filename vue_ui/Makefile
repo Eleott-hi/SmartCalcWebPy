@@ -18,7 +18,7 @@ create:
 install:
 	cd $(PROJECT); npm instal
 
-dev:
+dev: sass
 	cd $(PROJECT); npm run dev
 
 
@@ -30,6 +30,9 @@ chart:
 
 nvm:
 	nvm use 16
+
+sass:
+	cd $(PROJECT); sass scss/custom.scss src/assets/custom.css
 
 nvm_install:
 	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash

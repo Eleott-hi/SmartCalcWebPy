@@ -39,16 +39,6 @@ export default {
       });
     },
 
-    methods: {
-      Calculate() {
-        $.ajax({
-          url: `http://localhost:8000/calculate?${$.param(this.expressions)}`,
-          type: "GET",
-          success: (data) => { this.expressions['main'] = data.result; },
-          error: this.showErrorAlert
-        });
-      },
-
       showErrorAlert(xhr, status, error) {
         if (xhr.responseJSON && xhr.responseJSON.error) {
           alert(
@@ -56,30 +46,41 @@ export default {
             "\nError: " + error +
             "\nMessage: " + xhr.responseJSON.error);
         } else {
-          alert("An error occurred.");
+          alert("An error occurred. Status Code: " + xhr.status);
         }
       },
+
       FocusInput(input) {
         this.activeInput = input;
       },
 
-      showErrorAlert(xhr, status, error) {
-        console.error("Error calc:", xhr, status, error);
+      // showErrorAlert(xhr, status, error) {
+      //   console.error("Error calc:", xhr, status, error);
 
-        // Handle the error here along with the status code
-        if (xhr.responseJSON && xhr.responseJSON.error) {
-          alert("Error (" + xhr.status + "): " + xhr.responseJSON.error);
-        } else {
-          alert("An error occurred. Status Code: " + xhr.status);
-        }
-      },
+      //   // Handle the error here along with the status code
+      //   if (xhr.responseJSON && xhr.responseJSON.error) {
+      //     alert("Error (" + xhr.status + "): " + xhr.responseJSON.error);
+      //   } else {
+      //     alert("An error occurred. Status Code: " + xhr.status);
+      //   }
+      // },
 
       SetExpressions() {
         this.expressions["main"] = this.historySelected.expression_main;
         this.expressions["x"] = this.historySelected.expression_x;
       },
+
+      ToggleColorScheme() {
+        // Toggle the 'dark-mode' class on the body
+        document.body.classList.toggle('dark-mode');
+
+        // Save the user's preference in local storage or a cookie
+        const isDarkModeEnabled = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkModeEnabled);
+        // console.log(`Switched from ${currentScheme} mode to ${newScheme} mode`);
+      },
     },
-  }
+  
 };
 
 </script>
@@ -118,7 +119,7 @@ export default {
       <div class="row mb-2">
         <div class="col-4 btn-group d-flex" role="group">
         <button class="btn btn-secondary" @click="expressions[activeInput] += 'sqrt('">sqrt</button>
-        <button class="btn btn-secondary" @click="expressions[activeInput] += 'pow('">pow</button>
+        <button class="btn btn-secondary" @click="expressions[activeInput] += '^'">pow</button>
       </div>
       <div class="col-4 btn-group d-flex" role="group">
         <button class="btn btn-primary" @click="expressions[activeInput] += 7">7</button>

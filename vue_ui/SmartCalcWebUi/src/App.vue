@@ -9,6 +9,8 @@
         <RouterLink :to="{ name: 'plot' }">Plot</RouterLink>
         <RouterLink :to="{ name: 'loan_calculator' }">Loan Calculator</RouterLink>
         <RouterLink :to="{ name: 'deposit_calculator' }">Deposit Calculator</RouterLink>
+        <RouterLink :to="{ name: 'settings' }">Settings</RouterLink>
+        <RouterLink :to="{ name: 'settings2' }">Settings2</RouterLink>
         <RouterLink :to="{ name: 'about' }">About</RouterLink>
       </nav>
     </div>
@@ -30,8 +32,6 @@
     <div class="container text-center">
       <a href="https://github.com/Eleott-hi" target="_blank" rel="noopener">© eleott 2023</a>
     </div>
-
-
   </footer>
 </template>
 
