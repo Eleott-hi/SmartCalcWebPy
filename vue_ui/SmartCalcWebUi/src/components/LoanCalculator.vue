@@ -17,33 +17,14 @@ export default {
                 paymentsType: 'annuity',
             },
             x: [1, 2, 3],
-            from: -10.0,
-            to: 10.0,
-            label: '',
-            scales: {
-                xAxes: [{ ticks: { min: -10, max: 10 } }],
-                yAxes: [{ ticks: { min: -10, max: 10 } }],
-            },
-
-            output_data: {
-                pieData: {
-                    labels: ['VueJs', 'EmberJs', 'ReactJs', 'AngularJs'],
-                    datasets: [
-                        {
-                            backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-                            hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5",],
-                            data: [40, 20, 80, 10]
-                        }
-                    ]
-                },
-                x: [1, 2, 3],
-                label: '',
-                scales: {
-                    xAxes: [{ ticks: { min: -10, max: 10 } }],
-                    yAxes: [{ ticks: { min: -10, max: 10 } }],
-                },
-            },
-            table: null,
+            // from: -10.0,
+            // to: 10.0,
+            // label: '',
+            // scales: {
+            //     xAxes: [{ ticks: { min: -10, max: 10 } }],
+            //     yAxes: [{ ticks: { min: -10, max: 10 } }],
+            // },
+            loan_output: null,
         }
     },
 
@@ -52,12 +33,12 @@ export default {
             $.ajax({
                 url: `http://localhost:8000/loan_calculator?${$.param(this.input_data)}`,
                 type: "GET",
-                success: (data) => { this.FormTable(data); },
+                success: (data) => { this.RenderResult(data); },
                 error: this.showErrorAlert
             });
         },
 
-        FormTable(data) {
+        RenderResult(data) {
             const { payment, debth, percent, remain, overpay, all_sum } = data;
             let table = []
 
@@ -71,7 +52,14 @@ export default {
                 })
             }
 
-            this.table = table
+            this.loan_output = {
+                data : data,
+                table:  table,
+                pie_data : [all_sum - overpay, overpay],
+                payment: payment[0].toFixed(2),
+                overpay: overpay.toFixed(2),
+                all_sum: all_sum.toFixed(2),
+            }
         },
 
         showErrorAlert(xhr, status, error) {
@@ -88,17 +76,23 @@ export default {
 
     computed: {
         BarData() {
+            let monthes = []
+
+            for (let i = 0; i < this.loan_output.data.debth.length; i++) {
+                monthes.push(i + 1)
+            }
+
             return {
-                labels: this.x,
+                labels: monthes,
                 datasets: [
                     {
                         label: 'Main debt',
-                        data: [1, 2, 3],
+                        data: this.loan_output.data.debth,
                         backgroundColor: "#FF0000",
                     },
                     {
                         label: 'Percentage',
-                        data: [2, 3, 1],
+                        data: this.loan_output.data.percent,
                         backgroundColor: "#0000FF",
                     },
                 ]
@@ -120,8 +114,6 @@ export default {
                     y: {
                         stacked: true
                     },
-                    xAxes: [{ ticks: { min: -10, max: 10 } }],
-                    yAxes: [{ ticks: { min: -10, max: 10 } }],
                 }
             }
         },
@@ -132,7 +124,7 @@ export default {
                     {
                         backgroundColor: ['#41B883', '#00D8FF'],
                         hoverBackgroundColor: ['#FFFFFF'],
-                        data: [40, 20]
+                        data: this.loan_output.pie_data
                     }
                 ]
             }
@@ -211,11 +203,13 @@ export default {
                     </div>
                 </div>
             </div>
+
+            <div v-if="loan_output" class="container overflow-auto mt-5">
             <div class="row">
                 <div class="col-md-6">
-                    <p>Month payment: 1887</p>
-                    <p>Interest charges: 13.2222</p>
-                    <p>Debt + interest: 113 227,20 </p>
+                    <p>Month payment: {{loan_output.payment}}</p>
+                    <p>Interest charges: {{loan_output.overpay}}</p>
+                    <p>Debt + interest: {{loan_output.all_sum}} </p>
                 </div>
                 <div class="col-md-6">
                     <div class="container justify-content-center align-items-center ">
@@ -223,11 +217,11 @@ export default {
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-lg-10">
+            <div class="col-lg-10">
                 <div class="container justify-content-center align-items-center ">
                     <Bar class="mt-5" :data="BarData" :options="BarOptions" />
                 </div>
-            </div> -->
+            </div>
             <div class="container overflow-auto mt-5" style="height: 400px;">
                 <table class="table table-striped">
                     <thead class="table-dark">
@@ -240,7 +234,7 @@ export default {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in table" :key="item['month']">
+                        <tr v-for="item in loan_output.table" :key="item['month']">
                             <th scope="row">{{ item["month"] }}</th>
                             <td>{{ item["payment_amount"] }}</td>
                             <td>{{ item["payment_principal"] }}</td>
@@ -250,6 +244,7 @@ export default {
                     </tbody>
                 </table>
             </div>
+        </div>
         </div>
     </div>
 </template>

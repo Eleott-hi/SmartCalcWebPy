@@ -94,6 +94,12 @@ export default {
       return {};
     },
   },
+
+  methods: {
+    Calculate(){
+      console.log("Calculate");
+    }
+  }
 };
 </script>
 
@@ -197,9 +203,7 @@ export default {
                 id="flexSwitchCheckChecked"
                 checked
               />
-              <label class="form-check-label" for="flexSwitchCheckChecked">
-                Interest Capitalization</label
-              >
+              <label class="form-check-label" for="flexSwitchCheckChecked">Interest Capitalization</label>
             </div>
           </div>
         </div>
@@ -263,9 +267,7 @@ export default {
           </div>
         </div>
         <div class="col">
-          <label for="period-payments" class="form-label"
-            >Capitalization Frequency:</label
-          >
+          <label for="period-payments" class="form-label">Capitalization Frequency:</label>
           <div class="mb-4 input-group">
             <span class="input-group-text">
               <i class="bi bi-wallet2 text-secondary"></i>
@@ -285,11 +287,8 @@ export default {
             class="form-check-input"
             type="checkbox"
             id="flexSwitchCheckChecked"
-            checked
-          />
-          <label class="form-check-label" for="flexSwitchCheckChecked">
-            Outcome</label
-          >
+            checked />
+          <label class="form-check-label" for="flexSwitchCheckChecked">Outcome</label>
         </div>
       </div>
       <div class="row" v-if="outcomeInfo['isActive']">
@@ -338,6 +337,10 @@ export default {
         </div>
       </div>
     </div>
+          <div class="mb-4 text-center">
+                        <button type="submit" class="btn btn-secondary" @click="Calculate">Calculate</button>
+                    </div>
+    <div >
     <div class="row mt-5">
       <div class="col-md-6">
         <p>Interest charges: {{ result["charges"] }}</p>
@@ -384,6 +387,7 @@ export default {
           </tr>
         </tbody>
       </table>
+    </div>
     </div>
 
     <div class="container">
