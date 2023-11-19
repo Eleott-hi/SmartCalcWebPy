@@ -10,6 +10,7 @@
   "dependencies": {
     "@vuepic/vue-datepicker": "^7.2.2",
     "chart.js": "^4.4.0",
+    "electron": "^27.1.0",
     "vue": "^3.3.4",
     "vue-chartjs": "^5.2.0",
     "vue-router": "^4.2.4"
