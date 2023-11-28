@@ -29,6 +29,7 @@ chart:
 	cd $(PROJECT); npm install vue-chartjs chart.js @vuepic/vue-datepicker
 
 nvm:
+	nvm install 16
 	nvm use 16
 
 nvm_install:
