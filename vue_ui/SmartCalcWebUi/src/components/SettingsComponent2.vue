@@ -2,7 +2,7 @@
 export default {
   data() {
     return {
-      textColor: '#d6ff84', // Initialize with the default $primary color
+      textColor: this.$store.state.buttonColor, // Initialize with the default $primary color
     };
   },
   
@@ -21,12 +21,27 @@ export default {
       // this.$root.$style.$primary = newColor;
 
       // Update the CSS variable with the selected color
-      // document.documentElement.style.setProperty('--primary', newColor);
-      document.documentElement.style.setProperty('--bs-primary', newColor);
+      // document.documentElement.style.setProperty('--primary',    newColor);
+      // document.documentElement.style.setProperty('--bs-primary', newColor);
+
+      this.$store.commit('setButtonColor', newColor);
+
       // Implement additional logic if needed
       console.log(`Primary color set to: ${newColor}`);
     },
   },
+
+  computed: {
+    buttonColor: {
+      get() {
+        return this.$store.state.buttonColor;
+      },
+      set(value) {
+        this.$store.commit('setButtonColor', value);
+      },
+    },
+  },
+
 };
 </script>
 
@@ -46,7 +61,7 @@ export default {
         class="form-control form-control-color"
       />
     </div>
-    <!-- Other content in your template -->
+    <button :style="{ backgroundColor : $store.state.buttonColor }">Click me</button>
   </div>
 </template>
 
