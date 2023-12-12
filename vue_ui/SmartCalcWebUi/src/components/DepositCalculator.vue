@@ -366,28 +366,6 @@ export default {
         </div>
       </div>
     </div>
-    <div class="container overflow-auto mt-5" style="max-height: 400px">
-      <table class="table table-striped">
-        <thead class="table-dark">
-          <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Interest charges</th>
-            <th scope="col">Balance change</th>
-            <th scope="col">Pay</th>
-            <th scope="col">Balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in result['table']" :key="item['date']">
-            <th scope="row">{{ item["date"] }}</th>
-            <td>{{ item["interest_charges"] }}</td>
-            <td>{{ item["balance_change"] }}</td>
-            <td>{{ item["pay"] }}</td>
-            <td>{{ item["balance"] }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
     </div>
 
     <div class="container">
