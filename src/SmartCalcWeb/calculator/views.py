@@ -78,23 +78,6 @@ import datetime
 def deposit_calculator(request):
     try:
         query = GetQuery(request.GET)
-
-        # query = {
-        #     "cop_period": "NONE",
-        #     "add_period": "YEAR",
-        #     "sub_period": "YEAR",
-        #     "date_start": "2022-01-01 00:00:00",
-        #     "term": 100,
-        #     "percent": 100,
-        #     "percent_max_without_bill": 100,
-        #     "percent_bill": 100,
-        #     "sum_in": 100,
-        #     "sum_add": 100,
-        #     "sum_sub": 100,
-        # }
-        
-        logger.info(type(query["date_start"]))
-
         data_input = DepositDataInput.parse_obj(query)
         data_output = CalculateDeposit(data_input)
 

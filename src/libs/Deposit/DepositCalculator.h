@@ -34,6 +34,7 @@ struct DepositOutput {
   double bills{};
   double profit_wb{};
   double summary{};
+  double income_sum{};
 
   DepositOutput() = default;
 };
@@ -46,8 +47,6 @@ class DepositCalculator {
 
  private:
   DepositCalculator(const DepositInput &info);
-
-  // Deposit Deposit::GetDepositObject(const DepositInput &info);
 
   void calculate_deposit();
   void calc_bills(date::sys_days cur_date, double &profit);
@@ -63,10 +62,10 @@ class DepositCalculator {
  private:
   date::sys_days m_date_finish_;
   DepositInput m_info_;
-  double m_bill_res_;
-  double m_profit_res_;
-  double m_percentage_;
-  //   std::ostringstream profite_, bills_, profit_wb_, summary_;
+  double m_income_sum_{};
+  double m_bill_res_{};
+  double m_profit_res_{};
+  double m_percentage_{};
 };
 
 }  // namespace s21

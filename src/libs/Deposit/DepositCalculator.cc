@@ -2,11 +2,6 @@
 
 namespace s21 {
 
-// std::vector<std::string> Deposit::get_info() const {
-//     return std::vector<std::string>{profite_.str(), bills_.str(),
-//     profit_wb_.str(), summary_.str()};
-// }
-
 bool DepositCalculator::check_leap_year(const date::sys_days &d) {
   return date::year_month_day(d).year().is_leap();
 }
@@ -79,6 +74,7 @@ DepositOutput DepositCalculator::Calculate(const DepositInput &info) {
       deposit.m_bill_res_,                          //
       deposit.m_profit_res_ - deposit.m_bill_res_,  //
       deposit.m_info_.sum_in,                       //
+      deposit.m_income_sum_,                        //
   };
 }
 
@@ -151,6 +147,7 @@ void DepositCalculator::check_adding(date::sys_days const &cur_date,  //
 
 void DepositCalculator::add_money(bool add_operation,
                                   date::sys_days &operation_date) {
+  m_income_sum_ += add_operation ? m_info_.sum_add : -m_info_.sum_sub;
   m_info_.sum_in += add_operation ? m_info_.sum_add : -m_info_.sum_sub;
 
   operation_date = calc_next_date(operation_date,

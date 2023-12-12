@@ -28,66 +28,38 @@ export default {
   components: { VueDatePicker, Pie ,Doughnut},
   data() {
     return {
-      amount: 100000,
-      period: 12,
-      rate: 5,
-      date: new Date(),
       period_types: ["day", "week", "month", "quarter", "year", "halfyear"],
-      capitalizationInfo: {
-        isActive: false,
-        period: "year",
-      },
-      incomeInfo: {
-        isActive: false,
-        amount: 10000,
-        period: "month",
-      },
-      outcomeInfo: {
-        isActive: false,
-        amount: 10000,
-        period: "month",
-      },
-      pieData: {
-        labels: ["VueJs", "EmberJs", "ReactJs", "AngularJs"],
-        datasets: [
-          {
-            backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],
-            hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5"],
-            data: [40, 20, 80, 10],
-          },
-        ],
-      },
-      result: {
-        charges: 300,
-        table: [
-          {
-            date: "2023-01-01",
-            interest_charges: 300,
-            balance_change: 10000,
-            pay: 0,
-            balance: 0,
-          },
-          {
-            date: "2023-02-01",
-            interest_charges: 301,
-            balance_change: 10001,
-            pay: 1,
-            balance: 1,
-          },
-          {
-            date: "2023-03-01",
-            interest_charges: 302,
-            balance_change: 10002,
-            pay: 2,
-            balance: 2,
-          },
-        ],
+      result: null,
+      tmps:{
+        term: 12,
+        percent: 5,
+        date_start: new Date(),
+        percent_max_without_bill: 5,
+        percent_bill: 13,
+        sum_in: 100000,
+        sum_add: 10000,
+        sum_sub: 10000,
+        cop_period: "year",
+        add_period: "month",
+        sub_period: "month",
+        isActive_cop: false,
+        isActive_add: false,
+        isActive_sub: false,
       },
     };
   },
   computed: {
     PieData() {
-      return this.pieData;
+      return {
+        labels: ["Sum_In", "Percents", "Income_Sum"],
+        datasets: [
+          {
+            backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
+            hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870"],
+            data: [ this.tmps.sum_in, this.result.profite, this.result.income_sum ],
+          },
+        ],
+      }
     },
 
     PieOptions() {
@@ -97,8 +69,37 @@ export default {
 
   methods: {
     Calculate(){
-      console.log("Calculate");
-    }
+        let input_data = { ...this.tmps };
+        input_data.date_start = new Date(input_data.date_start).toISOString();
+
+        if (!this.tmps.isActive_cop) {
+          input_data.cop_period = 'none'
+        } 
+
+        if (!this.tmps.isActive_add) {
+          input_data.add_period = 'none'
+        } 
+
+        if (!this.tmps.isActive_sub) {
+          input_data.sub_period = 'none'
+        }
+
+        $.ajax({
+            url: `http://localhost:8000/deposit_calculator?${$.param(input_data)}`,
+            type: "GET",
+            success: this.formResult,
+            error: this.showErrorAlert
+        });
+    },
+    formResult(data) {
+      this.result = {
+        profite: data.profite.toFixed(2),
+        income_sum:  data.income_sum.toFixed(2),
+        bills: data.bills.toFixed(2),
+        profit_wb : data.profit_wb.toFixed(2),
+        summary : data.summary.toFixed(2),
+      };
+    },
   }
 };
 </script>
@@ -113,7 +114,7 @@ export default {
           <i class="bi bi-cash-stack text-secondary"></i>
         </span>
         <input
-          v-model="amount"
+          v-model="tmps.sum_in"
           id="amount"
           type="number"
           min="10000"
@@ -139,7 +140,7 @@ export default {
           <i class="bi bi-cash-stack text-secondary"></i>
         </span>
         <input
-          v-model="period"
+          v-model="tmps.term"
           id="period"
           type="number"
           min="1"
@@ -152,8 +153,7 @@ export default {
           <span
             class="tt"
             data-bs-placement="bottom"
-            title="Enter an amount of money you want to borrow"
-          >
+            title="Enter an amount of money you want to borrow" >
             <i class="bi bi-question-circle text-muted"></i>
           </span>
         </span>
@@ -161,7 +161,7 @@ export default {
       <label for="start_day" class="form-label">Start Day:</label>
       <div class="mb-4 input-group">
         <VueDatePicker
-          v-model="date"
+          v-model="tmps.date_start"
           text-input
           placeholder="Enter date (mm/dd/yyyy)"
         ></VueDatePicker>
@@ -172,7 +172,7 @@ export default {
           <i class="bi bi-percent text-secondary"></i>
         </span>
         <input
-          v-model="rate"
+          v-model="tmps.percent"
           type="number"
           id="rate"
           min="1"
@@ -186,8 +186,7 @@ export default {
           <span
             class="tt"
             data-bs-placement="bottom"
-            title="The interest rate at which you are going to repay the loan"
-          >
+            title="The interest rate at which you are going to repay the loan" >
             <i class="bi bi-question-circle text-muted"></i>
           </span>
         </span>
@@ -197,17 +196,17 @@ export default {
           <div class="mb-4 input-group">
             <div class="form-check form-switch">
               <input
-                v-model="capitalizationInfo['isActive']"
+                v-model="tmps.isActive_cop"
                 class="form-check-input"
                 type="checkbox"
-                id="flexSwitchCheckChecked"
+                id="CapitalizationCheckBox"
                 checked
               />
-              <label class="form-check-label" for="flexSwitchCheckChecked">Interest Capitalization</label>
+              <label class="form-check-label" for="CapitalizationCheckBox">Interest Capitalization</label>
             </div>
           </div>
         </div>
-        <div class="col" v-if="capitalizationInfo['isActive']">
+        <div class="col" v-if="tmps.isActive_cop">
           <label for="period-payments" class="form-label"
             >Capitalization Frequency:</label
           >
@@ -215,7 +214,7 @@ export default {
             <span class="input-group-text">
               <i class="bi bi-wallet2 text-secondary"></i>
             </span>
-            <select v-model="capitalizationInfo['period']" class="form-select">
+            <select v-model="tmps.cop_period" class="form-select">
               <option v-for="item in period_types" :value="item" :key="item">
                 Every {{ item }}
               </option>
@@ -226,18 +225,18 @@ export default {
       <div class="mb-4 input-group">
         <div class="form-check form-switch">
           <input
-            v-model="incomeInfo['isActive']"
+            v-model="tmps.isActive_add"
             class="form-check-input"
             type="checkbox"
-            id="flexSwitchCheckChecked"
+            id="IncomeCheckBox"
             checked
           />
-          <label class="form-check-label" for="flexSwitchCheckChecked">
+          <label class="form-check-label" for="IncomeCheckBox">
             Income</label
           >
         </div>
       </div>
-      <div class="row" v-if="incomeInfo['isActive']">
+      <div class="row" v-if="tmps.isActive_add">
         <div class="col">
           <label for="income" class="form-label">Income:</label>
           <div class="input-group mb-4">
@@ -246,7 +245,7 @@ export default {
               <i class="bi bi-cash-stack text-secondary"></i>
             </span>
             <input
-              v-model="incomeInfo['amount']"
+              v-model="tmps.sum_add"
               id="period"
               type="number"
               min="10000"
@@ -272,7 +271,7 @@ export default {
             <span class="input-group-text">
               <i class="bi bi-wallet2 text-secondary"></i>
             </span>
-            <select v-model="incomeInfo['period']" class="form-select">
+            <select v-model="tmps.add_period" class="form-select">
               <option v-for="item in period_types" :value="item" :key="item">
                 Every {{ item }}
               </option>
@@ -283,15 +282,15 @@ export default {
       <div class="mb-4 input-group">
         <div class="form-check form-switch">
           <input
-            v-model="outcomeInfo['isActive']"
+            v-model="tmps.isActive_sub"
             class="form-check-input"
             type="checkbox"
-            id="flexSwitchCheckChecked"
+            id="OutcomeCheckBox"
             checked />
-          <label class="form-check-label" for="flexSwitchCheckChecked">Outcome</label>
+          <label class="form-check-label" for="OutcomeCheckBox">Outcome</label>
         </div>
       </div>
-      <div class="row" v-if="outcomeInfo['isActive']">
+      <div class="row" v-if="tmps.isActive_sub">
         <div class="col">
           <label for="income" class="form-label">Outcome:</label>
           <div class="input-group mb-4">
@@ -300,7 +299,7 @@ export default {
               <i class="bi bi-cash-stack text-secondary"></i>
             </span>
             <input
-              v-model="outcomeInfo['amount']"
+              v-model="tmps.sum_sub"
               id="period"
               type="number"
               min="10000"
@@ -328,7 +327,7 @@ export default {
             <span class="input-group-text">
               <i class="bi bi-wallet2 text-secondary"></i>
             </span>
-            <select v-model="outcomeInfo['period']" class="form-select">
+            <select v-model="tmps.sub_period" class="form-select">
               <option v-for="item in period_types" :value="item" :key="item">
                 Every {{ item }}
               </option>
@@ -339,24 +338,16 @@ export default {
     </div>
           <div class="mb-4 text-center">
                         <button type="submit" class="btn btn-secondary" @click="Calculate">Calculate</button>
-                    </div>
+          </div>
     <div >
-    <div class="row mt-5">
+    
+    <div class="row mt-5" v-if="result">
       <div class="col-md-6">
-        <p>Interest charges: {{ result["charges"] }}</p>
-        <p>
-          Deposit amount with interest:
-          {{ incomeInfo["amount"] + result["charges"] }}
-        </p>
-        <p>
-          Capital gains:
-          {{
-            ((outcomeInfo["amount"] + result["charges"]) * 100) /
-              outcomeInfo["amount"] -
-            100
-          }}
-          %
-        </p>
+        <p>Interest charges: {{ result["profite"] }}</p>
+        <p>Bills: {{ result["bills"] }}</p>
+        <p>Interest charges without bills: {{ result["profit_wb"] }}</p>
+        <p>Income: {{ result["income_sum"] }}</p>
+        <p>Deposit amount with interest: {{ result["summary"] }}</p>
       </div>
       <div class="col-md-6">
         <div class="container">
@@ -366,24 +357,6 @@ export default {
         </div>
       </div>
     </div>
-    </div>
-
-    <div class="container">
-      <br /><br />
-      <p>Amount: {{ amount }}</p>
-      <p>Period: {{ period }}</p>
-      <p>Rate: {{ rate }}</p>
-      <p>Date: {{ date }}</p>
-
-      <p>Capitalization isActive: {{ capitalizationInfo["isActive"] }}</p>
-      <p>Capitalization period: {{ capitalizationInfo["period"] }}</p>
-      <p>Income isActive: {{ incomeInfo["isActive"] }}</p>
-      <p>Income amount: {{ incomeInfo["amount"] }}</p>
-      <p>Income period: {{ incomeInfo["period"] }}</p>
-
-      <p>Outcome isActive: {{ outcomeInfo["isActive"] }}</p>
-      <p>Outcome amount: {{ outcomeInfo["amount"] }}</p>
-      <p>Outcome period: {{ outcomeInfo["period"] }}</p>
     </div>
   </div>
 </template>

@@ -32,6 +32,7 @@ PYBIND11_MODULE(PybindDepositCalculator, m) {
 
   py::class_<s21::DepositOutput>(m, "DepositOutput")
       .def(py::init<>())
+      .def_readwrite("income_sum", &s21::DepositOutput::income_sum)
       .def_readwrite("profite", &s21::DepositOutput::profite)
       .def_readwrite("bills", &s21::DepositOutput::bills)
       .def_readwrite("profit_wb", &s21::DepositOutput::profit_wb)

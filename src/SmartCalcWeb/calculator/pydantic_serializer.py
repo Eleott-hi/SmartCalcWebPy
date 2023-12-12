@@ -88,6 +88,9 @@ class DepositDataInput (BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
+        json_encoders = {
+            datetime: lambda dt: dt.isoformat(),
+        }
 
     @validator("cop_period", "add_period", "sub_period", pre=True, always=True)
     def validate_period(cls, value):
@@ -97,17 +100,29 @@ class DepositDataInput (BaseModel):
             "WEEK": Period.WEEK,
             "MONTH": Period.MONTH,
             "QUARTER": Period.QUARTER,
-            "HALF_YEAR": Period.HALF_YEAR,
+            "HALFYEAR": Period.HALF_YEAR,
             "YEAR": Period.YEAR,
         }
 
         try:
-            return values[value]
+            return values[value.upper()]
         except:
             raise ValueError("Invalid Period value: " + value)
 
     def __str__(self):
-        return f"\tsum: {self.amount},\t\nterm: {self.period},\t\nrate: {self.rate},\t\nannuity: {self.paymentsType}"
+        return f"""
+date_start: {self.date_start}
+term: {self.term}
+percent: {self.percent}
+percent_max_without_bill: {self.percent_max_without_bill}
+percent_bill: {self.percent_bill}
+sum_in: {self.sum_in}
+sum_add: {self.sum_add}
+sum_sub: {self.sum_sub}
+cop_period: {self.cop_period}
+add_period: {self.add_period}
+sub_period: {self.sub_period}
+"""
 
     def getCPPObject(self):
         deposit_input = DepositInput()
@@ -128,6 +143,7 @@ class DepositDataInput (BaseModel):
 
 
 class DepositDataOutput(BaseModel):
+    income_sum: float
     profite: float
     bills: float
     profit_wb: float
@@ -136,6 +152,7 @@ class DepositDataOutput(BaseModel):
     @classmethod
     def from_cpp_object(cls, cpp_object: DepositOutput):
         return cls(
+            income_sum=cpp_object.income_sum,
             profite=cpp_object.profite,
             bills=cpp_object.bills,
             profit_wb=cpp_object.profit_wb,
@@ -143,4 +160,4 @@ class DepositDataOutput(BaseModel):
         )
 
     def __str__(self):
-        return f"month: {self.month}, payment: {self.payment}, debth: {self.debth}, percent: {self.percent}, remain: {self.remain}, overpay: {self.overpay}, all_sum: {self.all_sum}"
+        return f"income_sum: {self.income_sum}, profite: {self.profite}, bills: {self.bills}, profit_wb: {self.profit_wb}, summary: {self.summary}"
