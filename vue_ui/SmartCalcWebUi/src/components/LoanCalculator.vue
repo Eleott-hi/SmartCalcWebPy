@@ -199,7 +199,7 @@ export default {
                         </select>
                     </div>
                     <div class="mb-4 text-center">
-                        <button type="submit" class="btn btn-secondary" @click="Calculate">Calculate</button>
+                        <button type="submit" class="btn " :class="$store.state.primaryBtnBootstrapType" @click="Calculate">Calculate</button>
                     </div>
                 </div>
             </div>

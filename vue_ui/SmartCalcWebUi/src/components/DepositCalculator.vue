@@ -39,7 +39,7 @@ export default {
         sum_in: 100000,
         sum_add: 10000,
         sum_sub: 10000,
-        cop_period: "year",
+        cop_period: "month",
         add_period: "month",
         sub_period: "month",
         isActive_cop: false,
@@ -337,7 +337,7 @@ export default {
       </div>
     </div>
           <div class="mb-4 text-center">
-                        <button type="submit" class="btn btn-secondary" @click="Calculate">Calculate</button>
+                        <button type="submit" class="btn " :class="$store.state.primaryBtnBootstrapType" @click="Calculate">Calculate</button>
           </div>
     <div >
     

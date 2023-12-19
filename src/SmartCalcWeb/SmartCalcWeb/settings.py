@@ -59,6 +59,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    # "http://localhost:8000",
 ]
 
 CORS_ALLOW_METHODS = [
@@ -70,10 +71,6 @@ CORS_ALLOW_METHODS = [
 ]
 
 ROOT_URLCONF = 'SmartCalcWeb.urls'
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-]
 
 
 TEMPLATES = [

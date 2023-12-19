@@ -147,7 +147,7 @@ export default {
             </div>
         </div>
         <div class="mt-2 text-center">
-            <button @click="Calculate" class="btn btn-primary">Calculate</button>
+            <button @click="Calculate" class="btn " :class="$store.state.primaryBtnBootstrapType">Calculate</button>
         </div>
         <Line class="mt-5" :data="Data" :options="Options" id="plotLine" />
     </div>

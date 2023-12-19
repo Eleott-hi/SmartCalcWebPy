@@ -26,6 +26,26 @@ def Print(*args):
 def GetQuery(query):
     return {k: v[0] for k, v in dict(query).items()}
 
+@require_http_methods(["POST"])
+def config(request):
+    try:
+        data = json.loads(request.body.decode('utf-8'))
+
+        primary_btn_type = data.get('primaryBtnType')
+        secondary_btn_type = data.get('secondaryBtnType')
+        is_dark_mode = data.get('isDarkMode')
+    
+
+        return JsonResponse({
+            'primaryBtnType': primary_btn_type,
+            'secondaryBtnType': secondary_btn_type,
+            'isDarkMode': is_dark_mode
+        }, status=200)
+
+
+    except Exception as e:
+        logger.error(f"{e}")
+        return HttpResponseBadRequest(json.dumps({"error": str(e)}), content_type="application/json")
 
 def index(request):
     html = "common/index.html"
