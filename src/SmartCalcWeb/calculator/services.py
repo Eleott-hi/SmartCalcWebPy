@@ -58,6 +58,34 @@ def CalculateData(main_exp: str, x_exp: str) -> str:
     return "nan" if res == None else str(res)
 
 
+def DeleteHistory():
+    logger.info(f"Deleting history...")
+
+    MainExpression.objects.all().delete()
+    XValueExpression.objects.all().delete()
+
+    logger.info(f"Success!")
+
+
+def GetHistory():
+    logger.info(f"Getting history...")
+
+    main_expressions = MainExpression.objects.all()
+    x_value_expressions = XValueExpression.objects.all()
+
+    history_data = [
+        {
+            'expression_main': main_expression.expression,
+            'expression_x': x_value_expression.expression,
+        }
+        for main_expression, x_value_expression in zip(main_expressions, x_value_expressions)
+    ]
+
+    logger.info(f"Success!")
+
+    return history_data
+
+
 def CalculateLoan(data_input: LoanDataInput) -> LoanDataOutput:
     logger.info(f"Calculating loan...")
 
@@ -67,6 +95,7 @@ def CalculateLoan(data_input: LoanDataInput) -> LoanDataOutput:
     logger.info(f"Success!")
 
     return python_data_output
+
 
 def CalculateDeposit(data_input: DepositDataInput) -> DepositDataOutput:
     logger.info(f"Calculating deposit...")

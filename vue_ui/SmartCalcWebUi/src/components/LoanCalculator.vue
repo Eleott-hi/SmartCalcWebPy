@@ -31,7 +31,7 @@ export default {
     methods: {
         Calculate() {
             $.ajax({
-                url: `http://localhost:8000/loan_calculator?${$.param(this.input_data)}`,
+                url: `http://localhost:8000/loan_calculate?${$.param(this.input_data)}`,
                 type: "GET",
                 success: (data) => { this.RenderResult(data); },
                 error: this.showErrorAlert
@@ -53,9 +53,9 @@ export default {
             }
 
             this.loan_output = {
-                data : data,
-                table:  table,
-                pie_data : [all_sum - overpay, overpay],
+                data: data,
+                table: table,
+                pie_data: [all_sum - overpay, overpay],
                 payment: payment[0].toFixed(2),
                 overpay: overpay.toFixed(2),
                 all_sum: all_sum.toFixed(2),
@@ -199,52 +199,53 @@ export default {
                         </select>
                     </div>
                     <div class="mb-4 text-center">
-                        <button type="submit" class="btn " :class="$store.state.primaryBtnBootstrapType" @click="Calculate">Calculate</button>
+                        <button type="submit" class="btn " :class="$store.state.primaryBtnBootstrapType"
+                            @click="Calculate">Calculate</button>
                     </div>
                 </div>
             </div>
 
             <div v-if="loan_output" class="container overflow-auto mt-5">
-            <div class="row">
-                <div class="col-md-6">
-                    <p>Month payment: {{loan_output.payment}}</p>
-                    <p>Interest charges: {{loan_output.overpay}}</p>
-                    <p>Debt + interest: {{loan_output.all_sum}} </p>
-                </div>
-                <div class="col-md-6">
-                    <div class="container justify-content-center align-items-center ">
-                        <Pie class="mt-5" :data="PieData" :options="PieOptions" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Month payment: {{ loan_output.payment }}</p>
+                        <p>Interest charges: {{ loan_output.overpay }}</p>
+                        <p>Debt + interest: {{ loan_output.all_sum }} </p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="container justify-content-center align-items-center ">
+                            <Pie class="mt-5" :data="PieData" :options="PieOptions" />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-10">
-                <div class="container justify-content-center align-items-center ">
-                    <Bar class="mt-5" :data="BarData" :options="BarOptions" />
+                <div class="col-lg-10">
+                    <div class="container justify-content-center align-items-center ">
+                        <Bar class="mt-5" :data="BarData" :options="BarOptions" />
+                    </div>
+                </div>
+                <div class="container overflow-auto mt-5" style="height: 400px;">
+                    <table class="table table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Month</th>
+                                <th scope="col">Amount of payment</th>
+                                <th scope="col">Principal payment</th>
+                                <th scope="col">Interest payment</th>
+                                <th scope="col">Balance owed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="item in loan_output.table" :key="item['month']">
+                                <th scope="row">{{ item["month"] }}</th>
+                                <td>{{ item["payment_amount"] }}</td>
+                                <td>{{ item["payment_principal"] }}</td>
+                                <td>{{ item["payment_interest"] }}</td>
+                                <td>{{ item["balance_owed"] }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="container overflow-auto mt-5" style="height: 400px;">
-                <table class="table table-striped">
-                    <thead class="table-dark">
-                        <tr>
-                            <th scope="col">Month</th>
-                            <th scope="col">Amount of payment</th>
-                            <th scope="col">Principal payment</th>
-                            <th scope="col">Interest payment</th>
-                            <th scope="col">Balance owed</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in loan_output.table" :key="item['month']">
-                            <th scope="row">{{ item["month"] }}</th>
-                            <td>{{ item["payment_amount"] }}</td>
-                            <td>{{ item["payment_principal"] }}</td>
-                            <td>{{ item["payment_interest"] }}</td>
-                            <td>{{ item["balance_owed"] }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
         </div>
     </div>
 </template>

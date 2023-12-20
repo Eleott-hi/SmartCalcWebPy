@@ -15,12 +15,28 @@ export default createStore({
       state.secondaryBtnBootstrapType = config.secondaryBtnType;
       state.isDarkMode = config.isDarkMode;
 
+      document.body.classList.toggle("dark-mode", state.isDarkMode);
 
       console.log(config);
     },
   },
 
+
   actions: {
+    async getConfig({ commit }) {
+      try {
+        const response = await fetch('http://localhost:8000/config');
+        if (!response.ok) {
+          throw new Error('Failed to fetch config');
+        }
+        const data = await response.json();
+        commit('updateConfig', data);
+        console.log('Config fetched successfully');
+      } catch (error) {
+        console.error('Error fetching config', error);
+      }
+    },
+
     saveConfig({ commit, state }) {
       $.ajax({
         url: 'http://localhost:8000/config',

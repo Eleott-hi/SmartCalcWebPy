@@ -21,7 +21,6 @@ install:
 dev: sass
 	cd $(PROJECT); npm run dev
 
-
 build:
 	cd $(PROJECT); npm run build
 

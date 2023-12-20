@@ -29,8 +29,6 @@ SECRET_KEY = 'django-insecure-wm8_d(ooy5ajsu^z$$st4klykb3g0cdk8w^l8ez!r4bm)ayldc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -57,11 +55,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    # "http://localhost:8000",
-]
-
 CORS_ALLOW_METHODS = [
     'GET',
     'POST',
@@ -72,6 +65,15 @@ CORS_ALLOW_METHODS = [
 
 ROOT_URLCONF = 'SmartCalcWeb.urls'
 
+# CORS_ALLOW_ALL_ORIGINS = True
+ALLOWED_HOSTS = []
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://localhost:8000",
+
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:8000",
+]
 
 TEMPLATES = [
     {
@@ -147,16 +149,15 @@ USE_TZ = True
 
 STATIC_URL = 'assets/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,  'assets'),  # Adjust the path based on your project structure
+    # Adjust the path based on your project structure
+    os.path.join(BASE_DIR,  'assets'),
 ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5173",
-]
+
 
 class RotatingFilename(TimedRotatingFileHandler):
     def doRollover(self):
@@ -170,6 +171,7 @@ class RotatingFilename(TimedRotatingFileHandler):
         )
         self.mode = "a"
         self.stream = self._open()
+
 
 LOGGING = {
     'version': 1,
@@ -192,8 +194,7 @@ LOGGING = {
     },
     'loggers': {
         '': {
-            'handlers': ['file','console'],
-            
+            'handlers': ['file', 'console'],
             'level': 'DEBUG',
             'propagate': True,
         },

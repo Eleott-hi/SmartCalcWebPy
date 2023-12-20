@@ -36,8 +36,16 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { onMounted, inject } from 'vue';
+
+// Inject the store instance
+const store = inject('store');
+
+// Lifecycle hook to trigger actions on component creation
+onMounted(() => {
+  // Dispatch the getConfig action from the store
+  store.dispatch('getConfig');
+});
 </script>
 
 <style scoped>

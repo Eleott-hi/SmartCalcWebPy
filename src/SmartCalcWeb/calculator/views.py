@@ -1,9 +1,12 @@
+import datetime
 import concurrent.futures
-from django.http import (HttpResponse,
-                         HttpResponseRedirect,
-                         HttpResponseBadRequest,
-                         JsonResponse,
-                         HttpResponseNotAllowed,)
+from django.http import (
+    HttpResponse,
+    HttpResponseRedirect,
+    HttpResponseBadRequest,
+    JsonResponse,
+    HttpResponseNotAllowed,
+)
 from django.shortcuts import render
 from rest_framework.response import Response
 import json
@@ -26,31 +29,48 @@ def Print(*args):
 def GetQuery(query):
     return {k: v[0] for k, v in dict(query).items()}
 
-@require_http_methods(["POST"])
+
+@require_http_methods(["GET", "POST"])
 def config(request):
     try:
-        data = json.loads(request.body.decode('utf-8'))
+        settings = CONFIG['CalculatorSettings']
 
-        primary_btn_type = data.get('primaryBtnType')
-        secondary_btn_type = data.get('secondaryBtnType')
-        is_dark_mode = data.get('isDarkMode')
-    
+        if request.method == 'POST':
+            data = json.loads(request.body.decode('utf-8'))
 
-        return JsonResponse({
-            'primaryBtnType': primary_btn_type,
-            'secondaryBtnType': secondary_btn_type,
-            'isDarkMode': is_dark_mode
-        }, status=200)
+            settings['primaryBtnType'] = data.get('primaryBtnType')
+            settings['secondaryBtnType'] = data.get('secondaryBtnType')
+            settings['isDarkMode'] = data.get('isDarkMode')
 
+            with open('config.toml', "w") as toml_file:
+                toml.dump(CONFIG, toml_file)
+
+        return JsonResponse(settings, status=200)
 
     except Exception as e:
         logger.error(f"{e}")
         return HttpResponseBadRequest(json.dumps({"error": str(e)}), content_type="application/json")
 
+
+@require_http_methods(["GET", "DELETE"])
+def history(request):
+    try:
+        if request.method == 'DELETE':
+            DeleteHistory()
+
+        res = GetHistory()
+
+        return JsonResponse(res, status=200)
+
+    except Exception as e:
+        logger.error(f"{e}")
+        return HttpResponseBadRequest(json.dumps({"error": str(e)}), content_type="application/json")
+
+
 def index(request):
-    html = "common/index.html"
+    html = "calculator/index.html"
     logger.info(f'{html} loaded')
-    return render(request, html, {'CONFIG': CONFIG})
+    return render(request, html)
 
 
 @require_http_methods(["GET"])
@@ -58,7 +78,6 @@ def calculate(request):
     try:
         query = GetQuery(request.GET)
         res = CalculateData(query['expression'], query['x'])
-
         return JsonResponse({'result': res}, status=200)
 
     except Exception as e:
@@ -67,7 +86,7 @@ def calculate(request):
 
 
 @require_http_methods(["GET"])
-def graph(request):
+def plot_calculate(request):
     try:
         query = GetQuery(request.GET)
         data_input = PlotDataInput.parse_obj(query)
@@ -81,7 +100,7 @@ def graph(request):
 
 
 @require_http_methods(["GET"])
-def loan_calculator(request):
+def loan_calculate(request):
     try:
         query = GetQuery(request.GET)
         data_input = LoanDataInput.parse_obj(query)
@@ -93,9 +112,9 @@ def loan_calculator(request):
         logger.error(f"{e}")
         return HttpResponseBadRequest(json.dumps({"error": str(e)}), content_type="application/json")
 
-import datetime
+
 @require_http_methods(["GET"])
-def deposit_calculator(request):
+def deposit_calculate(request):
     try:
         query = GetQuery(request.GET)
         data_input = DepositDataInput.parse_obj(query)

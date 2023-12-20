@@ -46,7 +46,7 @@ export default {
     methods: {
         Calculate() {
             $.ajax({
-                url: `http://localhost:8000/graph?${$.param(this.input_data)}`,
+                url: `http://localhost:8000/plot_calculate?${$.param(this.input_data)}`,
                 type: "GET",
                 success: (data) => { this.data = data; },
                 error: this.showErrorAlert
