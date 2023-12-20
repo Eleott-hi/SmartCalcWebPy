@@ -13,6 +13,22 @@ export default {
     };
   },
 
+  // mounted: {
+  // GetHistory() {
+  //   $.ajax({
+  //     url: `http://localhost:8000/history`,
+  //     type: "GET",
+  //     success: (data) => {
+  //       console.log(data);
+  //       this.history = data;
+  //     },
+  //     error: this.showErrorAlert,
+  //   });
+  // },
+  // },
+
+
+
   methods: {
     Calculate() {
       const expression_main = encodeURIComponent(this.expressions["main"]);
@@ -57,6 +73,33 @@ export default {
     SetExpressions() {
       this.expressions["main"] = this.historySelected.expression_main;
       this.expressions["x"] = this.historySelected.expression_x;
+    },
+
+    GetHistory() {
+      $.ajax({
+        url: `http://localhost:8000/history`,
+        type: "GET",
+        success: (data) => {
+          console.log(data);
+          this.history = data.history;
+        },
+        error: this.showErrorAlert,
+      });
+    },
+
+    DeleteHistory() {
+      $.ajax({
+        url: `http://localhost:8000/history`,
+        type: "DELETE",
+        headers: {
+          'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        },
+        success: (data) => {
+          console.log(data);
+          this.history = data.history
+        },
+        error: this.showErrorAlert,
+      });
     },
   },
 };
@@ -243,6 +286,9 @@ export default {
             expression={{ item.expression_main }}; x={{ item.expression_x }}
           </option>
         </select>
+        <button class="btn" :class="$store.state.primaryBtnBootstrapType" @click="DeleteHistory">Delete History</button>
+        <br>
+        <button class="btn" :class="$store.state.primaryBtnBootstrapType" @click="GetHistory">Get History</button>
       </div>
     </div>
 

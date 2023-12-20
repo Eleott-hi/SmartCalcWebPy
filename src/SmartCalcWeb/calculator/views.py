@@ -60,7 +60,7 @@ def history(request):
 
         res = GetHistory()
 
-        return JsonResponse(res, status=200)
+        return JsonResponse({"history": res}, status=200)
 
     except Exception as e:
         logger.error(f"{e}")

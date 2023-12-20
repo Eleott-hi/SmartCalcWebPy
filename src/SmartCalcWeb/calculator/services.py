@@ -75,8 +75,8 @@ def GetHistory():
 
     history_data = [
         {
-            'expression_main': main_expression.expression,
-            'expression_x': x_value_expression.expression,
+            'expression_main': main_expression.Expression,
+            'expression_x': x_value_expression.Expression,
         }
         for main_expression, x_value_expression in zip(main_expressions, x_value_expressions)
     ]
