@@ -3,14 +3,13 @@
     <img alt="Vue logo" class="logo" src="@/assets/logo.png" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="SmartCalcWeb" />
+      <Greetings msg="SmartCalcWeb" />
       <nav>
         <RouterLink :to="{ name: 'calculator' }">Calculator</RouterLink>
         <RouterLink :to="{ name: 'plot' }">Plot</RouterLink>
         <RouterLink :to="{ name: 'loan_calculator' }">Loan Calculator</RouterLink>
         <RouterLink :to="{ name: 'deposit_calculator' }">Deposit Calculator</RouterLink>
         <RouterLink :to="{ name: 'settings' }">Settings</RouterLink>
-        <RouterLink :to="{ name: 'settings2' }">Settings2</RouterLink>
         <RouterLink :to="{ name: 'about' }">About</RouterLink>
       </nav>
     </div>
@@ -25,8 +24,7 @@
       Powered by
       <a href="https://www.djangoproject.com/" target="_blank" rel="noopener">Django</a> +
       <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a> +
-      <a href="https://getbootstrap.com/" target="_blank" rel="noopener">Bootstrap</a> +
-      <a href="https://nginx.org/en/" target="_blank" rel="noopener">Nginx</a>.
+      <a href="https://getbootstrap.com/" target="_blank" rel="noopener">Bootstrap</a>
     </h5>
 
     <div class="container text-center">
@@ -37,15 +35,12 @@
 
 <script setup>
 import { onMounted, inject } from 'vue';
+import { RouterLink, RouterView } from 'vue-router'
+import Greetings from './components/Greetings.vue'
 
-// Inject the store instance
 const store = inject('store');
 
-// Lifecycle hook to trigger actions on component creation
-onMounted(() => {
-  // Dispatch the getConfig action from the store
-  store.dispatch('getConfig');
-});
+onMounted(() => { store.dispatch('getConfig'); });
 </script>
 
 <style scoped>

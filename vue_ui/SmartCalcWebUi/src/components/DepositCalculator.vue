@@ -30,7 +30,7 @@ export default {
     return {
       period_types: ["day", "week", "month", "quarter", "year", "halfyear"],
       result: null,
-      tmps: {
+      input_data: {
         term: 12,
         percent: 5,
         date_start: new Date(),
@@ -56,7 +56,7 @@ export default {
           {
             backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
             hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870"],
-            data: [this.tmps.sum_in, this.result.profite, this.result.income_sum],
+            data: [this.input_data.sum_in, this.result.profite, this.result.income_sum],
           },
         ],
       }
@@ -69,18 +69,18 @@ export default {
 
   methods: {
     Calculate() {
-      let input_data = { ...this.tmps };
+      let input_data = { ...this.input_data };
       input_data.date_start = new Date(input_data.date_start).toISOString();
 
-      if (!this.tmps.isActive_cop) {
+      if (!this.input_data.isActive_cop) {
         input_data.cop_period = 'none'
       }
 
-      if (!this.tmps.isActive_add) {
+      if (!this.input_data.isActive_add) {
         input_data.add_period = 'none'
       }
 
-      if (!this.tmps.isActive_sub) {
+      if (!this.input_data.isActive_sub) {
         input_data.sub_period = 'none'
       }
 
@@ -113,7 +113,7 @@ export default {
         <span class="input-group-text">
           <i class="bi bi-cash-stack text-secondary"></i>
         </span>
-        <input v-model="tmps.sum_in" id="amount" type="number" min="10000" class="form-control" placeholder="e.g. 100000"
+        <input v-model="input_data.sum_in" id="amount" type="number" min="10000" class="form-control" placeholder="e.g. 100000"
           required />
         <!-- tooltip -->
         <span class="input-group-text">
@@ -128,7 +128,7 @@ export default {
         <span class="input-group-text">
           <i class="bi bi-cash-stack text-secondary"></i>
         </span>
-        <input v-model="tmps.term" id="period" type="number" min="1" class="form-control" placeholder="e.g. 100000"
+        <input v-model="input_data.term" id="period" type="number" min="1" class="form-control" placeholder="e.g. 100000"
           required />
         <!-- tooltip -->
         <span class="input-group-text">
@@ -139,14 +139,14 @@ export default {
       </div>
       <label for="start_day" class="form-label">Start Day:</label>
       <div class="mb-4 input-group">
-        <VueDatePicker v-model="tmps.date_start" text-input placeholder="Enter date (mm/dd/yyyy)"></VueDatePicker>
+        <VueDatePicker v-model="input_data.date_start" text-input placeholder="Enter date (mm/dd/yyyy)"></VueDatePicker>
       </div>
       <label for="rate" class="form-label">Interest rate, %:</label>
       <div class="mb-4 input-group">
         <span class="input-group-text">
           <i class="bi bi-percent text-secondary"></i>
         </span>
-        <input v-model="tmps.percent" type="number" id="rate" min="1" step="1" class="form-control" placeholder="e.g. 5"
+        <input v-model="input_data.percent" type="number" id="rate" min="1" step="1" class="form-control" placeholder="e.g. 5"
           required />
         <!-- tooltip -->
         <span class="input-group-text">
@@ -159,19 +159,19 @@ export default {
         <div class="col">
           <div class="mb-4 input-group">
             <div class="form-check form-switch">
-              <input v-model="tmps.isActive_cop" class="form-check-input" type="checkbox" id="CapitalizationCheckBox"
+              <input v-model="input_data.isActive_cop" class="form-check-input" type="checkbox" id="CapitalizationCheckBox"
                 checked />
               <label class="form-check-label" for="CapitalizationCheckBox">Interest Capitalization</label>
             </div>
           </div>
         </div>
-        <div class="col" v-if="tmps.isActive_cop">
+        <div class="col" v-if="input_data.isActive_cop">
           <label for="period-payments" class="form-label">Capitalization Frequency:</label>
           <div class="mb-4 input-group">
             <span class="input-group-text">
               <i class="bi bi-wallet2 text-secondary"></i>
             </span>
-            <select v-model="tmps.cop_period" class="form-select">
+            <select v-model="input_data.cop_period" class="form-select">
               <option v-for="item in period_types" :value="item" :key="item">
                 Every {{ item }}
               </option>
@@ -181,12 +181,12 @@ export default {
       </div>
       <div class="mb-4 input-group">
         <div class="form-check form-switch">
-          <input v-model="tmps.isActive_add" class="form-check-input" type="checkbox" id="IncomeCheckBox" checked />
+          <input v-model="input_data.isActive_add" class="form-check-input" type="checkbox" id="IncomeCheckBox" checked />
           <label class="form-check-label" for="IncomeCheckBox">
             Income</label>
         </div>
       </div>
-      <div class="row" v-if="tmps.isActive_add">
+      <div class="row" v-if="input_data.isActive_add">
         <div class="col">
           <label for="income" class="form-label">Income:</label>
           <div class="input-group mb-4">
@@ -194,7 +194,7 @@ export default {
             <span class="input-group-text">
               <i class="bi bi-cash-stack text-secondary"></i>
             </span>
-            <input v-model="tmps.sum_add" id="period" type="number" min="10000" class="form-control"
+            <input v-model="input_data.sum_add" id="period" type="number" min="10000" class="form-control"
               placeholder="e.g. 100000" required />
             <!-- tooltip -->
             <span class="input-group-text">
@@ -210,7 +210,7 @@ export default {
             <span class="input-group-text">
               <i class="bi bi-wallet2 text-secondary"></i>
             </span>
-            <select v-model="tmps.add_period" class="form-select">
+            <select v-model="input_data.add_period" class="form-select">
               <option v-for="item in period_types" :value="item" :key="item">
                 Every {{ item }}
               </option>
@@ -220,11 +220,11 @@ export default {
       </div>
       <div class="mb-4 input-group">
         <div class="form-check form-switch">
-          <input v-model="tmps.isActive_sub" class="form-check-input" type="checkbox" id="OutcomeCheckBox" checked />
+          <input v-model="input_data.isActive_sub" class="form-check-input" type="checkbox" id="OutcomeCheckBox" checked />
           <label class="form-check-label" for="OutcomeCheckBox">Outcome</label>
         </div>
       </div>
-      <div class="row" v-if="tmps.isActive_sub">
+      <div class="row" v-if="input_data.isActive_sub">
         <div class="col">
           <label for="income" class="form-label">Outcome:</label>
           <div class="input-group mb-4">
@@ -232,7 +232,7 @@ export default {
             <span class="input-group-text">
               <i class="bi bi-cash-stack text-secondary"></i>
             </span>
-            <input v-model="tmps.sum_sub" id="period" type="number" min="10000" class="form-control"
+            <input v-model="input_data.sum_sub" id="period" type="number" min="10000" class="form-control"
               placeholder="e.g. 100000" required />
             <!-- tooltip -->
             <span class="input-group-text">
@@ -248,7 +248,7 @@ export default {
             <span class="input-group-text">
               <i class="bi bi-wallet2 text-secondary"></i>
             </span>
-            <select v-model="tmps.sub_period" class="form-select">
+            <select v-model="input_data.sub_period" class="form-select">
               <option v-for="item in period_types" :value="item" :key="item">
                 Every {{ item }}
               </option>

@@ -5,7 +5,6 @@ import PlotView from '../views/PlotView.vue'
 import DepositView from '../views/DepositView.vue'
 import LoanView from '../views/LoanView.vue'
 import SettingsView from '../views/SettingsView.vue'
-import SettingsView2 from '../views/SettingsView2.vue'
 
 
 const router = createRouter({
@@ -40,11 +39,6 @@ const router = createRouter({
       path: '/settings',
       name: 'settings',
       component: SettingsView
-    },
-    {
-      path: '/settings2',
-      name: 'settings2',
-      component: SettingsView2
     },
   ]
 })

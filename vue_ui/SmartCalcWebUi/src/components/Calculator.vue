@@ -13,21 +13,7 @@ export default {
     };
   },
 
-  // mounted: {
-  // GetHistory() {
-  //   $.ajax({
-  //     url: `http://localhost:8000/history`,
-  //     type: "GET",
-  //     success: (data) => {
-  //       console.log(data);
-  //       this.history = data;
-  //     },
-  //     error: this.showErrorAlert,
-  //   });
-  // },
-  // },
-
-
+  mounted() { this.GetHistory(); },
 
   methods: {
     Calculate() {
@@ -112,7 +98,7 @@ export default {
       <div class="row mb-2">
         <div class="col-12 btn-group" role="group">
           <input type="text" class="form-control" v-model="expressions['main']" @focus="FocusInput('main')"
-            placeholder="Enter expression" />
+            @keyup.enter="Calculate" placeholder="Enter expression" />
         </div>
       </div>
       <!-- 2 Row -->
@@ -123,7 +109,7 @@ export default {
           </button>
         </div>
         <div class="col-8">
-          <input class="form-control w-100" v-model="expressions['x']" @focus="FocusInput('x')"
+          <input class="form-control w-100" v-model="expressions['x']" @focus="FocusInput('x')" @keyup.enter="Calculate"
             placeholder="Enter x value or expression" />
         </div>
       </div>
@@ -286,19 +272,9 @@ export default {
             expression={{ item.expression_main }}; x={{ item.expression_x }}
           </option>
         </select>
-        <button class="btn" :class="$store.state.primaryBtnBootstrapType" @click="DeleteHistory">Delete History</button>
-        <br>
-        <button class="btn" :class="$store.state.primaryBtnBootstrapType" @click="GetHistory">Get History</button>
+        <button class="btn" :class="$store.state.primaryBtnBootstrapType" @click="DeleteHistory">Delete All</button>
       </div>
     </div>
-
-    <!-- <div>
-            Main Expression: {{ expressions['main'] }}
-            <br>
-            X Expression: {{ expressions['x'] }}
-            <br>
-            Active Input: {{ activeInput }}
-        </div> -->
   </div>
 </template>
 

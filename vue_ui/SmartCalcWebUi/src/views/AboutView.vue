@@ -1,10 +1,10 @@
 
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import About from '../components/About.vue'
 </script>
 
 <template>
   <main class="mt-5">
-    <TheWelcome />
+    <About />
   </main>
 </template>

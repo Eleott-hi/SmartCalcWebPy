@@ -16,14 +16,6 @@ export default {
                 period: 12,
                 paymentsType: 'annuity',
             },
-            x: [1, 2, 3],
-            // from: -10.0,
-            // to: 10.0,
-            // label: '',
-            // scales: {
-            //     xAxes: [{ ticks: { min: -10, max: 10 } }],
-            //     yAxes: [{ ticks: { min: -10, max: 10 } }],
-            // },
             loan_output: null,
         }
     },
@@ -117,6 +109,7 @@ export default {
                 }
             }
         },
+        
         PieData() {
             return {
                 labels: ['Main debt', 'Interest'],

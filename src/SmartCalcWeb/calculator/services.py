@@ -19,7 +19,7 @@ def CalculateRPN(expression: str, x_value: float = 0) -> float | None:
     return None if isnan(y) else y
 
 
-def Calculate(expression: str, x_value: float = 0) -> float:
+def Calculate(expression: str, x_value: float = 0) -> float | None:
     logger.info(f"Expression: '{expression}', x: {x_value}")
     res = CalculateRPN(expression, x_value)
     logger.info(f"Result: {res}")
@@ -58,7 +58,7 @@ def CalculateData(main_exp: str, x_exp: str) -> str:
     return "nan" if res == None else str(res)
 
 
-def DeleteHistory():
+def DeleteHistory() -> None:
     logger.info(f"Deleting history...")
 
     MainExpression.objects.all().delete()
@@ -67,7 +67,7 @@ def DeleteHistory():
     logger.info(f"Success!")
 
 
-def GetHistory():
+def GetHistory() -> list[dict]:
     logger.info(f"Getting history...")
 
     main_expressions = MainExpression.objects.all()

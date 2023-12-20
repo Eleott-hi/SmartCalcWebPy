@@ -11,6 +11,7 @@ urlpatterns = [
     path("settings", views.index, name="index"),
     path("about", views.index, name="index"),
     
+    #APIs
     path("config", views.config, name="config"),
     path("history", views.history, name="history"),
     path("calculate", views.calculate, name="calculate"),

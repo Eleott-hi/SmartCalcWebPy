@@ -1,5 +1,5 @@
 <script setup>
-import WelcomeItem from './WelcomeItem.vue'
+import AboutItem from './AboutItem.vue'
 import IconBaseCalculator from './icons/IconBaseCalculator.vue'
 import IconAdvancedCalculator from './icons/IconAdvancedCalculator.vue'
 import IconPlot from './icons/IconPlot.vue'
@@ -10,7 +10,7 @@ import IconSupport from './icons/IconSupport.vue'
 
 <template>
   <div>
-    <WelcomeItem>
+    <AboutItem>
       <template #icon>
         <IconBaseCalculator />
       </template>
@@ -18,9 +18,9 @@ import IconSupport from './icons/IconSupport.vue'
       <RouterLink :to="{ name: 'calculator' }">SmartCalcWeb</RouterLink>
       supports basic arithmetic operations, including addition, subtraction, multiplication, and division.
       Simply type your expression in the input field and press Enter to get the result instantly.
-    </WelcomeItem>
+    </AboutItem>
 
-    <WelcomeItem>
+    <AboutItem>
       <template #icon>
         <IconAdvancedCalculator />
       </template>
@@ -29,9 +29,9 @@ import IconSupport from './icons/IconSupport.vue'
       <RouterLink :to="{ name: 'calculator' }">SmartCalcWeb</RouterLink>
       can handle it all. Use parentheses, exponents, square
       roots, and more to create intricate calculations with ease.
-    </WelcomeItem>
+    </AboutItem>
 
-    <WelcomeItem>
+    <AboutItem>
       <template #icon>
         <IconPlot />
       </template>
@@ -42,9 +42,9 @@ import IconSupport from './icons/IconSupport.vue'
       and see the graph come to life. Perfect for students, educators, and professionals who need to illustrate
       mathematical
       concepts.
-    </WelcomeItem>
+    </AboutItem>
 
-    <WelcomeItem>
+    <AboutItem>
       <template #icon>
         <IconLoan />
       </template>
@@ -54,9 +54,9 @@ import IconSupport from './icons/IconSupport.vue'
       helps you plan your finances effectively. Input the loan amount, interest rate, and
       duration to calculate monthly payments and total interest. Stay informed about your financial commitments
       effortlessly.
-    </WelcomeItem>
+    </AboutItem>
 
-    <WelcomeItem>
+    <AboutItem>
       <template #icon>
         <IconDeposit />
       </template>
@@ -67,9 +67,9 @@ import IconSupport from './icons/IconSupport.vue'
       assists you in understanding the growth of your
       savings. Input the initial deposit, interest rate, and time period to visualize your savings’ potential.
 
-    </WelcomeItem>
+    </AboutItem>
 
-    <WelcomeItem>
+    <AboutItem>
       <template #icon>
         <IconSupport />
       </template>
@@ -88,6 +88,6 @@ import IconSupport from './icons/IconSupport.vue'
       <RouterLink :to="{ name: 'calculator' }"> SmartCalcWeb </RouterLink>
       is more than just a calculator. It’s your smart choice for swift and accurate calculations. Start
       exploring its powerful features today and experience mathematics like never before!
-    </WelcomeItem>
+    </AboutItem>
   </div>
 </template>
