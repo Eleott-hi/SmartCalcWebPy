@@ -159,42 +159,42 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': os.path.join('../logs', 'logs'),
-            'when': 'M',
-            # S - Seconds
-            # M - Minutes
-            # H - Hours
-            # D - Days
-            # midnight - roll over at midnight
-            # W{0-6} - roll over on a certain day; 0 - Monday
-            'interval': 1,
-            'backupCount': 10,  # Number of log files to keep (optional)
-            'formatter': 'standard',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'standard',
-        },
-    },
-    'loggers': {
-        '': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-    'formatters': {
-        'standard': {
-            'format': '%(asctime)s [%(levelname)s] %(name)s/%(funcName)s: %(message)s',
-            'datefmt': '%Y-%m-%d UTC %H:%M:%S',
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.handlers.TimedRotatingFileHandler',
+#             'filename': os.path.join('../logs', 'logs'),
+#             'when': 'M',
+#             # S - Seconds
+#             # M - Minutes
+#             # H - Hours
+#             # D - Days
+#             # midnight - roll over at midnight
+#             # W{0-6} - roll over on a certain day; 0 - Monday
+#             'interval': 1,
+#             'backupCount': 10,  # Number of log files to keep (optional)
+#             'formatter': 'standard',
+#         },
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'standard',
+#         },
+#     },
+#     'loggers': {
+#         '': {
+#             'handlers': ['file', 'console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+#     'formatters': {
+#         'standard': {
+#             'format': '%(asctime)s [%(levelname)s] %(name)s/%(funcName)s: %(message)s',
+#             'datefmt': '%Y-%m-%d UTC %H:%M:%S',
+#         },
+#     },
+# }
