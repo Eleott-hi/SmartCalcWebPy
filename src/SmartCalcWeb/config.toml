@@ -1,4 +1,4 @@
 [CalculatorSettings]
-primaryBtnType = "btn-success"
-secondaryBtnType = "btn-secondary"
+primaryBtnType = "btn-danger"
+secondaryBtnType = "btn-warning"
 isDarkMode = true

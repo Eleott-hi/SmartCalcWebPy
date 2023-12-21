@@ -166,7 +166,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': os.path.join('/project/logs', 'logs'),
+            'filename': os.path.join('../logs', 'logs'),
             'when': 'M',
             # S - Seconds
             # M - Minutes

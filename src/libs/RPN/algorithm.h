@@ -2,9 +2,10 @@
 #define MEMORY_COMMON_ALGORITHM_H_
 
 #include <algorithm>
-#include <stdexcept>
 #include <functional>
 #include <numeric>
+#include <stdexcept>
+#include <vector>
 
 template <typename ContainerOut, typename ContainerIn, typename Function>
 ContainerOut Transform(ContainerIn const& in, Function const& function) {
@@ -80,11 +81,11 @@ TypeOut Cast(TypeIn ptr) {
   return static_cast<TypeOut>(ptr);
 }
 
-template <typename Type, template <typename> class Container>
-Type Pop(Container<Type>& stack) {
+template <typename Type, typename Container>
+Type Pop(Container& stack) {
   if (stack.empty()) throw std::invalid_argument("Pop: stack is empty");
 
-  auto res = stack.top();
+  Type res = stack.top();
   stack.pop();
   return res;
 }

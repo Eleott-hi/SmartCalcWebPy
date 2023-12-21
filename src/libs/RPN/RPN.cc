@@ -28,7 +28,7 @@ RPN::Lexems RPN::FormRPN(Lexems const &lexems) {
 
     } else if (lexem == Priority::PARENTHESIS_CLOSE) {
       while (stack.top() != Priority::PARENTHESIS_OPEN) {
-        rpn.push_back(Pop(stack));
+        rpn.push_back(Pop<Lexem>(stack));
       }
       stack.pop();
 
@@ -36,13 +36,13 @@ RPN::Lexems RPN::FormRPN(Lexems const &lexems) {
       while (!stack.empty() &&
              (lexem < stack.top() ||
               lexem != Priority::POW && lexem == stack.top())) {
-        rpn.push_back(Pop(stack));
+        rpn.push_back(Pop<Lexem>(stack));
       }
       stack.push(lexem);
     }
   }
 
-  while (!stack.empty()) rpn.push_back(Pop(stack));
+  while (!stack.empty()) rpn.push_back(Pop<Lexem>(stack));
 
   return rpn;
 }
@@ -59,8 +59,8 @@ double RPN::CalculateLexems(Lexems const &lexems, double x_value) {
       continue;
     }
 
-    double y = lexem == Priority::FUN ? 0.0 : Pop(stack);
-    double x = Pop(stack);
+    double y = lexem == Priority::FUN ? 0.0 : Pop<double>(stack);
+    double x = Pop<double>(stack);
     double result = lexem.func_(x, y);
 
     Print("Calculate:", "\n\tLexem:", lexem, "\n\tx:", x, "\n\ty:", y,

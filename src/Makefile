@@ -8,6 +8,10 @@ APP := calculator
 
 start: pip_update pip_install lib migrate test run_server
 
+install: 
+	cd $(PACKAGE); python3 -m PyInstaller --onefile --hidden-import=calculator manage.py
+
+
 docker:
 	-@docker compose up
 

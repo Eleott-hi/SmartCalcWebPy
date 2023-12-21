@@ -1,43 +1,49 @@
 const { app, BrowserWindow } = require('electron');
 const { spawn } = require('child_process');
 
+function startDjangoServer() {
+  // Use spawn to run the Django server start command
+  const serverProcess = spawn('make', { cwd: '../src' });
+
+  // Log server output to the console
+  serverProcess.stdout.on('data', (data) => {
+    console.log(`Django Server output: ${data}`);
+  });
+
+  // Log server errors to the console
+  serverProcess.stderr.on('data', (data) => {
+    console.error(`Django Server error: ${data}`);
+  });
+
+  // Log when the server process closes
+  serverProcess.on('close', (code) => {
+    console.log(`Django Server process exited with code ${code}`);
+  });
+
+  return serverProcess;
+}
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true,
-    },
+      nodeIntegration: true
+    }
   });
 
-//   // Start Django server
-  // const djangoProcess = spawn('python', ['manage.py', 'runserver']);
-  const djangoProcess = spawn('docker', ['manage.py', 'runserver']);
-
-//   // Handle Django server output
-//   djangoProcess.stdout.on('data', (data) => {
-//     console.log(`Django Server: ${data}`);
-//   });
-
-//   djangoProcess.stderr.on('data', (data) => {
-//     console.error(`Django Server Error: ${data}`);
-//   });
-
-  // Load your Django server URL in Electron app
-  win.loadURL('http://localhost:8000'); // Change the port if your Django server is running on a different port
-
-  // Open the DevTools.
-  win.webContents.openDevTools();
-
-  // Event handler for when the window is closed.
-//   win.on('closed', () => {
-//     // Stop the Django server when the Electron app is closed.
-//     djangoProcess.kill();
-//     app.quit();
-//   });
+  win.loadURL('http://localhost:8000/');
 }
 
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+  const serverProcess = startDjangoServer();
+
+  serverProcess.stdout.on('data', (data) => {
+    if (data.includes('Starting development server at http://127.0.0.1:8000/')) {
+      createWindow();
+    }
+  });
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

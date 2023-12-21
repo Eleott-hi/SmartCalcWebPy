@@ -8,12 +8,13 @@ djangorestframework==3.14.0
 Markdown==3.5
 numpy==1.26.0
 pybind11==2.10.4
-PybindDepositCalculator @ file:///project/libs/Deposit
-PybindLoanCalculator @ file:///project/libs/Loan
-PybindRPN @ file:///project/libs/RPN
+# PybindDepositCalculator @ file:///project/libs/Deposit
+# PybindLoanCalculator @ file:///project/libs/Loan
+# PybindRPN @ file:///project/libs/RPN
 pydantic==2.3.0
 pydantic_core==2.6.3
 pytz==2023.3.post1
 sqlparse==0.4.4
 toml==0.10.2
 typing_extensions==4.8.0
+pyinstaller
