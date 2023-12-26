@@ -8,11 +8,11 @@ from django.http import (
     HttpResponseNotAllowed,
 )
 from django.shortcuts import render
-from rest_framework.response import Response
+# from rest_framework.response import Response
 import json
 import logging
 import toml
-from rest_framework.decorators import api_view
+# from rest_framework.decorators import api_view
 from django.views.decorators.http import require_http_methods
 from .pydantic_serializer import *
 from .services import *
