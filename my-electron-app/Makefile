@@ -1,8 +1,8 @@
-if (`uname` == "Darwin")
-OPEN := open
-else
-OPEN := 
-endif
+# if (`uname` == "Darwin")
+# OPEN := open
+# else
+# OPEN := 
+# endif
 
 all: copy build open
 

@@ -8,9 +8,14 @@ APP := calculator
 
 start: pip_update pip_install lib migrate test run_server
 
-install: 
+copy_ui:
 	cd ../vue_ui; make build;
-	cp ../vue_ui/SmartCalcWebUi/dist/assets $(PROJECT)/assets
+	rm -rf $(PROJECT)/assets
+	cp -r ../vue_ui/SmartCalcWebUi/dist/assets $(PROJECT)
+	cp ../vue_ui/SmartCalcWebUi/dist/index.html $(PROJECT)/calculator/templates/calculator/index.html
+
+
+install: 
 	pyinstaller manage.spec -y
 
 docker:
@@ -80,4 +85,4 @@ pip_install:
 .PHONY: docker
 
 pyinstaller:
-	/opt/goinfre/pintoved/SmartCalcWebPy/src/dist/manage/manage runserver --noreload
+	./dist/manage/manage runserver --noreload
