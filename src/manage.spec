@@ -6,10 +6,10 @@ a = Analysis(
     pathex=['SmartCalcWeb/calculator'],
     binaries=[],
     datas=[
-        ('./logs', 'logs' ), 
-        ('SmartCalcWeb/config.toml', '.'), 
-        ('SmartCalcWeb/calculator/templates', 'calculator/templates'), 
+        ('SmartCalcWeb/logs', 'logs' ), 
         ('SmartCalcWeb/assets', 'assets'),
+        ('SmartCalcWeb/calculator/configs', 'calculator/configs'), 
+        ('SmartCalcWeb/calculator/templates', 'calculator/templates'), 
     ],
     hiddenimports=['calculator.apps' , 'calculator.urls'],
     hookspath=[],

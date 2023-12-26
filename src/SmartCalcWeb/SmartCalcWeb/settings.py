@@ -19,6 +19,9 @@ from datetime import datetime
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+print('Starting development server', flush=True)
+# print('Django basedir:',BASE_DIR, flush=True)
+# print('Django settings file:', Path(__file__).resolve())
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -149,8 +152,7 @@ USE_TZ = True
 
 STATIC_URL = 'assets/'
 STATICFILES_DIRS = [
-    # Adjust the path based on your project structure
-    os.path.join(BASE_DIR,  'assets'),
+   BASE_DIR / 'assets',
 ]
 
 # Default primary key field type
@@ -159,42 +161,42 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'file': {
-#             'level': 'DEBUG',
-#             'class': 'logging.handlers.TimedRotatingFileHandler',
-#             'filename': os.path.join('../logs', 'logs'),
-#             'when': 'M',
-#             # S - Seconds
-#             # M - Minutes
-#             # H - Hours
-#             # D - Days
-#             # midnight - roll over at midnight
-#             # W{0-6} - roll over on a certain day; 0 - Monday
-#             'interval': 1,
-#             'backupCount': 10,  # Number of log files to keep (optional)
-#             'formatter': 'standard',
-#         },
-#         'console': {
-#             'level': 'DEBUG',
-#             'class': 'logging.StreamHandler',
-#             'formatter': 'standard',
-#         },
-#     },
-#     'loggers': {
-#         '': {
-#             'handlers': ['file', 'console'],
-#             'level': 'DEBUG',
-#             'propagate': True,
-#         },
-#     },
-#     'formatters': {
-#         'standard': {
-#             'format': '%(asctime)s [%(levelname)s] %(name)s/%(funcName)s: %(message)s',
-#             'datefmt': '%Y-%m-%d UTC %H:%M:%S',
-#         },
-#     },
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': BASE_DIR / 'logs/logs',
+            'when': 'M',
+            # S - Seconds
+            # M - Minutes
+            # H - Hours
+            # D - Days
+            # midnight - roll over at midnight
+            # W{0-6} - roll over on a certain day; 0 - Monday
+            'interval': 1,
+            'backupCount': 5,  # Number of log files to keep (optional)
+            'formatter': 'standard',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s/%(funcName)s: %(message)s',
+            'datefmt': '%Y-%m-%d UTC %H:%M:%S',
+        },
+    },
+}

@@ -23,6 +23,8 @@ dev: sass
 
 build:
 	cd $(PROJECT); npm run build
+	cd $(PROJECT)/dist; mv favicon.ico assets/favicon.ico
+
 
 chart:
 	cd $(PROJECT); npm install vue-chartjs chart.js @vuepic/vue-datepicker

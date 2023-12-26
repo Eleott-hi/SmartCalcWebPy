@@ -9,8 +9,9 @@ APP := calculator
 start: pip_update pip_install lib migrate test run_server
 
 install: 
-	cd $(PACKAGE); python3 -m PyInstaller --onefile --hidden-import=calculator manage.py
-
+	cd ../vue_ui; make build;
+	cp ../vue_ui/SmartCalcWebUi/dist/assets $(PROJECT)/assets
+	pyinstaller manage.spec -y
 
 docker:
 	-@docker compose up
@@ -31,7 +32,7 @@ admin:
 	cd $(PACKAGE); python3 manage.py createsuperuser
 
 test:
-	cd $(PACKAGE); python3 manage.py test
+	cd $(PACKAGE); python3 manage.py test $(APP)
 
 lib:
 	cd libs/RPN; make
@@ -77,3 +78,6 @@ pip_install:
 	pip install -r requirements.txt
 
 .PHONY: docker
+
+pyinstaller:
+	/opt/goinfre/pintoved/SmartCalcWebPy/src/dist/manage/manage runserver --noreload

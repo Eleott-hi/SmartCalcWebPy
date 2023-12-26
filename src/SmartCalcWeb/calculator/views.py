@@ -12,23 +12,21 @@ from django.shortcuts import render
 import json
 import logging
 import toml
+from pathlib import Path
 # from rest_framework.decorators import api_view
 from django.views.decorators.http import require_http_methods
 from .pydantic_serializer import *
 from .services import *
 
-CONFIG = toml.load('config.toml')
-
-logger = logging.getLogger(__name__)
-
-
 def Print(*args):
     print(*args, flush=True)
 
+base_dir = Path(__file__).parent.parent
+config_path = base_dir / 'calculator/configs/config.toml'
+CONFIG = toml.load(config_path)
 
 def GetQuery(query):
     return {k: v[0] for k, v in dict(query).items()}
-
 
 @require_http_methods(["GET", "POST"])
 def config(request):
