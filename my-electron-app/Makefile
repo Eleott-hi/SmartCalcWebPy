@@ -1,8 +1,11 @@
-# if (`uname` == "Darwin")
-# OPEN := open
-# else
-# OPEN := 
-# endif
+UNAME := $(shell uname)
+OPEN :=
+APP := "my-electron-app Setup 1.0.0.exe"
+
+ifeq ($(UNAME), Darwin)
+	OPEN := open
+	APP := mac/my-electron-app.app
+endif
 
 all: copy build open
 
@@ -11,7 +14,7 @@ clean:
 	rm -rf ./dist
 
 copy:
-	cd ../src; make install
+	cd ../src; make 
 	cp -r ../src/dist/manage .
 
 build:
@@ -21,4 +24,4 @@ start:
 	npm run start
 
 open:
-	open ./dist/mac/my-electron-app.app
+	$(OPEN) ./dist/$(APP); 

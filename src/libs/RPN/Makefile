@@ -2,4 +2,4 @@
 all: run
 
 run: 
-	python -m pip install .
+	python3 -m pip install .

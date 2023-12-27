@@ -6,7 +6,7 @@ PACKAGE := $(PROJECT)
 APP_PACKAGE := django-polls
 APP := calculator
 
-start: pip_update pip_install lib migrate test run_server
+all: pip_update pip_install lib migrate test install
 
 copy_ui:
 	cd ../vue_ui; make build;
@@ -35,9 +35,6 @@ run_server:
 
 admin:
 	cd $(PACKAGE); python3 manage.py createsuperuser
-
-test:
-	cd $(PACKAGE); python3 manage.py test $(APP)
 
 lib:
 	cd libs/RPN; make

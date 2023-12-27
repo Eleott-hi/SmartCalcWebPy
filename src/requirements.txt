@@ -11,9 +11,9 @@ Markdown==3.5
 numpy==1.26.0
 packaging==23.2
 pybind11==2.10.4
-PybindDepositCalculator @ file:///opt/goinfre/pintoved/SmartCalcWebPy/src/libs/Deposit
-PybindLoanCalculator @ file:///opt/goinfre/pintoved/SmartCalcWebPy/src/libs/Loan
-PybindRPN @ file:///opt/goinfre/pintoved/SmartCalcWebPy/src/libs/RPN
+# PybindDepositCalculator @ file:///opt/goinfre/pintoved/SmartCalcWebPy/src/libs/Deposit
+# PybindLoanCalculator @ file:///opt/goinfre/pintoved/SmartCalcWebPy/src/libs/Loan
+# PybindRPN @ file:///opt/goinfre/pintoved/SmartCalcWebPy/src/libs/RPN
 pydantic==2.3.0
 pydantic_core==2.6.3
 pyinstaller==6.3.0

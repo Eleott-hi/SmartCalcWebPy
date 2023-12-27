@@ -17,14 +17,28 @@
   },
   "build": {
     "appId": "com.yourcompany.yourelectronapp",
+    "extraResources": [
+      {
+        "from": "manage",
+        "to": "manage",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
     "mac": {
-      "target": "dmg",
-      "extraResources": [
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    },
+    "win": {
+      "target": [
         {
-          "from": "manage",
-          "to": "manage",
-          "filter": [
-            "**/*"
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
           ]
         }
       ]
