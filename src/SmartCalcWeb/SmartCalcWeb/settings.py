@@ -160,6 +160,11 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+logging_dir = BASE_DIR / 'logs'
+
+if not os.path.exists(logging_dir):
+    os.makedirs(logging_dir)
+
 
 LOGGING = {
     'version': 1,
@@ -168,7 +173,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': BASE_DIR / 'logs/logs',
+            'filename': logging_dir / 'logs',
             'when': 'M',
             # S - Seconds
             # M - Minutes
