@@ -1,6 +1,6 @@
 PROJECT := SmartCalcWeb
 
-IP := 0.0.0.0
+IP := localhost
 PORT := 8000
 PACKAGE := $(PROJECT)
 APP_PACKAGE := django-polls
@@ -82,4 +82,4 @@ pip_install:
 .PHONY: docker
 
 pyinstaller:
-	./dist/manage/manage runserver --noreload
+	./dist/manage/manage runserver $(IP):$(PORT) --noreload

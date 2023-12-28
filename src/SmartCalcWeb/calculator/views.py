@@ -40,7 +40,7 @@ def config(request):
             settings['secondaryBtnType'] = data.get('secondaryBtnType')
             settings['isDarkMode'] = data.get('isDarkMode')
 
-            with open('config.toml', "w") as toml_file:
+            with open(config_path, "w") as toml_file:
                 toml.dump(CONFIG, toml_file)
 
         return JsonResponse(settings, status=200)
