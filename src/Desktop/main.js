@@ -24,7 +24,7 @@ const print_dir = (win) => {
 };
 
 const server_up = (win) => {
-    const managePath = path.resolve(__dirname);
+    const managePath = path.resolve(__dirname, '..');
     const command = managePath + '/manage/manage'
 
     console.log('Manage Path:', command);

@@ -14,14 +14,13 @@ clean:
 	rm -rf ./dist
 
 copy:
-	cd ../src; make install
-	cp -r ../src/dist/manage .
+	cp -r ../Django/dist/manage .
 
 build:
 	npm run build
 
 start:
 	npm run start
-
+	
 open:
 	$(OPEN) ./dist/$(APP); 
