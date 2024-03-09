@@ -5,10 +5,9 @@ SmartCalc v4.0 is a Python-based web application designed to provide advanced ma
 ## Stack Usage
 
 - Python 3.11
-- MVC framework (Django or Flask)
+- MVC framework (Django)
 - Server-Side Rendering
 - Docker Compose
-- JavaScript (for graph plotting)
 
 ## Build Instructions
 
