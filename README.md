@@ -33,7 +33,7 @@ docker-compose up
 SmartCalc v4.0 implements various mathematical and financial functionalities, adhering to MVC architecture and Google Code Style guidelines. It provides a user-friendly interface for performing complex calculations and analyzing financial scenarios.
 
 ## Features
-### Part 1: Implementation of SmartCalc v4.0
+### 1: Implementation of SmartCalc v4.0
 Developed in Python 3.11
 MVC framework (Django or Flask)
 Server-Side Rendering
@@ -42,14 +42,21 @@ Help section with program interface description
 History of operations with load and clear options
 Support for arithmetic expressions and mathematical functions
 Graph plotting functionality
-### Part 2: Credit Calculator
+
+![Calc](misc/images/calc.gif)
+![Plot](misc/images/plot.gif)
+
+### 2: Credit Calculator
 Calculates monthly payment, overpayment, and total payment
 Input: total loan amount, term, interest rate, and type (annuity or differentiated)
-### Part 3: Deposit Calculator
+### 3: Deposit Calculator
 Calculates accrued interest, tax amount, and final deposit amount
 Input: deposit amount, term, interest rate, tax rate, payment frequency, interest capitalization, deposits list, withdrawals list
-### Part 4: Configuration and Logging
+
+![Plot](misc/images/credit_deposit.gif)
+
+### 4: Configuration and Logging
 Reads settings from a configuration file
 Supports logging of operations history with rotation period customization
-### Part 5: JS Graphics
-Utilizes a JS component for client-side graph plotting
+
+![Plot](misc/images/settings.gif)
