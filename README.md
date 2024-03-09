@@ -35,9 +35,8 @@ SmartCalc v4.0 implements various mathematical and financial functionalities, ad
 ## Features
 ### 1: Implementation of SmartCalc v4.0
 Developed in Python 3.11
-MVC framework (Django or Flask)
-Server-Side Rendering
-Reuses model from SmartCalc v3.0
+MVC framework (Django)
+Reuses model from SmartCalc v3.0 written in C++
 Help section with program interface description
 History of operations with load and clear options
 Support for arithmetic expressions and mathematical functions
@@ -49,6 +48,7 @@ Graph plotting functionality
 ### 2: Credit Calculator
 Calculates monthly payment, overpayment, and total payment
 Input: total loan amount, term, interest rate, and type (annuity or differentiated)
+
 ### 3: Deposit Calculator
 Calculates accrued interest, tax amount, and final deposit amount
 Input: deposit amount, term, interest rate, tax rate, payment frequency, interest capitalization, deposits list, withdrawals list
