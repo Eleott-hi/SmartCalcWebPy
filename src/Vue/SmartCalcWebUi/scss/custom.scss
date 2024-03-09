@@ -1,0 +1,29 @@
+// // Custom.scss
+// // functions and mixins first
+// @import '../node_modules/bootstrap/scss/functions';
+// @import '../node_modules/bootstrap/scss/mixins';
+
+
+// // override bootstrap functions to comply with --vars
+// @import 'functions-override';
+
+// // Override Boostrap variables
+// @import 'bootstrap-variables';
+// // add other themes if you want
+// @import '~bootswatch/dist/sandstone/variables';
+
+
+
+// $primary: var(--primary);
+
+// $theme-colors: (
+//   'primary': var(--primary)
+// );
+
+
+
+
+
+// Bootstrap and its default variables
+@import "../node_modules/bootstrap/scss/bootstrap";
+

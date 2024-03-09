@@ -1,0 +1,25 @@
+altgraph==0.17.4
+annotated-types==0.5.0
+asgiref==3.7.2
+Django==4.2.2
+django-cors-headers==4.3.0
+django-debug-toolbar==4.1.0
+django-filter==23.3
+djangorestframework==3.14.0
+macholib==1.16.3
+Markdown==3.5
+numpy==1.26.0
+packaging==23.2
+pybind11==2.10.4
+# PybindDepositCalculator @ file:///opt/goinfre/pintoved/SmartCalcWebPy/src/libs/Deposit
+# PybindLoanCalculator @ file:///opt/goinfre/pintoved/SmartCalcWebPy/src/libs/Loan
+# PybindRPN @ file:///opt/goinfre/pintoved/SmartCalcWebPy/src/libs/RPN
+pydantic==2.3.0
+pydantic_core==2.6.3
+pyinstaller==6.3.0
+pyinstaller-hooks-contrib==2023.11
+pytz==2023.3.post1
+sqlparse==0.4.4
+toml==0.10.2
+typing_extensions==4.8.0
+python-dotenv
