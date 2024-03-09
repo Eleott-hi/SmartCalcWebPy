@@ -1,24 +1,17 @@
 PROJECT := SmartCalcWeb
 
-IP := localhost
+IP := 0.0.0.0
 PORT := 8000
 PACKAGE := $(PROJECT)
 APP_PACKAGE := django-polls
 APP := calculator
 
-all: pip_update pip_install lib migrate test install
+all: pip_update pip_install lib migrate test run_server
 
 copy_ui:
 	rm -rf $(PROJECT)/assets
 	cp -r ../Vue/SmartCalcWebUi/dist/assets $(PROJECT)
 	cp ../Vue/SmartCalcWebUi/dist/index.html $(PROJECT)/calculator/templates/calculator/index.html
-
-
-install: 
-	pyinstaller manage.spec -y
-
-docker:
-	-@docker compose up
 
 start_project:
 	django-admin startproject $(PACKAGE)
@@ -55,30 +48,11 @@ shell:
 make_migration:
 	cd $(PACKAGE); python3 manage.py makemigrations $(APP)
 
-env:
-	python3 -m venv env
-	@echo
-	@echo "source env/bin/activate"
-	@echo
-
-	exit 1;
-
 freeze:
 	pip freeze > requirements.txt
-
-build_package:
-	cd $(APP_PACKAGE); python3 setup.py sdist
-
-install_packege:
-	python3 -m pip install $(APP_PACKAGE)/dist/*.tar.gz
 
 pip_update:
 	pip install --upgrade pip
 
 pip_install:
 	pip install -r requirements.txt
-
-.PHONY: docker
-
-pyinstaller:
-	./dist/manage/manage runserver $(IP):$(PORT) --noreload
